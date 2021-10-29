@@ -8,7 +8,7 @@
 $ npm install vue
 $ npm install -g @vue/cli
 $ git clone https://github.com/RullyanGS/SYSCOW-Frontend.git
-$ SYSCOW-Frontend
+$ cd SYSCOW-Frontend
 $ npm install
 $ npm run dev
 ```
