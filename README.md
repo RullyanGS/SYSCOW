@@ -1,7 +1,7 @@
 # SYSCOW - Front-end
 
 ## Instalação para Windows
-- [Instale o git}(https://gitforwindows.org)
+- [Instale o git](https://gitforwindows.org)
 - [Instale o Node.js](https://nodejs.org/en/download/)
 - No terminal digite os seguintes comandos:
 ``` bash
