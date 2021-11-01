@@ -1,34 +1,8 @@
 {
-  "todos": [
+  "user": [
     {
-      "id": 0,
-      "name": "Go to the gym",
-      "done": true
-    },
-    {
-      "id": 1,
-      "name": "Walk the dog",
-      "done": true
-    },
-    {
-      "id": 2,
-      "name": "Get some pizza",
-      "done": true
-    },
-    {
-      "name": "Finish this project",
-      "id": 3,
-      "done": true
-    },
-    {
-      "name": "arroz",
-      "id": 4,
-      "done": true
-    },
-    {
-      "name": "",
-      "id": 5,
-      "done": true
+      "name": "teste",
+      "email": "teste"
     }
   ]
 }

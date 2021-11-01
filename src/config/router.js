@@ -10,6 +10,7 @@ import Consulta from '@/components/consulta/Consulta'
 import Evento from '@/components/evento/Evento'
 import Ordenhadiaria from '@/components/ordenhadiaria/Ordenhadiaria'
 import Relatorios from '@/components/relatorios/Relatorios'
+import Auth from '@/components/auth/Auth'
 
 Vue.use(VueRouter)
 
@@ -49,6 +50,10 @@ const routes = [{
     name: 'relatorios',
     path: '/relatorios',
     component: Relatorios
+}, {
+    name: 'auth',
+    path: '/auth',
+    component: Auth
 }]
 
 export default new VueRouter({

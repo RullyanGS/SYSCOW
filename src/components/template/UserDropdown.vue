@@ -9,18 +9,26 @@
         </div>
         <div class="user-dropdown-content">
             <router-link to="/">
-                <i class="fa fa-sign-out"></i> Sair
+                <a href @click.prevent="logout"> <i class="fa fa-sign-out"></i> Sair </a>
             </router-link>
         </div>
     </div>
 </template>
 
 <script>
+import { userKey } from '@/global'
 import { mapState } from 'vuex'
 
 export default {
     name: "UserDropdown",
-    computed: mapState(['user'])
+    computed: mapState(['user']),
+    methods: {
+        logout() {
+            localStorage.removeItem(userKey)
+            this.$store.commit('setUser', null)
+            this.$router.push({ name: 'auth' })
+        }
+    }
 }
 </script>
 

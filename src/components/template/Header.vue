@@ -16,7 +16,13 @@ export default {
     props: {
         title: String,
         hideUserDropdown: Boolean
+    },
+    methods: {
+        toggleMenu() {
+            this.$store.commit('toggleMenu')
+        }
     }
+    
 }
 </script>
 

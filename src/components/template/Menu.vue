@@ -1,5 +1,5 @@
 <template>
-    <aside class="menu">
+    <aside class="menu" v-show="isMenuVisible">
         <div class="navegacao">NAVEGAÇÃO</div>
         <router-link to="/">Tela Inicial</router-link>
         <router-link to="/animais">Animais</router-link>
@@ -14,8 +14,11 @@
 </template>
 
 <script>
+import {mapState} from 'vuex'
+
 export default {
-    name: 'Menu'
+    name: 'Menu',
+    computed: mapState(['isMenuVisible'])
 }
 </script>
 

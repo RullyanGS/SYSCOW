@@ -1,13 +1,15 @@
 <template>
-  <div id="app">
-    <Header title="SYSCOW"/>
-    <Menu />
+  <div id="app" :class="{'hide-menu': !isMenuVisible || !user}">
+    <Header title="SYSCOW" v-if="user"
+      :hideUserDropdown="!user" />
+    <Menu v-if="user" />
     <Content />
     <Footer />
   </div>
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import Header from "@/components/template/Header"
 import Menu from "@/components/template/Menu"
 import Content from "@/components/template/Content"
@@ -15,7 +17,8 @@ import Footer from "@/components/template/Footer"
 
 export default {
   name: "App",
-  components: { Header, Menu, Content, Footer}
+  components: { Header, Menu, Content, Footer},
+  computed: mapState(['isMenuVisible', 'user'])
 }
 </script>
 
@@ -40,5 +43,12 @@ export default {
       "header header"
       "menu content"
       "menu footer";
+  }
+
+  #app.hide-menu {
+    grid-template-areas: 
+      "content content"
+      "content content"
+      "footer footer";
   }
 </style>
