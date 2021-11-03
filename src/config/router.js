@@ -15,8 +15,12 @@ import Auth from '@/components/auth/Auth'
 Vue.use(VueRouter)
 
 const routes = [{
-    name:  'home',
+    name: 'auth',
     path: '/',
+    component: Auth
+}, {
+    name:  'home',
+    path: '/home',
     component: Home
 }, {
     name: 'animais',
@@ -50,10 +54,6 @@ const routes = [{
     name: 'relatorios',
     path: '/relatorios',
     component: Relatorios
-}, {
-    name: 'auth',
-    path: '/auth',
-    component: Auth
 }]
 
 export default new VueRouter({

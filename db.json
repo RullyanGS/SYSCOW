@@ -4,5 +4,19 @@
       "name": "teste",
       "email": "teste"
     }
+  ],
+  "animais": [
+    {
+      "nomeAnimal": "mu",
+      "brinco": "123456",
+      "dataNascimento": "2021-07-20",
+      "sexo": "F",
+      "peso": "70",
+      "origem": "compra",
+      "raca": "Senepol",
+      "nomeMae": "ela",
+      "nomePai": "ele",
+      "id": 1
+    }
   ]
 }
