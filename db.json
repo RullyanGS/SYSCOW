@@ -17,6 +17,18 @@
       "nomeMae": "ela",
       "nomePai": "ele",
       "id": 1
+    },
+    {
+      "nomeAnimal": "bee",
+      "brinco": "1213231",
+      "dataNascimento": "2021-09-01",
+      "sexo": "F",
+      "peso": "76",
+      "origem": "compra",
+      "raca": "Brahman",
+      "nomeMae": "",
+      "nomePai": "",
+      "id": 2
     }
   ]
 }

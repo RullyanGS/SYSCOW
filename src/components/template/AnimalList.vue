@@ -1,16 +1,7 @@
 <template>
     <div class="animalList">
         <ul>
-            <li v-for="animal of animais" :key="animal.id">
-                {{ animal.nomeAnimal}}
-                {{ animal.brinco }} 
-                {{ animal.dataNascimento }} 
-                {{ animal.sexo }} 
-                {{ animal.peso }} 
-                {{ animal.raca }} 
-                {{ animal.nomeMae }} 
-                {{ animal.nomePai }} 
-            </li>
+            <b-table hover striped :items="animais" :fields="fields"></b-table>
         </ul>
 
         <b-button v-b-modal.modal-prevent-closing>Cadastrar</b-button>
@@ -181,7 +172,15 @@ export default {
                 { value: 'Charolês', text: 'Charolês' },
                 { value: 'Guzerá', text: 'Guzerá' },
                 { value: 'Tabapuã', text: 'Tabapuã' }],
-            animais: []
+            animais: [],
+            fields: [
+                { key: 'brinco', label: 'Brinco', sortable: true},
+                { key: 'nomeAnimal', label: 'Nome', sortable: true},
+                { key: 'raca', label: 'Raça', sortable: true},
+                { key: 'sexo', label: 'Sexo', sortable: true},
+                { key: 'dataNascimento', label: 'Data Nascimento', sortable: true},
+                { key: 'actions', label: 'Ações' }
+            ]
         };
     },
     async created() {
