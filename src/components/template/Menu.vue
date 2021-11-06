@@ -5,10 +5,10 @@
         <router-link to="/animais">Animais</router-link>
         <router-link to="/pesagem">Pesagem</router-link>
         <router-link to="/descarte">Descarte</router-link>
-        <router-link to="/vacinacao">Vacinacao</router-link>
+        <router-link to="/vacinacao">Vacinação</router-link>
         <router-link to="/consulta">Consulta</router-link>
         <router-link to="/evento">Evento</router-link>
-        <router-link to="/ordenhadiaria">Ordenha Diaria</router-link>
+        <router-link to="/ordenhadiaria">Ordenha Diária</router-link>
         <router-link to="/relatorios">Relatórios</router-link>
     </aside>
 </template>
