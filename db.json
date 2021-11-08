@@ -7,28 +7,28 @@
   ],
   "animais": [
     {
-      "nomeAnimal": "mu",
-      "brinco": "123456",
-      "dataNascimento": "2021-07-20",
+      "nomeAnimal": "VAQUINHA",
+      "brinco": "14356",
+      "dataNascimento": "2021-11-03",
       "sexo": "F",
-      "peso": "70",
+      "peso": "435",
       "origem": "compra",
-      "raca": "Senepol",
-      "nomeMae": "ela",
-      "nomePai": "ele",
-      "id": 1
+      "raca": "Nelore",
+      "nomeMae": "tete",
+      "nomePai": "toto",
+      "id": 6
     },
     {
-      "nomeAnimal": "bee",
-      "brinco": "1213231",
-      "dataNascimento": "2021-09-01",
+      "nomeAnimal": "sdgdg",
+      "brinco": "324324",
+      "dataNascimento": "2021-11-02",
       "sexo": "F",
-      "peso": "76",
+      "peso": "-32434",
       "origem": "compra",
-      "raca": "Brahman",
-      "nomeMae": "",
-      "nomePai": "",
-      "id": 2
+      "raca": "Nelore",
+      "nomeMae": "asdsd",
+      "nomePai": "asdasdas",
+      "id": 7
     }
   ]
 }
