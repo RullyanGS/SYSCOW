@@ -7,28 +7,52 @@
   ],
   "animais": [
     {
-      "nomeAnimal": "VAQUINHA",
-      "brinco": "14356",
-      "dataNascimento": "2021-11-03",
-      "sexo": "F",
-      "peso": "435",
+      "nomeAnimal": "Vaquinha",
+      "brinco": "1234",
+      "dataNascimento": "2021-11-02",
+      "sexo": "M",
+      "peso": "123",
       "origem": "compra",
-      "raca": "Nelore",
-      "nomeMae": "tete",
-      "nomePai": "toto",
-      "id": 6
+      "raca": "Brahman",
+      "nomeMae": "",
+      "nomePai": "",
+      "id": 1
     },
     {
-      "nomeAnimal": "sdgdg",
-      "brinco": "324324",
+      "nomeAnimal": "muuu",
+      "brinco": "1234",
       "dataNascimento": "2021-11-02",
-      "sexo": "F",
-      "peso": "-32434",
+      "sexo": "M",
+      "peso": "123",
       "origem": "compra",
-      "raca": "Nelore",
-      "nomeMae": "asdsd",
-      "nomePai": "asdasdas",
-      "id": 7
+      "raca": "Brahman",
+      "nomeMae": "",
+      "nomePai": "",
+      "id": 2
+    },
+    {
+      "nomeAnimal": "Vaco",
+      "brinco": "1234",
+      "dataNascimento": "2021-11-02",
+      "sexo": "M",
+      "peso": "123",
+      "origem": "compra",
+      "raca": "Brahman",
+      "nomeMae": "",
+      "nomePai": "",
+      "id": 3
+    },
+    {
+      "nomeAnimal": "mel",
+      "brinco": "1234",
+      "dataNascimento": "2021-11-02",
+      "sexo": "M",
+      "peso": "123",
+      "origem": "compra",
+      "raca": "Brahman",
+      "nomeMae": "",
+      "nomePai": "",
+      "id": 4
     }
   ]
 }

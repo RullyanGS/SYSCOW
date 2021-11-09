@@ -4,7 +4,7 @@
         <ul>
             <b-table hover striped :items="animais" :fields="fields">          
                 <template #cell(actions)="data">
-                    <b-button variant="warning" @click="loadUser(data.item)" class="mr-2">
+                    <b-button variant="warning" v-b-modal.modal-editar-animal @click="loadUser(data.item)" class="mr-2">
                         <i class="fa fa-pencil"></i>
                     </b-button>
                     <b-button variant="danger" v-b-modal.modal-excluir-animal @click="loadUser(data.item)">
@@ -22,7 +22,7 @@
             size="lg"
             hide-footer>
                 <br>
-                Deseja realmente excluir esse o animal: <strong>{{animal.nomeAnimal}}</strong>
+                Deseja realmente excluir o animal: <strong>{{animal.nomeAnimal}}</strong>
                 <br>
                 <br>
                 <b-button variant="danger" @click="remove">Sim</b-button>
@@ -155,6 +155,133 @@
             </form>
             </b-modal>
         </b-row>
+
+        <b-row>
+            <b-modal
+            id="modal-editar-animal"
+            ref="modal"
+            title="Editar informações do animal"
+            size="lg"
+            @show="resetModal"
+            @hidden="resetModal"
+            @ok="handleOk"
+            hide-footer>
+
+            Deseja realmente editar o animal: <strong>{{animal.nomeAnimal}}</strong>
+            <br><br>
+
+            <form ref="form" @submit.stop.prevent="cadastrar">
+                
+                <b-container>
+                    <b-row>
+                        <b-col>
+                            <b-form-group
+                                label="Nome*"
+                                invalid-feedback="O nome é obrigatório">
+                                <b-form-input
+                                    v-model="animal.nomeAnimal"
+                                    required />
+                            </b-form-group>
+                        </b-col>
+                        <b-col>
+                            <b-form-group
+                                label="Brinco*"
+                                invalid-feedback="O brinco é obrigatório">
+                                <b-form-input
+                                    v-model="animal.brinco"
+                                    type="number"
+                                    required />
+                            </b-form-group>
+                        </b-col>
+                        <b-col>    
+                            <b-form-group
+                                label="Data de nascimento*"
+                                invalid-feedback="A data de nascimento é obrigatório">
+                                <b-form-input
+                                    type = "date"
+                                    v-model="animal.dataNascimento"
+                                    required />
+                            </b-form-group>
+                        </b-col>
+                    </b-row>
+                </b-container>
+
+                <b-container>
+                    <b-row>
+                        <b-col>
+                            <b-form-group
+                                label="Sexo*"
+                                invalid-feedback="O sexo é obrigatório">
+                                <b-form-select 
+                                    v-model="animal.sexo" 
+                                    :options="opcaoSexo"
+                                    required>
+                                    <template #first>
+                                        <b-form-select-option :value="null" disabled>-- Por favor selecione uma opção --</b-form-select-option>
+                                    </template>
+                                </b-form-select>
+                            </b-form-group>
+                        </b-col>
+                        <b-col>
+                            <b-form-group
+                                label="Peso (Kg)">
+                                <b-form-input
+                                    type="number"
+                                    v-model="animal.peso" />
+                            </b-form-group>
+                        </b-col>
+                            <b-form-group
+                                label="Origem*"
+                                invalid-feedback="A origem é obrigatório">
+                                <b-form-select 
+                                    v-model="animal.origem" 
+                                    :options="opcaoOrigem">
+                                    <template #first>
+                                        <b-form-select-option :value="null" disabled>-- Por favor selecione uma opção --</b-form-select-option>
+                                    </template>
+                                </b-form-select>
+                            </b-form-group>
+                        <b-col>
+                            <b-form-group
+                                label="Raça*"
+                                invalid-feedback="A raça é obrigatório">
+                                <b-form-select 
+                                    v-model="animal.raca" 
+                                    :options="opcaoRaca">
+                                    <template #first>
+                                        <b-form-select-option :value="null" disabled>-- Por favor selecione uma opção --</b-form-select-option>
+                                    </template>
+                                </b-form-select>
+                            </b-form-group>
+                        </b-col>
+                    </b-row>
+                </b-container>
+
+                <b-container>
+                    <b-row>
+                        <b-col>
+                            <b-form-group
+                                label="Nome da mãe">
+                                <b-form-input
+                                    v-model="animal.nomeMae" />
+                            </b-form-group>
+                        </b-col>
+                        <b-col>
+                            <b-form-group
+                                label="Nome do pai">
+                                <b-form-input
+                                    v-model="animal.nomePai" />
+                            </b-form-group>
+                        </b-col>
+                    </b-row>
+                </b-container>
+
+            </form>
+
+            <b-button variant="danger" @click="editar">Sim</b-button>
+
+            </b-modal>
+        </b-row>
     </div>
 </template>
 
@@ -246,9 +373,9 @@ export default {
         },
         handleOk(bvModalEvt) {
             bvModalEvt.preventDefault()
-            this.handleSubmit()
+            this.cadastrar()
         },
-        async handleSubmit() {
+        async cadastrar() {
             if (!this.checkFormValidity()) {
                 return
             }
@@ -273,6 +400,32 @@ export default {
             // Esconder o modal manualmente
             this.$nextTick(() => {
                 this.$bvModal.hide('modal-cadastrar-animal')
+            })
+        },
+        async editar() {
+            try {
+                const id = this.animal.id
+                const res = await axios.put(`${baseURL}/${id}`, { 
+                    nomeAnimal: this.animal.nomeAnimal, 
+                    brinco: this.animal.brinco, 
+                    dataNascimento: this.animal.dataNascimento,
+                    sexo: this.animal.sexo, 
+                    peso: this.animal.peso,
+                    origem: this.animal.origem,
+                    raca: this.animal.raca,
+                    nomeMae: this.animal.nomeMae,
+                    nomePai: this.animal.nomePai});
+
+                    this.animais = [...this.animais, res.data];
+
+            } catch (e) {
+                console.error(e);
+            }
+
+            // Esconder o modal manualmente
+            this.$nextTick(() => {
+                //this.$bvModal.hide('modal-cadastrar-animal')
+                location.reload();
             })
         },
         async remove() {
