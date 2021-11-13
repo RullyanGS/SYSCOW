@@ -1,6 +1,7 @@
 <template>
     <div class="animalList">
 
+        <!-- Tabela Animais -->
         <ul>
             <b-table hover striped :items="animais" :fields="fields">          
                 <template #cell(actions)="data">
@@ -13,22 +14,10 @@
                 </template>
             </b-table>
         </ul>
-
+        
         <b-button v-b-modal.modal-cadastrar-animal>Cadastrar</b-button>
         
-            <b-modal
-            id="modal-excluir-animal"
-            title="Excluir Animal" 
-            size="lg"
-            hide-footer>
-                <br>
-                Deseja realmente excluir o animal: <strong>{{animal.nomeAnimal}}</strong>
-                <br>
-                <br>
-                <b-button variant="danger" @click="remove">Sim</b-button>
-            </b-modal>
-        
-
+        <!-- Cadastro Animal -->
         <b-row>
             <b-modal
             id="modal-cadastrar-animal"
@@ -37,7 +26,7 @@
             size="lg"
             @show="resetModal"
             @hidden="resetModal"
-            @ok="handleOk">
+            @ok="cadastroOk">
 
             <form ref="form" @submit.stop.prevent="handleSubmit">
                 
@@ -138,15 +127,33 @@
                         <b-col>
                             <b-form-group
                                 label="Nome da mãe">
-                                <b-form-input
-                                    v-model="nomeMae" />
+
+                                <b-form-select
+                                    v-model="nomeMae" >
+                                    <template #first>
+                                        <b-form-select-option :value="null" >Não Cadastrado</b-form-select-option>
+                                    </template>
+                                    <b-form-select-option v-for="animal of animais" :key="animal.id" :value="animal.nomeAnimal">
+                                        {{animal.nomeAnimal}}
+                                    </b-form-select-option>
+                                </b-form-select>
+
                             </b-form-group>
                         </b-col>
                         <b-col>
                             <b-form-group
                                 label="Nome do pai">
-                                <b-form-input
-                                    v-model="nomePai" />
+
+                                <b-form-select
+                                    v-model="nomePai" >
+                                    <template #first>
+                                        <b-form-select-option :value="null" >Não Cadastrado</b-form-select-option>
+                                    </template>
+                                    <b-form-select-option v-for="animal of animais" :key="animal.id" :value="animal.nomeAnimal">
+                                        {{animal.nomeAnimal}}
+                                    </b-form-select-option>
+                                </b-form-select>
+                                    
                             </b-form-group>
                         </b-col>
                     </b-row>
@@ -156,6 +163,7 @@
             </b-modal>
         </b-row>
 
+        <!-- Editar Animal -->
         <b-row>
             <b-modal
             id="modal-editar-animal"
@@ -164,8 +172,7 @@
             size="lg"
             @show="resetModal"
             @hidden="resetModal"
-            @ok="handleOk"
-            hide-footer>
+            @ok="editarOk">
 
             Deseja realmente editar o animal: <strong>{{animal.nomeAnimal}}</strong>
             <br><br>
@@ -180,6 +187,7 @@
                                 invalid-feedback="O nome é obrigatório">
                                 <b-form-input
                                     v-model="animal.nomeAnimal"
+                                    :state="nomeAnimalState"
                                     required />
                             </b-form-group>
                         </b-col>
@@ -190,6 +198,7 @@
                                 <b-form-input
                                     v-model="animal.brinco"
                                     type="number"
+                                    :state="brincoState"
                                     required />
                             </b-form-group>
                         </b-col>
@@ -200,6 +209,7 @@
                                 <b-form-input
                                     type = "date"
                                     v-model="animal.dataNascimento"
+                                    :state="dataNascimentoState"
                                     required />
                             </b-form-group>
                         </b-col>
@@ -215,6 +225,7 @@
                                 <b-form-select 
                                     v-model="animal.sexo" 
                                     :options="opcaoSexo"
+                                    :state="sexoState"
                                     required>
                                     <template #first>
                                         <b-form-select-option :value="null" disabled>-- Por favor selecione uma opção --</b-form-select-option>
@@ -235,7 +246,9 @@
                                 invalid-feedback="A origem é obrigatório">
                                 <b-form-select 
                                     v-model="animal.origem" 
-                                    :options="opcaoOrigem">
+                                    :options="opcaoOrigem"
+                                    :state="origemState"
+                                    required>
                                     <template #first>
                                         <b-form-select-option :value="null" disabled>-- Por favor selecione uma opção --</b-form-select-option>
                                     </template>
@@ -247,7 +260,9 @@
                                 invalid-feedback="A raça é obrigatório">
                                 <b-form-select 
                                     v-model="animal.raca" 
-                                    :options="opcaoRaca">
+                                    :options="opcaoRaca"
+                                    :state="racaState"
+                                    required>
                                     <template #first>
                                         <b-form-select-option :value="null" disabled>-- Por favor selecione uma opção --</b-form-select-option>
                                     </template>
@@ -262,15 +277,33 @@
                         <b-col>
                             <b-form-group
                                 label="Nome da mãe">
-                                <b-form-input
-                                    v-model="animal.nomeMae" />
+
+                                <b-form-select
+                                    v-model="animal.nomeMae" >
+                                    <template #first>
+                                        <b-form-select-option :value="null" >Não Cadastrado</b-form-select-option>
+                                    </template>
+                                    <b-form-select-option v-for="animal of animais" :key="animal.id" :value="animal.nomeAnimal">
+                                        {{animal.nomeAnimal}}
+                                    </b-form-select-option>
+                                </b-form-select>
+
                             </b-form-group>
                         </b-col>
                         <b-col>
                             <b-form-group
                                 label="Nome do pai">
-                                <b-form-input
-                                    v-model="animal.nomePai" />
+
+                                <b-form-select
+                                    v-model="animal.nomePai" >
+                                    <template #first>
+                                        <b-form-select-option :value="null" >Não Cadastrado</b-form-select-option>
+                                    </template>
+                                    <b-form-select-option v-for="animal of animais" :key="animal.id" :value="animal.nomeAnimal">
+                                        {{animal.nomeAnimal}}
+                                    </b-form-select-option>
+                                </b-form-select>
+
                             </b-form-group>
                         </b-col>
                     </b-row>
@@ -278,10 +311,25 @@
 
             </form>
 
-            <b-button variant="danger" @click="editar">Sim</b-button>
-
             </b-modal>
         </b-row>
+
+        <!-- Excluir Animal -->
+        <b-row>
+            <b-modal
+                id="modal-excluir-animal"
+                title="Excluir Animal" 
+                size="lg"
+                hide-footer>
+                    <br>
+                    Deseja realmente excluir o animal: <strong>{{animal.nomeAnimal}}</strong>
+                    <br>
+                    <br>
+                    <b-button variant="danger" @click="remove">Sim</b-button>
+            </b-modal>
+        </b-row>
+
+
     </div>
 </template>
 
@@ -312,18 +360,66 @@ export default {
                 { value: 'F', text: 'Fêmea' }, 
                 { value: 'M', text: 'Macho'}],
             opcaoOrigem: [
-                { value: 'compra', text: 'Compra' },
-                { value: 'nasceu', text: 'Nasceu na fazenda' }],
+                { value: 'Compra', text: 'Compra' },
+                { value: 'Nascimento', text: 'Nascimento' }],
             opcaoRaca: [
+                { value: 'Aberdeen Angus', text: 'Aberdeen Angus' },
                 { value: 'Angus', text: 'Angus' },
-                { value: 'Nelore', text: 'Nelore' },
+                { value: 'Ayrshire', text: 'Ayrshire' },
+                { value: 'Black Dorper', text: 'Black Dorper' },
+                { value: 'Braford', text: 'Braford' },
                 { value: 'Brahman', text: 'Brahman' },
                 { value: 'Brangus', text: 'Brangus' },
-                { value: 'Senepol', text: 'Senepol' },
-                { value: 'Hereford', text: 'Hereford' },
+                { value: 'Canchim', text: 'Canchim' },
                 { value: 'Caracu', text: 'Caracu' },
                 { value: 'Charolês', text: 'Charolês' },
+                { value: 'Composto', text: 'Composto' },
+                { value: 'Cruzamento Industrial', text: 'Cruzamento Industrial' },
+                { value: 'Desconhecida', text: 'Desconhecida' },
+                { value: 'F1', text: 'F1' },
+                { value: 'Friesian', text: 'Friesian' },
+                { value: 'Gir', text: 'Gir' },
+                { value: 'Gir Leiteiro', text: 'Gir Leiteiro' },
+                { value: 'Girolando', text: 'Girolando' },
+                { value: 'Guernsey', text: 'Guernsey' },
                 { value: 'Guzerá', text: 'Guzerá' },
+                { value: 'Guzerá Leiteiro', text: 'Guzerá Leiteiro' },
+                { value: 'Guzolando', text: 'Guzolando' },
+                { value: 'Hereford', text: 'Hereford' },
+                { value: 'Holandês Preto e Branco', text: 'Holandês Preto e Branco' },
+                { value: 'Holandês Vermelho', text: 'Holandês Vermelho' },
+                { value: 'Jafarabadi', text: 'Jafarabadi' },
+                { value: 'Jersey', text: 'Jersey' },
+                { value: 'Jersolando', text: 'Jersolando' },
+                { value: 'Kiwi', text: 'Kiwi' },
+                { value: 'Mestiça', text: 'Mestiça' },
+                { value: 'Montbeliard', text: 'Montbeliard' },
+                { value: 'Murrah', text: 'Murrah' },
+                { value: 'Nelorando', text: 'Nelorando' },
+                { value: 'Nelore', text: 'Nelore' },
+                { value: 'Nelore pintado', text: 'Nelore pintado' },
+                { value: 'Normando', text: 'Normando' },
+                { value: 'Norueguês Vermelho', text: 'Norueguês Vermelho' },
+                { value: 'Pardo Alpina', text: 'Pardo Alpina' },
+                { value: 'Pardo Suíça (Schwyz)', text: 'Pardo Suíça (Schwyz)' },
+                { value: 'Poll Dorset', text: 'Poll Dorset' },
+                { value: 'Purunã', text: 'Purunã' },
+                { value: 'Red Angus', text: 'Red Angus' },
+                { value: 'S1', text: 'S1' },
+                { value: 'Saanen', text: 'Saanen' },
+                { value: 'Santa Inês', text: 'Santa Inês' },
+                { value: 'Senepol', text: 'Senepol' },
+                { value: 'Simental', text: 'Simental' },
+                { value: 'Sindi', text: 'Sindi' },
+                { value: 'Sindolando', text: 'Sindolando' },
+                { value: 'Sinjer', text: 'Sinjer' },
+                { value: 'Tabapuã', text: 'Tabapuã' },
+                { value: 'Tabolanda', text: 'Tabolanda' },
+                { value: 'Tricross', text: 'Tricross' },
+                { value: 'WAGUYU', text: 'WAGUYU' },
+                { value: 'White Dorper', text: 'White Dorper' },
+                { value: 'Zebuíno', text: 'Zebuíno' },
+                { value: 'Outra', text: 'Outra' },
                 { value: 'Tabapuã', text: 'Tabapuã' }],
             animal: {},
             animais: [],
@@ -362,8 +458,6 @@ export default {
             this.brinco = ''
             this.dataNascimento = ''
             this.peso = ''
-            this.nomeMae =  ''
-            this.nomePai = ''
             this.nomeAnimalState = null
             this.brincoState = null
             this.dataNascimentoState = null
@@ -371,9 +465,13 @@ export default {
             this.origemState = null
             this.racaState = null
         },
-        handleOk(bvModalEvt) {
+        cadastroOk(bvModalEvt) {
             bvModalEvt.preventDefault()
             this.cadastrar()
+        },
+        editarOk(bvModalEvt) {
+            bvModalEvt.preventDefault()
+            this.editar()
         },
         async cadastrar() {
             if (!this.checkFormValidity()) {
@@ -403,6 +501,9 @@ export default {
             })
         },
         async editar() {
+            if (!this.checkFormValidity()) {
+                return
+            }
             try {
                 const id = this.animal.id
                 const res = await axios.put(`${baseURL}/${id}`, { 

@@ -12,47 +12,55 @@
       "dataNascimento": "2021-11-02",
       "sexo": "M",
       "peso": "123",
-      "origem": "compra",
+      "origem": "Compra",
       "raca": "Brahman",
-      "nomeMae": "",
-      "nomePai": "",
+      "nomeMae": "Vaquinha",
+      "nomePai": "Vaco",
       "id": 1
     },
     {
-      "nomeAnimal": "muuu",
-      "brinco": "1234",
-      "dataNascimento": "2021-11-02",
-      "sexo": "M",
-      "peso": "123",
-      "origem": "compra",
-      "raca": "Brahman",
-      "nomeMae": "",
+      "nomeAnimal": "Vaco",
+      "brinco": "123456",
+      "dataNascimento": "2021-08-17",
+      "sexo": "F",
+      "peso": "150",
+      "origem": "Compra",
+      "raca": "Sindolando",
+      "nomeMae": "Vaco",
       "nomePai": "",
       "id": 2
     },
     {
-      "nomeAnimal": "Vaco",
+      "nomeAnimal": "Mu",
       "brinco": "1234",
-      "dataNascimento": "2021-11-02",
-      "sexo": "M",
-      "peso": "123",
-      "origem": "compra",
-      "raca": "Brahman",
+      "dataNascimento": "2021-11-11",
+      "sexo": "F",
+      "peso": "",
+      "origem": "Compra",
+      "raca": "Brangus",
       "nomeMae": "",
       "nomePai": "",
       "id": 3
+    }
+  ],
+  "pesagens": [
+    {
+      "nomeAnimal": "Vaquinha",
+      "peso": "150",
+      "dataPesagem": "2021-11-13",
+      "id": 1
     },
     {
-      "nomeAnimal": "mel",
-      "brinco": "1234",
-      "dataNascimento": "2021-11-02",
-      "sexo": "M",
-      "peso": "123",
-      "origem": "compra",
-      "raca": "Brahman",
-      "nomeMae": "",
-      "nomePai": "",
-      "id": 4
+      "nomeAnimal": "vaco",
+      "peso": "100",
+      "dataPesagem": "2021-11-13",
+      "id": 2
+    },
+    {
+      "nomeAnimal": "Mu",
+      "peso": "150",
+      "dataPesagem": "2021-11-13",
+      "id": 3
     }
   ]
 }

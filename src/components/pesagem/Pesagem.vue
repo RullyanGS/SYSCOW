@@ -1,15 +1,17 @@
 <template>
     <div class="pesagem">
         <PageTitle main="Pesagem" />
+        <pesagem-list />
     </div>
 </template>
 
 <script>
+import PesagemList from "../template/PesagemList";
 import PageTitle from '../template/PageTitle'
 
 export default {
     name: 'Pesagem',
-    components: { PageTitle }
+    components: { PageTitle, PesagemList}
 }
 </script>
 
