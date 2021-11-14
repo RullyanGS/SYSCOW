@@ -15,7 +15,7 @@
       "raca": "Canchim",
       "nomeMae": null,
       "nomePai": null,
-      "ativo": true,
+      "ativo": false,
       "id": 4
     },
     {
@@ -69,5 +69,14 @@
       "id": 2
     }
   ],
-  "descartes": []
+  "descartes": [
+    {
+      "nomeAnimal": "Vaco",
+      "motivo": "morte",
+      "causa": "Causas naturais",
+      "dataDescarte": "2021-11-13",
+      "id": 1
+    }
+  ],
+  "ordenhas": []
 }

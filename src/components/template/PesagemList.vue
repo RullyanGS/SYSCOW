@@ -170,11 +170,11 @@ export default {
     name: "PesagemList",
     data () {
         return {
-            nomeAnimal: '',
+            nomeAnimal: null,
             nomeAnimalState: null,
-            peso: '',
+            peso: null,
             pesoState: null,
-            dataPesagem: '',
+            dataPesagem: null,
             dataPesagemState: null,
             animal: {},
             animais: [],
