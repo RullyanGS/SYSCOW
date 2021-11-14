@@ -90,7 +90,7 @@
             @hidden="resetModal"
             @ok="editarOk">
 
-            Deseja realmente editar o animal: <strong>{{pesagem.nomeAnimal}}</strong>
+            Deseja realmente editar o peso do animal <strong>{{pesagem.nomeAnimal}}</strong> ?
             <br><br>
 
             <form ref="form" @submit.stop.prevent="cadastrar">
@@ -152,12 +152,9 @@
                 id="modal-excluir-peso"
                 title="Excluir Peso" 
                 size="lg"
-                hide-footer>
+                @ok="remove">
                     <br>
-                    Deseja realmente excluir o peso do animal: <strong>{{pesagem.nomeAnimal}}</strong>
-                    <br>
-                    <br>
-                    <b-button variant="danger" @click="remove">Sim</b-button>
+                    Deseja realmente excluir o peso do animal <strong>{{pesagem.nomeAnimal}}</strong> ?
             </b-modal>
         </b-row>
 
@@ -194,10 +191,10 @@ export default {
     },
     async created() {
         try {
-        const resPeagem = await axios.get(`${baseURL}/pesagens`);
-        const resAnimal = await axios.get(`${baseURL}/animais`);
+        const resPesagem = await axios.get(`${baseURL}/pesagens`);
+        const resAnimal = await axios.get(`${baseURL}/animais?ativo=true`);
 
-        this.pesagens = resPeagem.data;
+        this.pesagens = resPesagem.data;
         this.animais = resAnimal.data;
         } catch (e) {
         console.error(e);

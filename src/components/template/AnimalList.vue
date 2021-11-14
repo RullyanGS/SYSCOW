@@ -85,6 +85,7 @@
                                 </b-form-select>
                             </b-form-group>
                         </b-col>
+                        <!-- 
                         <b-col>
                             <b-form-group
                                 label="Peso (Kg)">
@@ -93,13 +94,15 @@
                                     v-model="peso" />
                             </b-form-group>
                         </b-col>
+                        -->
                             <b-form-group
                                 label="Origem*"
                                 invalid-feedback="A origem é obrigatório">
                                 <b-form-select 
                                     v-model="origem" 
                                     :options="opcaoOrigem"
-                                    :state="origemState">
+                                    :state="origemState"
+                                    required>
                                     <template #first>
                                         <b-form-select-option :value="null" disabled>-- Por favor selecione uma opção --</b-form-select-option>
                                     </template>
@@ -112,7 +115,8 @@
                                 <b-form-select 
                                     v-model="raca" 
                                     :options="opcaoRaca"
-                                    :state="racaState">
+                                    :state="racaState"
+                                    required>
                                     <template #first>
                                         <b-form-select-option :value="null" disabled>-- Por favor selecione uma opção --</b-form-select-option>
                                     </template>
@@ -174,7 +178,7 @@
             @hidden="resetModal"
             @ok="editarOk">
 
-            Deseja realmente editar o animal: <strong>{{animal.nomeAnimal}}</strong>
+            Deseja realmente editar o animal <strong>{{animal.nomeAnimal}}</strong> ?
             <br><br>
 
             <form ref="form" @submit.stop.prevent="cadastrar">
@@ -233,6 +237,7 @@
                                 </b-form-select>
                             </b-form-group>
                         </b-col>
+                        <!-- 
                         <b-col>
                             <b-form-group
                                 label="Peso (Kg)">
@@ -241,6 +246,7 @@
                                     v-model="animal.peso" />
                             </b-form-group>
                         </b-col>
+                        -->
                             <b-form-group
                                 label="Origem*"
                                 invalid-feedback="A origem é obrigatório">
@@ -320,12 +326,9 @@
                 id="modal-excluir-animal"
                 title="Excluir Animal" 
                 size="lg"
-                hide-footer>
+                @ok="remove">
                     <br>
-                    Deseja realmente excluir o animal: <strong>{{animal.nomeAnimal}}</strong>
-                    <br>
-                    <br>
-                    <b-button variant="danger" @click="remove">Sim</b-button>
+                    Deseja realmente excluir o animal <strong>{{animal.nomeAnimal}}</strong> ?
             </b-modal>
         </b-row>
 
@@ -335,7 +338,7 @@
 
 <script>
 import axios from "axios";
-const baseURL = "http://localhost:3001/animais";
+const baseURL = "http://localhost:3001";
 
 export default {
     name: "AnimalList",
@@ -349,13 +352,14 @@ export default {
             dataNascimentoState: null,
             sexo: null,
             sexoState: null,
-            peso: null,
+            //peso: null,
             origem: null,
             origemState: null,
             raca: null,
             racaState: null,
             nomeMae: null,
             nomePai: null,
+            ativo: true,
             opcaoSexo: [
                 { value: 'F', text: 'Fêmea' }, 
                 { value: 'M', text: 'Macho'}],
@@ -435,7 +439,7 @@ export default {
     },
     async created() {
         try {
-        const res = await axios.get(baseURL);
+        const res = await axios.get(`${baseURL}/animais?ativo=true`);
 
         this.animais = res.data;
         } catch (e) {
@@ -457,13 +461,14 @@ export default {
             this.nomeAnimal = ''
             this.brinco = ''
             this.dataNascimento = ''
-            this.peso = ''
+            //this.peso = ''
             this.nomeAnimalState = null
             this.brincoState = null
             this.dataNascimentoState = null
             this.sexoState = null
             this.origemState = null
             this.racaState = null
+            this.ativo = true
         },
         cadastroOk(bvModalEvt) {
             bvModalEvt.preventDefault()
@@ -478,16 +483,17 @@ export default {
                 return
             }
             try {
-                const res = await axios.post(baseURL, { 
+                const res = await axios.post(`${baseURL}/animais`, { 
                     nomeAnimal: this.nomeAnimal, 
                     brinco: this.brinco, 
                     dataNascimento: this.dataNascimento,
                     sexo: this.sexo, 
-                    peso: this.peso,
+                    //peso: this.peso,
                     origem: this.origem,
                     raca: this.raca,
                     nomeMae: this.nomeMae,
-                    nomePai: this.nomePai});
+                    nomePai: this.nomePai,
+                    ativo: this.ativo});
 
                     this.animais = [...this.animais, res.data];
 
@@ -506,16 +512,17 @@ export default {
             }
             try {
                 const id = this.animal.id
-                const res = await axios.put(`${baseURL}/${id}`, { 
+                const res = await axios.put(`${baseURL}/animais/${id}`, { 
                     nomeAnimal: this.animal.nomeAnimal, 
                     brinco: this.animal.brinco, 
                     dataNascimento: this.animal.dataNascimento,
                     sexo: this.animal.sexo, 
-                    peso: this.animal.peso,
+                    //peso: this.animal.peso,
                     origem: this.animal.origem,
                     raca: this.animal.raca,
                     nomeMae: this.animal.nomeMae,
-                    nomePai: this.animal.nomePai});
+                    nomePai: this.animal.nomePai,
+                    ativo: this.animal.ativo});
 
                     this.animais = [...this.animais, res.data];
 
@@ -531,8 +538,10 @@ export default {
         },
         async remove() {
             try {
+                await axios.patch(`${baseURL}/animais/${this.nomeAnimal}`, {ativo: true})
+
                 const id = this.animal.id
-                await axios.delete(`${baseURL}/${id}`)
+                await axios.delete(`${baseURL}/animais/${id}`)
                     .then(() => {
                         location.reload();
                     });

@@ -7,40 +7,52 @@
   ],
   "animais": [
     {
-      "nomeAnimal": "Vaquinha",
-      "brinco": "1234",
-      "dataNascimento": "2021-11-02",
-      "sexo": "M",
-      "peso": "123",
-      "origem": "Compra",
-      "raca": "Brahman",
-      "nomeMae": "Vaquinha",
-      "nomePai": "Vaco",
-      "id": 1
-    },
-    {
       "nomeAnimal": "Vaco",
-      "brinco": "123456",
-      "dataNascimento": "2021-08-17",
-      "sexo": "F",
-      "peso": "150",
+      "brinco": "14256",
+      "dataNascimento": "2021-04-07",
+      "sexo": "M",
       "origem": "Compra",
-      "raca": "Sindolando",
-      "nomeMae": "Vaco",
-      "nomePai": "",
-      "id": 2
+      "raca": "Canchim",
+      "nomeMae": null,
+      "nomePai": null,
+      "ativo": true,
+      "id": 4
     },
     {
       "nomeAnimal": "Mu",
-      "brinco": "1234",
-      "dataNascimento": "2021-11-11",
+      "brinco": "123456",
+      "dataNascimento": "2021-02-10",
       "sexo": "F",
-      "peso": "",
       "origem": "Compra",
-      "raca": "Brangus",
-      "nomeMae": "",
-      "nomePai": "",
-      "id": 3
+      "raca": "Charolês",
+      "nomeMae": null,
+      "nomePai": null,
+      "ativo": true,
+      "id": 5
+    },
+    {
+      "nomeAnimal": "asdas",
+      "brinco": "2132",
+      "dataNascimento": "2021-11-14",
+      "sexo": "F",
+      "origem": "Compra",
+      "raca": "Braford",
+      "nomeMae": null,
+      "nomePai": null,
+      "ativo": true,
+      "id": 6
+    },
+    {
+      "nomeAnimal": "teste",
+      "brinco": "213213",
+      "dataNascimento": "2021-11-02",
+      "sexo": "F",
+      "origem": "Compra",
+      "raca": "Angus",
+      "nomeMae": null,
+      "nomePai": null,
+      "ativo": true,
+      "id": 7
     }
   ],
   "pesagens": [
@@ -55,12 +67,7 @@
       "peso": "100",
       "dataPesagem": "2021-11-13",
       "id": 2
-    },
-    {
-      "nomeAnimal": "Mu",
-      "peso": "150",
-      "dataPesagem": "2021-11-13",
-      "id": 3
     }
-  ]
+  ],
+  "descartes": []
 }

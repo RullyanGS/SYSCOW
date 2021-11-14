@@ -1,0 +1,342 @@
+<template>
+    <div class="descarteList">
+        <ul>
+            <b-table hover striped :items="descartes" :fields="fields">          
+                <template #cell(actions)="data">
+                    <b-button variant="warning" v-b-modal.modal-editar-descarte @click="loadDescarte(data.item)" class="mr-2">
+                        <i class="fa fa-pencil"></i>
+                    </b-button>
+                    <b-button variant="danger" v-b-modal.modal-excluir-descarte @click="loadDescarte(data.item)">
+                        <i class="fa fa-trash"></i>
+                    </b-button>
+                </template>
+            </b-table>
+        </ul>
+
+        <b-button v-b-modal.modal-cadastrar-descarte>Cadastrar</b-button>
+
+        <!-- Cadastro Descarte -->
+        <b-row>
+            <b-modal
+            id="modal-cadastrar-descarte"
+            ref="modal"
+            title="Cadastro de descarte"
+            size="lg"
+            @show="resetModal"
+            @hidden="resetModal"
+            @ok="cadastroOk">
+
+            <form ref="form" @submit.stop.prevent="handleSubmit">
+                
+                <b-container>
+                    <b-row>
+                        <b-col>
+                            <b-form-group
+                                label="Nome*"
+                                invalid-feedback="O nome é obrigatório">
+
+                                <b-form-select
+                                    v-model="nomeAnimal"
+                                    :state="nomeAnimalState"
+                                    required >
+
+                                    <template #first>
+                                        <b-form-select-option :value="null" disabled>-- Por favor selecione uma opção --</b-form-select-option>
+                                    </template>
+
+                                    <b-form-select-option v-for="animal of animais" :key="animal.id" :value="animal.id">
+                                        {{animal.nomeAnimal}}
+                                    </b-form-select-option>
+
+                                </b-form-select>
+                            </b-form-group>
+                        </b-col>
+                        <b-col>
+                            <b-form-group
+                                label="Motivo*"
+                                invalid-feedback="O Motivo é obrigatório">
+
+                                <b-form-select
+                                    v-model="motivo"
+                                    :state="motivoState"
+                                    :options="opcaoMotivo"
+                                    required >
+                                    <template #first>
+                                        <b-form-select-option :value="null" disabled>-- Por favor selecione uma opção --</b-form-select-option>
+                                    </template>
+                                </b-form-select>
+                            </b-form-group>
+                        </b-col>
+                        <b-col>
+                            <b-form-group
+                                label="Causa">
+
+                                <b-form-input
+                                    v-model="causa"/>
+
+                            </b-form-group>
+                        </b-col>
+                        <b-col>    
+                            <b-form-group
+                                label="Data de Descarte*"
+                                invalid-feedback="A data do Descarte é obrigatório">
+                                <b-form-input
+                                    type = "date"
+                                    v-model="dataDescarte"
+                                    :state="dataDescarteState"
+                                    required />
+                            </b-form-group>
+                        </b-col>
+                    </b-row>
+                </b-container>
+
+            </form>
+            </b-modal>
+        </b-row>
+
+        <!-- Editar Descarte -->
+        <b-row>
+            <b-modal
+            id="modal-editar-descarte"
+            ref="modal"
+            title="Editar Descarte do animal"
+            size="lg"
+            @show="resetModal"
+            @hidden="resetModal"
+            @ok="editarOk">
+
+            Deseja realmente editar o descarte do animal <strong>{{descarte.nomeAnimal}}</strong> ?
+            <br><br>
+
+            <form ref="form" @submit.stop.prevent="cadastrar">
+                
+                <b-container>
+                    <b-row>
+                        <b-col>
+                            <b-form-group
+                                label="Nome*"
+                                invalid-feedback="O nome é obrigatório">
+                                
+                                <b-form-input
+                                    v-model="descarte.nomeAnimal"
+                                    disabled
+                                    >
+                                </b-form-input>
+                            </b-form-group>
+                        </b-col>
+                        <b-col>
+                            <b-form-group
+                                label="Motivo*"
+                                invalid-feedback="O Motivo é obrigatório">
+
+                                <b-form-select
+                                    v-model="descarte.motivo"
+                                    :state="motivoState"
+                                    :options="opcaoMotivo"
+                                    required >
+                                    <template #first>
+                                        <b-form-select-option :value="null" disabled>-- Por favor selecione uma opção --</b-form-select-option>
+                                    </template>
+                                </b-form-select>
+                            </b-form-group>
+                        </b-col>
+                        <b-col>
+                            <b-form-group
+                                label="Causa">
+
+                                <b-form-input
+                                    v-model="descarte.causa"/>
+
+                            </b-form-group>
+                        </b-col>
+                        <b-col>    
+                            <b-form-group
+                                label="Data de Descarte*"
+                                invalid-feedback="A data do Descarte é obrigatório">
+                                <b-form-input
+                                    type = "date"
+                                    v-model="descarte.dataDescarte"
+                                    :state="dataDescarteState"
+                                    required />
+                            </b-form-group>
+                        </b-col>
+                    </b-row>
+                </b-container>
+
+            </form>
+
+            </b-modal>
+        </b-row>
+
+        <!-- Excluir Descarte -->
+        <b-row>
+            <b-modal
+                id="modal-excluir-descarte"
+                title="Excluir Descarte" 
+                size="lg"
+                @ok="remove">
+                    <br>
+                    Deseja realmente excluir o descarte do animal <strong>{{descarte.nomeAnimal}}</strong> ?
+            </b-modal>
+        </b-row>
+
+    </div>
+</template>
+
+<script>
+import axios from "axios";
+const baseURL = "http://localhost:3001";
+
+export default {
+    name: "DescarteList",
+    data () {
+        return {
+            nomeAnimal: null,
+            nomeAnimalState: null,
+            motivo: null,
+            motivoState: null,
+            causa: null,
+            dataDescarte: null,
+            dataDescarteState: null,
+
+            backupAnimal: [],
+
+            animal: {},
+            animais: [],
+
+            descarte: {},
+            descartes: [],
+
+            opcaoMotivo: [
+                {value: 'morte', text: 'Morte'},
+                {value: 'roubo', text: 'Roubo'},
+                {value: 'venda', text: 'Venda'},
+                {value: 'desaparecido', text: 'Desaparecido'}
+            ],
+            fields: [
+                { key: 'nomeAnimal', label: 'Nome', sortable: true},
+                { key: 'dataDescarte', label: 'Data Descarte', sortable: true},
+                { key: 'motivo', label: 'Motivo', sortable: true},
+                { key: 'causa', label: 'Causa', sortable: true},
+                { key: 'actions', label: 'Ações' }
+            ]
+        }      
+    },
+    async created() {
+        try {
+        const resDescarte = await axios.get(`${baseURL}/descartes`);
+        const resAnimal = await axios.get(`${baseURL}/animais?ativo=true`);
+
+        this.descartes = resDescarte.data;
+        this.animais = resAnimal.data;
+        
+        } catch (e) {
+            console.error(e);
+        }
+    },
+    methods: {
+        checkFormValidity() {
+            const valid = this.$refs.form.checkValidity()
+            this.nomeAnimalState = valid
+            this.motivoState = valid
+            this.dataDescarteState = valid
+            return valid
+        },
+        resetModal() {
+            this.nomeAnimal = ''
+            this.motivo = ''
+            this.causa = ''
+            this.dataDescarte = ''
+            this.nomeAnimalState = null
+            this.motivoState = null
+            this.dataDescarteState = null
+        },
+        cadastroOk(bvModalEvt) {
+            bvModalEvt.preventDefault()
+            this.cadastrar()
+        },
+        editarOk(bvModalEvt) {
+            bvModalEvt.preventDefault()
+            this.editar()
+        },
+        async cadastrar() {
+            if (!this.checkFormValidity()) {
+                return
+            }
+            try {
+                const id = this.nomeAnimal
+
+                const res = await axios.get(`${baseURL}/animais/${id}`);
+                this.backupAnimal = res.data;
+
+                const resCadastro = await axios.post(`${baseURL}/descartes`, { 
+                    nomeAnimal: this.backupAnimal.nomeAnimal, 
+                    motivo: this.motivo, 
+                    causa: this.causa, 
+                    dataDescarte: this.dataDescarte});
+
+                    this.descartes = [...this.descartes, resCadastro.data];
+
+                await axios.patch(`${baseURL}/animais/${id}`, {ativo: false});
+
+            } catch (e) {
+                console.error(e);
+            }
+
+            // Esconder o modal manualmente
+            this.$nextTick(() => {
+                //this.$bvModal.hide('modal-cadastrar-descarte')
+                location.reload();
+            })
+        },
+        async editar() {
+            if (!this.checkFormValidity()) {
+                return
+            }
+
+            try {
+                const id = this.descarte.id
+                const res = await axios.patch(`${baseURL}/descartes/${id}`, { 
+                    motivo: this.descarte.motivo, 
+                    causa: this.descarte.causa, 
+                    dataDescarte: this.descarte.dataDescarte});
+
+                    this.descartes = [...this.descartes, res.data];
+            } catch (e) {
+                console.error(e);
+            }
+
+            // Esconder o modal manualmente
+            this.$nextTick(() => {
+                //this.$bvModal.hide('modal-editar-descarte')
+                location.reload();
+            })
+        },
+        async remove() {
+            try {
+                const res = await axios.get(`${baseURL}/animais/?nomeAnimal=${this.descarte.nomeAnimal}`);
+                this.backupAnimal = res.data[0];
+
+                const id = this.descarte.id
+                await axios.delete(`${baseURL}/descartes/${id}`)
+
+                await axios.patch(`${baseURL}/animais/${this.backupAnimal.id}`, {ativo: true})
+            } catch (e) {
+                console.error(e);
+            }
+
+            this.$nextTick(() => {
+                //this.$bvModal.hide('modal-excluir-descarte')
+                location.reload();
+            })
+        },
+        loadDescarte(descarte) {
+            this.descarte = { ...descarte }
+        }
+    }
+}
+</script>
+
+<style>
+
+</style>
