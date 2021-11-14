@@ -44,7 +44,7 @@
                                         <b-form-select-option :value="null" disabled>-- Por favor selecione uma opção --</b-form-select-option>
                                     </template>
 
-                                    <b-form-select-option v-for="animal of animais" :key="animal.id" :value="animal.id">
+                                    <b-form-select-option v-for="animal of animais" :key="animal.id" :value="animal.nomeAnimal">
                                         {{animal.nomeAnimal}}
                                     </b-form-select-option>
 
@@ -119,9 +119,7 @@
                                 
                                 <b-form-input
                                     v-model="descarte.nomeAnimal"
-                                    disabled
-                                    >
-                                </b-form-input>
+                                    disabled />
                             </b-form-group>
                         </b-col>
                         <b-col>

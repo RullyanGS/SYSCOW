@@ -75,7 +75,7 @@
             </b-modal>
         </b-row>
 
-        <!-- Editar Peso -->
+        <!-- Editar Ordenha -->
         <b-row>
             <b-modal
             id="modal-editar-ordenha"
@@ -137,7 +137,7 @@
             </b-modal>
         </b-row>
 
-        <!-- Excluir Animal -->
+        <!-- Excluir Ordenha -->
         <b-row>
             <b-modal
                 id="modal-excluir-ordenha"

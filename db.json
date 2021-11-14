@@ -78,5 +78,13 @@
       "id": 1
     }
   ],
-  "ordenhas": []
+  "ordenhas": [
+    {
+      "qtdeLitros": "50",
+      "nrFemeas": "6",
+      "dataOrdenhaDiaria": "2021-11-14",
+      "id": 1
+    }
+  ],
+  "vacinas": []
 }
