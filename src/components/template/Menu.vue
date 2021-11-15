@@ -5,7 +5,7 @@
         <router-link to="/animais">Animais</router-link>
         <router-link to="/pesagem">Pesagem</router-link>
         <router-link to="/descarte">Descarte</router-link>
-        <router-link to="/vacinacao">Vacinação</router-link>
+        <router-link to="/vacinacao">Medicação</router-link>
         <router-link to="/consulta">Consulta</router-link>
         <router-link to="/evento">Evento</router-link>
         <router-link to="/ordenhadiaria">Ordenha Diária</router-link>

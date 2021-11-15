@@ -1,6 +1,6 @@
 <template>
     <div class="vacinacao">
-        <PageTitle main="Vacinação" />
+        <PageTitle main="Medicação" />
         <Vacinacao-list />
     </div>
 </template>

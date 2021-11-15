@@ -1,15 +1,17 @@
 <template>
     <div class="evento">
         <PageTitle main="Evento" />
+        <evento-list />
     </div>
 </template>
 
 <script>
+import EventoList from "../template/EventoList";
 import PageTitle from '../template/PageTitle'
 
 export default {
     name: 'Evento',
-    components: { PageTitle }
+    components: { PageTitle, EventoList }
 }
 </script>
 

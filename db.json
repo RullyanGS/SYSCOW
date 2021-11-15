@@ -27,7 +27,7 @@
       "raca": "Charolês",
       "nomeMae": null,
       "nomePai": null,
-      "ativo": true,
+      "ativo": false,
       "id": 5
     },
     {
@@ -39,7 +39,7 @@
       "raca": "Braford",
       "nomeMae": null,
       "nomePai": null,
-      "ativo": true,
+      "ativo": false,
       "id": 6
     },
     {
@@ -51,8 +51,20 @@
       "raca": "Angus",
       "nomeMae": null,
       "nomePai": null,
-      "ativo": true,
+      "ativo": false,
       "id": 7
+    },
+    {
+      "nomeAnimal": "teste",
+      "brinco": "12121",
+      "dataNascimento": "2021-11-15",
+      "sexo": "F",
+      "origem": "Compra",
+      "raca": "Angus",
+      "nomeMae": null,
+      "nomePai": null,
+      "ativo": true,
+      "id": 8
     }
   ],
   "pesagens": [
@@ -76,6 +88,27 @@
       "causa": "Causas naturais",
       "dataDescarte": "2021-11-13",
       "id": 1
+    },
+    {
+      "nomeAnimal": "asdas",
+      "motivo": "morte",
+      "causa": "",
+      "dataDescarte": "2021-11-14",
+      "id": 2
+    },
+    {
+      "nomeAnimal": "teste",
+      "motivo": "venda",
+      "causa": "",
+      "dataDescarte": "2021-11-14",
+      "id": 3
+    },
+    {
+      "nomeAnimal": "Mu",
+      "motivo": "morte",
+      "causa": "",
+      "dataDescarte": "2021-11-15",
+      "id": 4
     }
   ],
   "ordenhas": [
@@ -86,5 +119,42 @@
       "id": 1
     }
   ],
-  "vacinas": []
+  "vacinas": [
+    {
+      "nomeAnimal": "Mu",
+      "nomeVacina": "teste",
+      "descricaoVacina": "teste",
+      "dataVacinacao": "2021-11-14",
+      "dataLiberacao": "2021-11-20",
+      "id": 1
+    },
+    {
+      "nomeAnimal": "teste",
+      "nomePatologia": "gripe",
+      "nomeMedicamento": "gripe v",
+      "observacao": "",
+      "dataVacinacao": "2021-11-15",
+      "dataLiberacao": "",
+      "id": 2
+    }
+  ],
+  "consultas": [
+    {
+      "nomeAnimal": "Mu",
+      "nomeConsulta": "teste",
+      "descricaoConsulta": "teste",
+      "dataConsulta": "2021-11-20",
+      "id": 1
+    }
+  ],
+  "eventos": [
+    {
+      "nomeAnimal": "teste",
+      "nomeEvento": "cobertura",
+      "dataEvento": "2021-11-15",
+      "dataProximoEvento": "2021-11-15",
+      "descricaoEvento": "",
+      "id": 1
+    }
+  ]
 }

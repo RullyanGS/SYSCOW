@@ -1,26 +1,26 @@
 <template>
-    <div class="vacinacaoList">
+    <div class="eventoList">
         <ul>
-            <b-table hover striped :items="vacinas" :fields="fields">          
+            <b-table hover striped :items="eventos" :fields="fields">          
                 <template #cell(actions)="data">
-                    <b-button variant="warning" v-b-modal.modal-editar-vacinacao @click="loadVacinacao(data.item)" class="mr-2">
+                    <b-button variant="warning" v-b-modal.modal-editar-evento @click="loadEvento(data.item)" class="mr-2">
                         <i class="fa fa-pencil"></i>
                     </b-button>
-                    <b-button variant="danger" v-b-modal.modal-excluir-vacinacao @click="loadVacinacao(data.item)">
+                    <b-button variant="danger" v-b-modal.modal-excluir-evento @click="loadEvento(data.item)">
                         <i class="fa fa-trash"></i>
                     </b-button>
                 </template>
             </b-table>
         </ul>
 
-        <b-button v-b-modal.modal-cadastrar-vacinacao>Cadastrar</b-button>
+        <b-button v-b-modal.modal-cadastrar-evento>Cadastrar</b-button>
 
-        <!-- Cadastro Medicação -->
+        <!-- Cadastro Evento -->
         <b-row>
             <b-modal
-            id="modal-cadastrar-vacinacao"
+            id="modal-cadastrar-evento"
             ref="modal"
-            title="Cadastro da Medicação"
+            title="Cadastro do Evento"
             size="lg"
             @show="resetModal"
             @hidden="resetModal"
@@ -53,26 +53,18 @@
                         </b-col>
                         <b-col>
                             <b-form-group
-                                label="Nome da Patologia*"
-                                invalid-feedback="O nome da patologia é obrigatório">
+                                label="Evento*"
+                                invalid-feedback="O evento é obrigatório">
 
-                                <b-form-input
-                                    v-model="nomePatologia"
-                                    :state="nomePatologiaState"
-                                    required />
-
-                            </b-form-group>
-                        </b-col>
-                        <b-col>
-                            <b-form-group
-                                label="Nome do Medicamento*"
-                                invalid-feedback="O nome do medicamento é obrigatório">
-
-                                <b-form-input
-                                    v-model="nomeMedicamento"
-                                    :state="nomeMedicamentoState"
-                                    required />
-
+                                <b-form-select
+                                    v-model="nomeEvento"
+                                    :state="nomeEventoState"
+                                    :options="opcaoEvento"
+                                    required >
+                                    <template #first>
+                                        <b-form-select-option :value="null" disabled>-- Por favor selecione uma opção --</b-form-select-option>
+                                    </template>
+                                </b-form-select>
                             </b-form-group>
                         </b-col>
                     </b-row>
@@ -82,21 +74,24 @@
                     <b-row>
                         <b-col>    
                             <b-form-group
-                                label="Data da Vacinação*" 
-                                invalid-feedback="A data de vacinação é obrigatoria">
+                                label="Data da evento*" 
+                                invalid-feedback="A data do evento é obrigatorio">
                                 <b-form-input
                                     type = "date"
-                                    v-model="dataVacinacao"  
-                                    :state="dataVacinacaoState"
+                                    v-model="dataEvento"  
+                                    :state="dataEventoState"
                                     required />
                             </b-form-group>
                         </b-col>
                         <b-col>    
                             <b-form-group
-                                label="Data de Liberação" >
+                                label="Data do próximo evento*" 
+                                invalid-feedback="A data do próximo evento é obrigatorio">
                                 <b-form-input
                                     type = "date"
-                                    v-model="dataLiberacao"/>
+                                    v-model="dataProximoEvento"  
+                                    :state="dataProximoEventoState"
+                                    required />
                             </b-form-group>
                         </b-col>
                     </b-row>
@@ -106,10 +101,10 @@
                     <b-row>
                         <b-col>
                             <b-form-group
-                                label="Observação">
+                                label="Descrição do evento">
 
                                 <b-form-input
-                                    v-model="observacao" />
+                                    v-model="descricaoEvento" />
 
                             </b-form-group>
                         </b-col>
@@ -120,12 +115,13 @@
             </b-modal>
         </b-row>
 
-        <!-- Cadastro Vacinacao -->
+        
+        <!-- Editar Evento -->
         <b-row>
             <b-modal
-            id="modal-editar-vacinacao"
+            id="modal-editar-evento"
             ref="modal"
-            title="Editar Medicação"
+            title="Editar Evento"
             size="lg"
             @show="resetModal"
             @hidden="resetModal"
@@ -140,33 +136,36 @@
                                 label="Nome do Animal*"
                                 invalid-feedback="O nome do animal é obrigatório">
 
-                                <b-form-input
-                                    v-model="vacina.nomeAnimal"
-                                    disabled />
+                                <b-form-select
+                                    v-model="evento.nomeAnimal"
+                                    :state="nomeAnimalState"
+                                    required >
+
+                                    <template #first>
+                                        <b-form-select-option :value="null" disabled>-- Por favor selecione uma opção --</b-form-select-option>
+                                    </template>
+
+                                    <b-form-select-option v-for="animal of animais" :key="animal.id" :value="animal.nomeAnimal">
+                                        {{animal.nomeAnimal}}
+                                    </b-form-select-option>
+
+                                </b-form-select>
                             </b-form-group>
                         </b-col>
                         <b-col>
                             <b-form-group
-                                label="Nome da Vacina*"
-                                invalid-feedback="O nome da Vacina é obrigatório">
+                                label="Evento*"
+                                invalid-feedback="O evento é obrigatório">
 
-                                <b-form-input
-                                    v-model="vacina.nomePatologia"
-                                    :state="nomePatologiaState"
-                                    required />
-
-                            </b-form-group>
-                        </b-col>
-                        <b-col>
-                            <b-form-group
-                                label="Nome do Medicamento*"
-                                invalid-feedback="O nome do medicamento é obrigatório">
-
-                                <b-form-input
-                                    v-model="vacina.nomeMedicamento"
-                                    :state="nomeMedicamentoState"
-                                    required />
-
+                                <b-form-select
+                                    v-model="evento.nomeEvento"
+                                    :state="nomeEventoState"
+                                    :options="opcaoEvento"
+                                    required >
+                                    <template #first>
+                                        <b-form-select-option :value="null" disabled>-- Por favor selecione uma opção --</b-form-select-option>
+                                    </template>
+                                </b-form-select>
                             </b-form-group>
                         </b-col>
                     </b-row>
@@ -176,21 +175,24 @@
                     <b-row>
                         <b-col>    
                             <b-form-group
-                                label="Data da Vacinação*" 
-                                invalid-feedback="A data de vacinação é obrigatoria">
+                                label="Data da evento*" 
+                                invalid-feedback="A data do evento é obrigatorio">
                                 <b-form-input
                                     type = "date"
-                                    v-model="vacina.dataVacinacao"  
-                                    :state="dataVacinacaoState"
+                                    v-model="evento.dataEvento"  
+                                    :state="dataEventoState"
                                     required />
                             </b-form-group>
                         </b-col>
                         <b-col>    
                             <b-form-group
-                                label="Data de Liberação" >
+                                label="Data do próximo evento*" 
+                                invalid-feedback="A data do próximo evento é obrigatorio">
                                 <b-form-input
                                     type = "date"
-                                    v-model="vacina.dataLiberacao"/>
+                                    v-model="evento.dataProximoEvento"  
+                                    :state="dataProximoEventoState"
+                                    required />
                             </b-form-group>
                         </b-col>
                     </b-row>
@@ -198,13 +200,12 @@
 
                 <b-container>
                     <b-row>
-                        
                         <b-col>
                             <b-form-group
-                                label="Observação">
+                                label="Descrição do evento">
 
                                 <b-form-input
-                                    v-model="vacina.observacao" />
+                                    v-model="evento.descricaoEvento" />
 
                             </b-form-group>
                         </b-col>
@@ -215,17 +216,18 @@
             </b-modal>
         </b-row>
 
-        <!-- Excluir Vacinacao -->
+        <!-- Excluir Evento -->
         <b-row>
             <b-modal
-                id="modal-excluir-vacinacao"
-                title="Excluir Medicação" 
+                id="modal-excluir-evento"
+                title="Excluir Evento" 
                 size="lg"
                 @ok="remove">
                     <br>
-                    Deseja realmente excluir a vacinacao do animal <strong>{{vacina.nomeAnimal}}</strong> ?
+                    Deseja realmente excluir o evento do animal <strong>{{evento.nomeAnimal}}</strong> ?
             </b-modal>
         </b-row>
+        
 
     </div>
 </template>
@@ -235,44 +237,46 @@ import axios from "axios";
 const baseURL = "http://localhost:3001";
 
 export default {
-    name: "VacinacaoList",
-    data () {
+    name: "EventoList",
+    data() {
         return {
             nomeAnimal: null,
-            nomePatologia: null,
-            nomeMedicamento: null,
-            observacao: null,
-            dataVacinacao: null,
-            dataLiberacao: null,
             nomeAnimalState: null,
-            nomePatologiaState: null,
-            nomeMedicamentoState: null,
-            dataVacinacaoState: null,
-
-            vacina: {},
-            vacinas: [],
+            nomeEvento: null,
+            nomeEventoState: null,
+            dataEvento: null,
+            dataEventoState: null,
+            dataProximoEvento: null,
+            dataProximoEventoState: null,
+            descricaoEvento: null,
+            opcaoEvento: [
+                { value: 'cio', text: 'Cio'},
+                { value: 'cobertura', text: 'Cobertura'},
+                { value: 'secagem', text: 'Secagem'}
+            ],
 
             animal: {},
             animais: [],
 
+            evento: {},
+            eventos: [],
+
             fields: [
                 { key: 'nomeAnimal', label: 'Nome do Animal', sortable: true},
-                { key: 'nomePatologia', label: 'Nome Vacina', sortable: true},
-                { key: 'nomeMedicamento', label: 'Nome Medicamento', sortable: true},
-                { key: 'observacao', label: 'Observação', sortable: true},
-                { key: 'dataVacinacao', label: 'Data da Vacinação', sortable: true},
-                { key: 'dataLiberacao', label: 'Data de Liberacao', sortable: true},
+                { key: 'nomeEvento', label: 'Evento', sortable: true},
+                { key: 'dataEvento', label: 'Data do Evento', sortable: true},
+                { key: 'dataProximoEvento', label: 'Data do Próximo Evento', sortable: true},
+                { key: 'descricaoEvento', label: 'Descrição do Evento', sortable: true},
                 { key: 'actions', label: 'Ações' }
             ]
-
         }
     },
     async created() {
         try {
-        const resVacina = await axios.get(`${baseURL}/vacinas`);
+        const resEvento = await axios.get(`${baseURL}/eventos`);
         const resAnimal = await axios.get(`${baseURL}/animais?ativo=true`);
 
-        this.vacinas = resVacina.data;
+        this.eventos = resEvento.data;
         this.animais = resAnimal.data;
 
         } catch (e) {
@@ -283,22 +287,21 @@ export default {
         checkFormValidity() {
             const valid = this.$refs.form.checkValidity()
             this.nomeAnimalState = valid
-            this.nomePatologiaState = valid
-            this.nomeMedicamentoState = valid
-            this.dataVacinacaoState = valid
+            this.nomeEventoState = valid
+            this.dataEventoState = valid
+            this.dataProximoEventoState = valid
             return valid
         },
         resetModal() {
             this.nomeAnimal = ''
-            this.nomePatologia = ''
-            this.nomeMedicamento = ''
-            this.observacao = ''
-            this.dataVacinacao = ''
-            this.dataLiberacao = ''
+            this.nomeEvento = ''
+            this.dataEvento = ''
+            this.dataProximoEvento = ''
+            this.descricaoEvento = ''
             this.nomeAnimalState = null
-            this.nomePatologiaState = null
-            this.nomeMedicamentoState = null
-            this.dataVacinacaoState = null
+            this.nomeEventoState = null
+            this.dataEventoState = null
+            this.dataProximoEventoState = null
         },
         cadastroOk(bvModalEvt) {
             bvModalEvt.preventDefault()
@@ -313,15 +316,14 @@ export default {
                 return
             }
             try {
-                const res = await axios.post(`${baseURL}/vacinas`, { 
+                const res = await axios.post(`${baseURL}/eventos`, { 
                     nomeAnimal: this.nomeAnimal, 
-                    nomePatologia: this.nomePatologia,
-                    nomeMedicamento: this.nomeMedicamento,
-                    observacao: this.observacao, 
-                    dataVacinacao: this.dataVacinacao, 
-                    dataLiberacao: this.dataLiberacao});
+                    nomeEvento: this.nomeEvento,
+                    dataEvento: this.dataEvento,
+                    dataProximoEvento: this.dataProximoEvento, 
+                    descricaoEvento: this.descricaoEvento});
 
-                    this.vacinas = [...this.vacinas, res.data];
+                    this.eventos = [...this.eventos, res.data];
 
             } catch (e) {
                 console.error(e);
@@ -329,7 +331,7 @@ export default {
 
             // Esconder o modal manualmente
             this.$nextTick(() => {
-                this.$bvModal.hide('modal-cadastrar-vacinacao')
+                this.$bvModal.hide('modal-cadastrar-evento')
             })
         },
         async editar() {
@@ -337,16 +339,16 @@ export default {
                 return
             }
             try {
-                const id = this.vacina.id
-                const res = await axios.put(`${baseURL}/vacinas/${id}`, { 
-                    nomeAnimal: this.vacina.nomeAnimal, 
-                    nomePatologia: this.vacina.nomePatologia, 
-                    nomeMedicamento: this.vacina.nomeMedicamento, 
-                    observacao: this.vacina.observacao, 
-                    dataVacinacao: this.vacina.dataVacinacao, 
-                    dataLiberacao: this.vacina.dataLiberacao});
+                const id = this.evento.id
+                const res = await axios.put(`${baseURL}/eventos/${id}`, { 
+                    nomeAnimal: this.evento.nomeAnimal, 
+                    nomeEvento: this.evento.nomeEvento, 
+                    dataEvento: this.evento.dataEvento, 
+                    dataProximoEvento: this.evento.dataProximoEvento, 
+                    dataProximoEventoState: this.evento.dataProximoEventoState, 
+                    descricaoEvento: this.evento.descricaoEvento});
 
-                    this.vacinas = [...this.vacinas, res.data];
+                    this.eventos = [...this.eventos, res.data];
 
             } catch (e) {
                 console.error(e);
@@ -354,14 +356,14 @@ export default {
 
             // Esconder o modal manualmente
             this.$nextTick(() => {
-                //this.$bvModal.hide('modal-cadastrar-vacina')
+                //this.$bvModal.hide('modal-cadastrar-evento')
                 location.reload();
             })
         },
         async remove() {
             try {
-                const id = this.vacina.id
-                await axios.delete(`${baseURL}/vacinas/${id}`)
+                const id = this.evento.id
+                await axios.delete(`${baseURL}/eventos/${id}`)
                     .then(() => {
                         location.reload();
                     });
@@ -370,11 +372,11 @@ export default {
             }
 
             this.$nextTick(() => {
-                this.$bvModal.hide('modal-excluir-vacina')
+                this.$bvModal.hide('modal-excluir-evento')
             })
         },
-        loadVacinacao(vacina) {
-            this.vacina = { ...vacina }
+        loadEvento(evento) {
+            this.evento = { ...evento }
         }
     }
 }
