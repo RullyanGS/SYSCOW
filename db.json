@@ -65,6 +65,18 @@
       "nomePai": null,
       "ativo": true,
       "id": 8
+    },
+    {
+      "nomeAnimal": "Vaquinha",
+      "brinco": "12235",
+      "dataNascimento": "2021-11-15",
+      "sexo": "F",
+      "origem": "Compra",
+      "raca": "Brangus",
+      "nomeMae": null,
+      "nomePai": null,
+      "ativo": true,
+      "id": 9
     }
   ],
   "pesagens": [

@@ -16,7 +16,7 @@
         </ul>
         
         <b-button v-b-modal.modal-cadastrar-animal>Cadastrar</b-button>
-        
+
         <!-- Cadastro Animal -->
         <b-row>
             <b-modal
@@ -49,8 +49,8 @@
                                 invalid-feedback="O brinco é obrigatório">
                                 <b-form-input
                                     v-model="brinco"
-                                    type="number"
                                     :state="brincoState"
+                                    type="number"
                                     required />
                             </b-form-group>
                         </b-col>
@@ -331,7 +331,6 @@
                     Deseja realmente excluir o animal <strong>{{animal.nomeAnimal}}</strong> ?
             </b-modal>
         </b-row>
-
 
     </div>
 </template>
