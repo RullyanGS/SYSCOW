@@ -1,7 +1,21 @@
 <template>
     <div class="eventoList">
+
+        <b-row>
+            <b-col cols="1" />
+            <b-col cols="6">
+                <b-input v-model="filter" placeholder="Buscar..."></b-input>
+            </b-col>
+            <b-col cols="1" />
+            <b-col cols="4">
+                <b-button v-b-modal.modal-cadastrar-evento variant="primary">Cadastrar</b-button>
+            </b-col>
+        </b-row>
+        
+        <hr />
+
         <ul>
-            <b-table hover striped :items="eventos" :fields="fields">          
+            <b-table hover striped :items="eventos" :fields="fields" :current-page="currentPage" :per-page="5" :filter="filter">          
                 <template #cell(actions)="data">
                     <b-button variant="warning" v-b-modal.modal-editar-evento @click="loadEvento(data.item)" class="mr-2">
                         <i class="fa fa-pencil"></i>
@@ -13,7 +27,9 @@
             </b-table>
         </ul>
 
-        <b-button v-b-modal.modal-cadastrar-evento>Cadastrar</b-button>
+        <ul class="justify-content-center row my-1">
+            <b-pagination size="md" :total-rows="this.eventos.length" :per-page="5" v-model="currentPage" />
+        </ul>
 
         <!-- Cadastro Evento -->
         <b-row>
@@ -45,7 +61,7 @@
                                     </template>
 
                                     <b-form-select-option v-for="animal of animais" :key="animal.id" :value="animal.nomeAnimal">
-                                        {{animal.nomeAnimal}}
+                                        {{animal.brinco}} - {{animal.nomeAnimal}}
                                     </b-form-select-option>
 
                                 </b-form-select>
@@ -146,7 +162,7 @@
                                     </template>
 
                                     <b-form-select-option v-for="animal of animais" :key="animal.id" :value="animal.nomeAnimal">
-                                        {{animal.nomeAnimal}}
+                                        {{animal.brinco}} - {{animal.nomeAnimal}}
                                     </b-form-select-option>
 
                                 </b-form-select>
@@ -235,16 +251,20 @@
 <script>
 import axios from "axios";
 const baseURL = "http://localhost:3001";
+import moment from 'moment'
 
 export default {
     name: "EventoList",
     data() {
         return {
+            filter: '',
+            currentPage: 1,
+            perPage: 5,
             nomeAnimal: null,
             nomeAnimalState: null,
             nomeEvento: null,
             nomeEventoState: null,
-            dataEvento: null,
+            dataEvento: new Date().toISOString().substr(0, 10),
             dataEventoState: null,
             dataProximoEvento: null,
             dataProximoEventoState: null,
@@ -264,8 +284,14 @@ export default {
             fields: [
                 { key: 'nomeAnimal', label: 'Nome do Animal', sortable: true},
                 { key: 'nomeEvento', label: 'Evento', sortable: true},
-                { key: 'dataEvento', label: 'Data do Evento', sortable: true},
-                { key: 'dataProximoEvento', label: 'Data do Próximo Evento', sortable: true},
+                { key: 'dataEvento', label: 'Data do Evento', sortable: true,
+                formatter: value => {
+                    return moment(String(value)).format('DD/MM/YYYY')
+                }},
+                { key: 'dataProximoEvento', label: 'Data do Próximo Evento', sortable: true,
+                formatter: value => {
+                    return moment(String(value)).format('DD/MM/YYYY')
+                }},
                 { key: 'descricaoEvento', label: 'Descrição do Evento', sortable: true},
                 { key: 'actions', label: 'Ações' }
             ]
@@ -295,7 +321,7 @@ export default {
         resetModal() {
             this.nomeAnimal = ''
             this.nomeEvento = ''
-            this.dataEvento = ''
+            //this.dataEvento = ''
             this.dataProximoEvento = ''
             this.descricaoEvento = ''
             this.nomeAnimalState = null

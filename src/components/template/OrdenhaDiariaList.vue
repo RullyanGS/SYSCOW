@@ -1,9 +1,22 @@
 <template>
     <div class="ordenhaDiariaList">
 
+        <b-row>
+            <b-col cols="1" />
+            <b-col cols="6">
+                <b-input v-model="filter" placeholder="Buscar..."></b-input>
+            </b-col>
+            <b-col cols="1" />
+            <b-col cols="4">
+                <b-button v-b-modal.modal-cadastrar-ordenha variant="primary">Cadastrar</b-button>
+            </b-col>
+        </b-row>
+        
+        <hr />
+
         <!-- Tabela Ordenha Diaria -->
         <ul>
-            <b-table hover striped :items="ordenhas" :fields="fields">          
+            <b-table hover striped :items="ordenhas" :fields="fields" :current-page="currentPage" :per-page="5" :filter="filter">          
                 <template #cell(actions)="data">
                     <b-button variant="warning" v-b-modal.modal-editar-ordenha @click="loadOrdenha(data.item)" class="mr-2">
                         <i class="fa fa-pencil"></i>
@@ -15,7 +28,9 @@
             </b-table>
         </ul>
 
-        <b-button v-b-modal.modal-cadastrar-ordenha>Cadastrar</b-button>
+        <ul class="justify-content-center row my-1">
+            <b-pagination size="md" :total-rows="this.ordenhas.length" :per-page="5" v-model="currentPage" />
+        </ul>
 
         <!-- Cadastro Ordenha -->
         <b-row>
@@ -157,16 +172,20 @@
 <script>
 import axios from "axios";
 const baseURL = "http://localhost:3001";
+import moment from 'moment'
 
 export default {
     name: "OrdenhaDiariaList",
     data () {
         return {
+            filter: '',
+            currentPage: 1,
+            perPage: 5,
             qtdeLitros: null,
             qtdeLitrosState: null,
             nrFemeas: null,
             nrFemeasState: null,
-            dataOrdenhaDiaria: null,
+            dataOrdenhaDiaria: new Date().toISOString().substr(0, 10),
             dataOrdenhaDiariaState: null,
 
             ordenha: {},
@@ -174,7 +193,10 @@ export default {
             fields: [
                 { key: 'qtdeLitros', label: 'Quantidade de Litros', sortable: true},
                 { key: 'nrFemeas', label: 'Número de Femeas Ordenhadas', sortable: true},
-                { key: 'dataOrdenhaDiaria', label: 'Data da Ordenha', sortable: true},
+                { key: 'dataOrdenhaDiaria', label: 'Data da Ordenha', sortable: true,
+                    formatter: value => {
+                        return moment(String(value)).format('DD/MM/YYYY')
+                    }},
                 { key: 'actions', label: 'Ações' }
             ]
 
@@ -200,7 +222,7 @@ export default {
         resetModal() {
             this.qtdeLitros = ''
             this.nrFemeas = ''
-            this.dataOrdenhaDiaria = ''
+            //this.dataOrdenhaDiaria = ''
             this.qtdeLitrosState = null
             this.nrFemeasState = null
             this.dataOrdenhaDiariaState = null

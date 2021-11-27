@@ -1,9 +1,22 @@
 <template>
     <div class="animalList">
 
+        <b-row>
+            <b-col cols="1" />
+            <b-col cols="6">
+                <b-input v-model="filter" placeholder="Buscar..."></b-input>
+            </b-col>
+            <b-col cols="1" />
+            <b-col cols="4">
+                <b-button v-b-modal.modal-cadastrar-animal variant="primary">Cadastrar</b-button>
+            </b-col>
+        </b-row>
+        
+        <hr />
+
         <!-- Tabela Animais -->
         <ul>
-            <b-table hover striped :items="animais" :fields="fields">          
+            <b-table hover striped :items="animais" :fields="fields" :current-page="currentPage" :per-page="5" :filter="filter">          
                 <template #cell(actions)="data">
                     <b-button variant="warning" v-b-modal.modal-editar-animal @click="loadUser(data.item)" class="mr-2">
                         <i class="fa fa-pencil"></i>
@@ -15,7 +28,9 @@
             </b-table>
         </ul>
         
-        <b-button v-b-modal.modal-cadastrar-animal>Cadastrar</b-button>
+        <ul class="justify-content-center row my-1">
+            <b-pagination size="md" :total-rows="this.animais.length" :per-page="5" v-model="currentPage" />
+        </ul>
 
         <!-- Cadastro Animal -->
         <b-row>
@@ -338,11 +353,16 @@
 <script>
 import axios from "axios";
 const baseURL = "http://localhost:3001";
+import moment from 'moment'
 
 export default {
+
     name: "AnimalList",
     data() {
         return {
+            filter: '',
+            currentPage: 1,
+            perPage: 5,
             nomeAnimal: null,
             nomeAnimalState: null,
             brinco: null,
@@ -431,7 +451,10 @@ export default {
                 { key: 'nomeAnimal', label: 'Nome', sortable: true},
                 { key: 'raca', label: 'Raça', sortable: true},
                 { key: 'sexo', label: 'Sexo', sortable: true},
-                { key: 'dataNascimento', label: 'Data Nascimento', sortable: true},
+                { key: 'dataNascimento', label: 'Data Nascimento', sortable: true,
+                formatter: value => {
+                    return moment(String(value)).format('DD/MM/YYYY')
+                }},
                 { key: 'actions', label: 'Ações' }
             ]
         };
@@ -537,7 +560,7 @@ export default {
         },
         async remove() {
             try {
-                await axios.patch(`${baseURL}/animais/${this.nomeAnimal}`, {ativo: true})
+                //await axios.patch(`${baseURL}/animais/${this.nomeAnimal}`, {ativo: true})
 
                 const id = this.animal.id
                 await axios.delete(`${baseURL}/animais/${id}`)
@@ -560,5 +583,4 @@ export default {
 </script>
 
 <style>
-
 </style>

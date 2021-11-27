@@ -1,7 +1,7 @@
 <template>
     <aside class="menu" v-show="isMenuVisible">
         <div class="navegacao">NAVEGAÇÃO</div>
-        <router-link to="/">Tela Inicial</router-link>
+        <router-link to="/home">Tela Inicial</router-link>
         <router-link to="/animais">Animais</router-link>
         <router-link to="/pesagem">Pesagem</router-link>
         <router-link to="/descarte">Descarte</router-link>

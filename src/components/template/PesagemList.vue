@@ -1,9 +1,22 @@
 <template>
     <div class="pesagemList">
 
+        <b-row>
+            <b-col cols="1" />
+            <b-col cols="6">
+                <b-input v-model="filter" placeholder="Buscar..."></b-input>
+            </b-col>
+            <b-col cols="1" />
+            <b-col cols="4">
+                <b-button v-b-modal.modal-cadastrar-peso variant="primary">Cadastrar</b-button>
+            </b-col>
+        </b-row>
+        
+        <hr />
+
         <!-- Tabela Pesagem -->
         <ul>
-            <b-table hover striped :items="pesagens" :fields="fields">          
+            <b-table hover striped :items="pesagens" :fields="fields" :current-page="currentPage" :per-page="5" :filter="filter">          
                 <template #cell(actions)="data">
                     <b-button variant="warning" v-b-modal.modal-editar-peso @click="loadPesagem(data.item)" class="mr-2">
                         <i class="fa fa-pencil"></i>
@@ -15,7 +28,9 @@
             </b-table>
         </ul>
 
-        <b-button v-b-modal.modal-cadastrar-peso>Cadastrar</b-button>
+        <ul class="justify-content-center row my-1">
+            <b-pagination size="md" :total-rows="this.pesagens.length" :per-page="5" v-model="currentPage" />
+        </ul>
 
         <!-- Cadastro Peso -->
         <b-row>
@@ -42,7 +57,7 @@
                                     :state="nomeAnimalState"
                                     required >
                                     <b-form-select-option v-for="animal of animais" :key="animal.id" :value="animal.nomeAnimal">
-                                        {{animal.nomeAnimal}}
+                                        {{animal.brinco}} - {{animal.nomeAnimal}}
                                     </b-form-select-option>
 
                                 </b-form-select>
@@ -67,6 +82,7 @@
                                 invalid-feedback="A data da Pesagem é obrigatório">
                                 <b-form-input
                                     type = "date"
+                                    class="today"
                                     v-model="dataPesagem"
                                     :state="dataPesagemState"
                                     required />
@@ -108,7 +124,7 @@
                                     required >
 
                                     <b-form-select-option v-for="animal of animais" :key="animal.id" :value="animal.nomeAnimal">
-                                        {{animal.nomeAnimal}}
+                                        {{animal.brinco}} - {{animal.nomeAnimal}}
                                     </b-form-select-option>
 
                                 </b-form-select>
@@ -165,17 +181,22 @@
 <script>
 import axios from "axios";
 const baseURL = "http://localhost:3001";
+import moment from 'moment'
 
 export default {
     name: "PesagemList",
     data () {
         return {
+            filter: '',
+            currentPage: 1,
+            perPage: 5,
+
             nomeAnimal: null,
             nomeAnimalState: null,
             peso: null,
             pesoState: null,
-            dataPesagem: null,
-            dataPesagemState: null,
+            dataPesagem: new Date().toISOString().substr(0, 10),
+            dataPesagemState: 'null',
             animal: {},
             animais: [],
 
@@ -183,7 +204,10 @@ export default {
             pesagens: [],
             fields: [
                 { key: 'nomeAnimal', label: 'Nome', sortable: true},
-                { key: 'dataPesagem', label: 'Data Pesagem', sortable: true},
+                { key: 'dataPesagem', label: 'Data Pesagem', sortable: true,
+                formatter: value => {
+                    return moment(String(value)).format('DD/MM/YYYY')
+                }},
                 { key: 'peso', label: 'Peso (Kg)', sortable: true},
                 { key: 'actions', label: 'Ações' }
             ]
@@ -196,6 +220,10 @@ export default {
 
         this.pesagens = resPesagem.data;
         this.animais = resAnimal.data;
+        
+        var data = new Date();
+        console.log(data.toLocaleDateString());
+        console.log(data.toISOString().substr(0, 10));
         } catch (e) {
         console.error(e);
         }
@@ -211,7 +239,7 @@ export default {
         resetModal() {
             this.nomeAnimal = ''
             this.peso = ''
-            this.dataPesagem = ''
+            //this.dataPesagem = ''
             this.nomeAnimalState = null
             this.pesoState = null
             this.dataPesagemState = null

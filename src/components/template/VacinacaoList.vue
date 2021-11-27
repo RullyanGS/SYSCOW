@@ -1,7 +1,21 @@
 <template>
     <div class="vacinacaoList">
+
+        <b-row>
+            <b-col cols="1" />
+            <b-col cols="6">
+                <b-input v-model="filter" placeholder="Buscar..."></b-input>
+            </b-col>
+            <b-col cols="1" />
+            <b-col cols="4">
+                <b-button v-b-modal.modal-cadastrar-vacinacao variant="primary">Cadastrar</b-button>
+            </b-col>
+        </b-row>
+        
+        <hr />
+
         <ul>
-            <b-table hover striped :items="vacinas" :fields="fields">          
+            <b-table hover striped :items="vacinas" :fields="fields" :current-page="currentPage" :per-page="5" :filter="filter">          
                 <template #cell(actions)="data">
                     <b-button variant="warning" v-b-modal.modal-editar-vacinacao @click="loadVacinacao(data.item)" class="mr-2">
                         <i class="fa fa-pencil"></i>
@@ -13,7 +27,9 @@
             </b-table>
         </ul>
 
-        <b-button v-b-modal.modal-cadastrar-vacinacao>Cadastrar</b-button>
+        <ul class="justify-content-center row my-1">
+            <b-pagination size="md" :total-rows="this.vacinas.length" :per-page="5" v-model="currentPage" />
+        </ul>
 
         <!-- Cadastro Medicação -->
         <b-row>
@@ -135,6 +151,7 @@
                 
                 <b-container>
                     <b-row>
+                        <!--
                         <b-col>
                             <b-form-group
                                 label="Nome do Animal*"
@@ -143,6 +160,28 @@
                                 <b-form-input
                                     v-model="vacina.nomeAnimal"
                                     disabled />
+                            </b-form-group>
+                        </b-col>
+                        -->
+                        <b-col>
+                            <b-form-group
+                                label="Nome do Animal*"
+                                invalid-feedback="O nome do animal é obrigatório">
+
+                                <b-form-select
+                                    v-model="vacina.nomeAnimal"
+                                    :state="nomeAnimalState"
+                                    required >
+
+                                    <template #first>
+                                        <b-form-select-option :value="null" disabled>-- Por favor selecione uma opção --</b-form-select-option>
+                                    </template>
+
+                                    <b-form-select-option v-for="animal of animais" :key="animal.id" :value="animal.nomeAnimal">
+                                        {{animal.brinco}} - {{animal.nomeAnimal}}
+                                    </b-form-select-option>
+
+                                </b-form-select>
                             </b-form-group>
                         </b-col>
                         <b-col>
@@ -233,16 +272,20 @@
 <script>
 import axios from "axios";
 const baseURL = "http://localhost:3001";
+import moment from 'moment'
 
 export default {
     name: "VacinacaoList",
     data () {
         return {
+            filter: '',
+            currentPage: 1,
+            perPage: 5,
             nomeAnimal: null,
             nomePatologia: null,
             nomeMedicamento: null,
             observacao: null,
-            dataVacinacao: null,
+            dataVacinacao: new Date().toISOString().substr(0, 10),
             dataLiberacao: null,
             nomeAnimalState: null,
             nomePatologiaState: null,
@@ -260,8 +303,19 @@ export default {
                 { key: 'nomePatologia', label: 'Nome Vacina', sortable: true},
                 { key: 'nomeMedicamento', label: 'Nome Medicamento', sortable: true},
                 { key: 'observacao', label: 'Observação', sortable: true},
-                { key: 'dataVacinacao', label: 'Data da Vacinação', sortable: true},
-                { key: 'dataLiberacao', label: 'Data de Liberacao', sortable: true},
+                { key: 'dataVacinacao', label: 'Data da Vacinação', sortable: true,
+                formatter: value => {
+                    return moment(String(value)).format('DD/MM/YYYY')
+                }},
+                { key: 'dataLiberacao', label: 'Data de Liberacao', sortable: true,
+                formatter: value => {
+                    if (moment(value).isValid()) {
+                        return moment(String(value)).format('DD/MM/YYYY')
+                    } else {
+                        return 'Não informado'
+                    }
+                    
+                }},
                 { key: 'actions', label: 'Ações' }
             ]
 
@@ -293,7 +347,7 @@ export default {
             this.nomePatologia = ''
             this.nomeMedicamento = ''
             this.observacao = ''
-            this.dataVacinacao = ''
+            //this.dataVacinacao = ''
             this.dataLiberacao = ''
             this.nomeAnimalState = null
             this.nomePatologiaState = null

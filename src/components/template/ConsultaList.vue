@@ -1,7 +1,21 @@
 <template>
     <div class="consultaList">
+
+        <b-row>
+            <b-col cols="1" />
+            <b-col cols="6">
+                <b-input v-model="filter" placeholder="Buscar..."></b-input>
+            </b-col>
+            <b-col cols="1" />
+            <b-col cols="4">
+                <b-button v-b-modal.modal-cadastrar-consulta variant="primary">Cadastrar</b-button>
+            </b-col>
+        </b-row>
+        
+        <hr />
+
         <ul>
-            <b-table hover striped :items="consultas" :fields="fields">          
+            <b-table hover striped :items="consultas" :fields="fields" :current-page="currentPage" :per-page="5" :filter="filter">          
                 <template #cell(actions)="data">
                     <b-button variant="warning" v-b-modal.modal-editar-consulta @click="loadConsulta(data.item)" class="mr-2">
                         <i class="fa fa-pencil"></i>
@@ -13,7 +27,9 @@
             </b-table>
         </ul>
 
-        <b-button v-b-modal.modal-cadastrar-consulta>Cadastrar</b-button>
+        <ul class="justify-content-center row my-1">
+            <b-pagination size="md" :total-rows="this.consultas.length" :per-page="5" v-model="currentPage" />
+        </ul>
 
         <!-- Cadastro Consulta -->
         <b-row>
@@ -45,7 +61,7 @@
                                     </template>
 
                                     <b-form-select-option v-for="animal of animais" :key="animal.id" :value="animal.nomeAnimal">
-                                        {{animal.nomeAnimal}}
+                                        {{animal.brinco}} - {{animal.nomeAnimal}}
                                     </b-form-select-option>
 
                                 </b-form-select>
@@ -121,6 +137,7 @@
                 
                 <b-container>
                     <b-row>
+                        <!--
                         <b-col>
                             <b-form-group
                                 label="Nome do Animal*"
@@ -129,6 +146,28 @@
                                 <b-form-input
                                     v-model="consulta.nomeAnimal"
                                     disabled />
+                            </b-form-group>
+                        </b-col>
+                        -->
+                        <b-col>
+                            <b-form-group
+                                label="Nome do Animal*"
+                                invalid-feedback="O nome do animal é obrigatório">
+
+                                <b-form-select
+                                    v-model="consulta.nomeAnimal"
+                                    :state="nomeAnimalState"
+                                    required >
+
+                                    <template #first>
+                                        <b-form-select-option :value="null" disabled>-- Por favor selecione uma opção --</b-form-select-option>
+                                    </template>
+
+                                    <b-form-select-option v-for="animal of animais" :key="animal.id" :value="animal.nomeAnimal">
+                                        {{animal.brinco}} - {{animal.nomeAnimal}}
+                                    </b-form-select-option>
+
+                                </b-form-select>
                             </b-form-group>
                         </b-col>
                         <b-col>
@@ -203,15 +242,19 @@
 <script>
 import axios from "axios";
 const baseURL = "http://localhost:3001";
+import moment from 'moment'
 
 export default {
     name: "ConsultaList",
     data () {
         return {
+            filter: '',
+            currentPage: 1,
+            perPage: 5,
             nomeAnimal: null,
             nomeConsulta: null,
             descricaoConsulta: null,
-            dataConsulta: null,
+            dataConsulta: new Date().toISOString().substr(0, 10),
             //dataLiberacao: null,
             nomeAnimalState: null,
             nomeConsultaState: null,
@@ -227,7 +270,10 @@ export default {
                 { key: 'nomeAnimal', label: 'Nome do Animal', sortable: true},
                 { key: 'nomeConsulta', label: 'Nome Consulta', sortable: true},
                 { key: 'descricaoConsulta', label: 'Descricao da Consulta', sortable: true},
-                { key: 'dataConsulta', label: 'Data da Consulta', sortable: true},
+                { key: 'dataConsulta', label: 'Data da Consulta', sortable: true,
+                formatter: value => {
+                    return moment(String(value)).format('DD/MM/YYYY')
+                }},
                 //{ key: 'dataLiberacao', label: 'Data de Liberacao', sortable: true},
                 { key: 'actions', label: 'Ações' }
             ]
@@ -258,7 +304,7 @@ export default {
             this.nomeAnimal = ''
             this.nomeConsulta = ''
             this.descricaoConsulta = ''
-            this.dataConsulta = ''
+            //this.dataConsulta = ''
             //this.dataLiberacao = ''
             this.nomeAnimalState = null
             this.nomeConsultaState = null

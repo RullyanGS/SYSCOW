@@ -27,7 +27,7 @@
       "raca": "Charolês",
       "nomeMae": null,
       "nomePai": null,
-      "ativo": false,
+      "ativo": true,
       "id": 5
     },
     {
@@ -39,20 +39,8 @@
       "raca": "Braford",
       "nomeMae": null,
       "nomePai": null,
-      "ativo": false,
+      "ativo": true,
       "id": 6
-    },
-    {
-      "nomeAnimal": "teste",
-      "brinco": "213213",
-      "dataNascimento": "2021-11-02",
-      "sexo": "F",
-      "origem": "Compra",
-      "raca": "Angus",
-      "nomeMae": null,
-      "nomePai": null,
-      "ativo": false,
-      "id": 7
     },
     {
       "nomeAnimal": "teste",
@@ -65,18 +53,6 @@
       "nomePai": null,
       "ativo": true,
       "id": 8
-    },
-    {
-      "nomeAnimal": "Vaquinha",
-      "brinco": "12235",
-      "dataNascimento": "2021-11-15",
-      "sexo": "F",
-      "origem": "Compra",
-      "raca": "Brangus",
-      "nomeMae": null,
-      "nomePai": null,
-      "ativo": true,
-      "id": 9
     }
   ],
   "pesagens": [
@@ -87,10 +63,46 @@
       "id": 1
     },
     {
-      "nomeAnimal": "vaco",
-      "peso": "100",
-      "dataPesagem": "2021-11-13",
+      "nomeAnimal": "Mu",
+      "peso": "200",
+      "dataPesagem": "2021-11-20",
       "id": 2
+    },
+    {
+      "nomeAnimal": "asdas",
+      "peso": "",
+      "dataPesagem": "2021-11-20",
+      "id": 3
+    },
+    {
+      "nomeAnimal": "asdas",
+      "peso": "130",
+      "dataPesagem": "2021-11-21",
+      "id": 4
+    },
+    {
+      "nomeAnimal": "asdas",
+      "peso": "150",
+      "dataPesagem": "2021-11-21",
+      "id": 5
+    },
+    {
+      "nomeAnimal": "asdas",
+      "peso": "110",
+      "dataPesagem": "2021-11-21",
+      "id": 6
+    },
+    {
+      "nomeAnimal": "Mu",
+      "peso": "175",
+      "dataPesagem": "2021-11-25",
+      "id": 7
+    },
+    {
+      "nomeAnimal": "asdas",
+      "peso": "200",
+      "dataPesagem": "2021-11-25",
+      "id": 8
     }
   ],
   "descartes": [
@@ -100,27 +112,6 @@
       "causa": "Causas naturais",
       "dataDescarte": "2021-11-13",
       "id": 1
-    },
-    {
-      "nomeAnimal": "asdas",
-      "motivo": "morte",
-      "causa": "",
-      "dataDescarte": "2021-11-14",
-      "id": 2
-    },
-    {
-      "nomeAnimal": "teste",
-      "motivo": "venda",
-      "causa": "",
-      "dataDescarte": "2021-11-14",
-      "id": 3
-    },
-    {
-      "nomeAnimal": "Mu",
-      "motivo": "morte",
-      "causa": "",
-      "dataDescarte": "2021-11-15",
-      "id": 4
     }
   ],
   "ordenhas": [
@@ -129,30 +120,37 @@
       "nrFemeas": "6",
       "dataOrdenhaDiaria": "2021-11-14",
       "id": 1
+    },
+    {
+      "qtdeLitros": "50",
+      "nrFemeas": "12",
+      "dataOrdenhaDiaria": "2021-11-25",
+      "id": 2
     }
   ],
   "vacinas": [
     {
       "nomeAnimal": "Mu",
-      "nomeVacina": "teste",
-      "descricaoVacina": "teste",
-      "dataVacinacao": "2021-11-14",
-      "dataLiberacao": "2021-11-20",
-      "id": 1
-    },
-    {
-      "nomeAnimal": "teste",
       "nomePatologia": "gripe",
       "nomeMedicamento": "gripe v",
       "observacao": "",
       "dataVacinacao": "2021-11-15",
       "dataLiberacao": "",
       "id": 2
+    },
+    {
+      "nomeAnimal": "asdas",
+      "nomePatologia": "teste",
+      "nomeMedicamento": "teste",
+      "observacao": "",
+      "dataVacinacao": "2021-11-21",
+      "dataLiberacao": "2021-11-21",
+      "id": 3
     }
   ],
   "consultas": [
     {
-      "nomeAnimal": "Mu",
+      "nomeAnimal": "asdas",
       "nomeConsulta": "teste",
       "descricaoConsulta": "teste",
       "dataConsulta": "2021-11-20",
