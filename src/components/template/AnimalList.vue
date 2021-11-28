@@ -63,9 +63,10 @@
                                 label="Brinco*"
                                 invalid-feedback="O brinco é obrigatório">
                                 <b-form-input
+                                    type="tel" 
+                                    v-mask="'####'" 
                                     v-model="brinco"
                                     :state="brincoState"
-                                    type="number"
                                     required />
                             </b-form-group>
                         </b-col>
@@ -100,16 +101,6 @@
                                 </b-form-select>
                             </b-form-group>
                         </b-col>
-                        <!-- 
-                        <b-col>
-                            <b-form-group
-                                label="Peso (Kg)">
-                                <b-form-input
-                                    type="number"
-                                    v-model="peso" />
-                            </b-form-group>
-                        </b-col>
-                        -->
                             <b-form-group
                                 label="Origem*"
                                 invalid-feedback="A origem é obrigatório">
@@ -152,7 +143,7 @@
                                     <template #first>
                                         <b-form-select-option :value="null" >Não Cadastrado</b-form-select-option>
                                     </template>
-                                    <b-form-select-option v-for="animal of animais" :key="animal.id" :value="animal.nomeAnimal">
+                                    <b-form-select-option v-for="animal of animaisF" :key="animal.id" :value="animal.nomeAnimal">
                                         {{animal.nomeAnimal}}
                                     </b-form-select-option>
                                 </b-form-select>
@@ -168,7 +159,7 @@
                                     <template #first>
                                         <b-form-select-option :value="null" >Não Cadastrado</b-form-select-option>
                                     </template>
-                                    <b-form-select-option v-for="animal of animais" :key="animal.id" :value="animal.nomeAnimal">
+                                    <b-form-select-option v-for="animal of animaisM" :key="animal.id" :value="animal.nomeAnimal">
                                         {{animal.nomeAnimal}}
                                     </b-form-select-option>
                                 </b-form-select>
@@ -215,8 +206,9 @@
                                 label="Brinco*"
                                 invalid-feedback="O brinco é obrigatório">
                                 <b-form-input
+                                    type="tel" 
+                                    v-mask="'####'" 
                                     v-model="animal.brinco"
-                                    type="number"
                                     :state="brincoState"
                                     required />
                             </b-form-group>
@@ -304,7 +296,7 @@
                                     <template #first>
                                         <b-form-select-option :value="null" >Não Cadastrado</b-form-select-option>
                                     </template>
-                                    <b-form-select-option v-for="animal of animais" :key="animal.id" :value="animal.nomeAnimal">
+                                    <b-form-select-option v-for="animal of animaisF" :key="animal.id" :value="animal.nomeAnimal">
                                         {{animal.nomeAnimal}}
                                     </b-form-select-option>
                                 </b-form-select>
@@ -320,7 +312,7 @@
                                     <template #first>
                                         <b-form-select-option :value="null" >Não Cadastrado</b-form-select-option>
                                     </template>
-                                    <b-form-select-option v-for="animal of animais" :key="animal.id" :value="animal.nomeAnimal">
+                                    <b-form-select-option v-for="animal of animaisM" :key="animal.id" :value="animal.nomeAnimal">
                                         {{animal.nomeAnimal}}
                                     </b-form-select-option>
                                 </b-form-select>
@@ -352,7 +344,7 @@
 
 <script>
 import axios from "axios";
-const baseURL = "http://localhost:3001";
+import {baseApiUrl} from '@/global'
 import moment from 'moment'
 
 export default {
@@ -360,6 +352,7 @@ export default {
     name: "AnimalList",
     data() {
         return {
+            teste: '',
             filter: '',
             currentPage: 1,
             perPage: 5,
@@ -371,7 +364,6 @@ export default {
             dataNascimentoState: null,
             sexo: null,
             sexoState: null,
-            //peso: null,
             origem: null,
             origemState: null,
             raca: null,
@@ -386,7 +378,6 @@ export default {
                 { value: 'Compra', text: 'Compra' },
                 { value: 'Nascimento', text: 'Nascimento' }],
             opcaoRaca: [
-                { value: 'Aberdeen Angus', text: 'Aberdeen Angus' },
                 { value: 'Angus', text: 'Angus' },
                 { value: 'Ayrshire', text: 'Ayrshire' },
                 { value: 'Black Dorper', text: 'Black Dorper' },
@@ -397,16 +388,12 @@ export default {
                 { value: 'Caracu', text: 'Caracu' },
                 { value: 'Charolês', text: 'Charolês' },
                 { value: 'Composto', text: 'Composto' },
-                { value: 'Cruzamento Industrial', text: 'Cruzamento Industrial' },
                 { value: 'Desconhecida', text: 'Desconhecida' },
-                { value: 'F1', text: 'F1' },
                 { value: 'Friesian', text: 'Friesian' },
                 { value: 'Gir', text: 'Gir' },
-                { value: 'Gir Leiteiro', text: 'Gir Leiteiro' },
                 { value: 'Girolando', text: 'Girolando' },
                 { value: 'Guernsey', text: 'Guernsey' },
                 { value: 'Guzerá', text: 'Guzerá' },
-                { value: 'Guzerá Leiteiro', text: 'Guzerá Leiteiro' },
                 { value: 'Guzolando', text: 'Guzolando' },
                 { value: 'Hereford', text: 'Hereford' },
                 { value: 'Holandês Preto e Branco', text: 'Holandês Preto e Branco' },
@@ -428,7 +415,6 @@ export default {
                 { value: 'Poll Dorset', text: 'Poll Dorset' },
                 { value: 'Purunã', text: 'Purunã' },
                 { value: 'Red Angus', text: 'Red Angus' },
-                { value: 'S1', text: 'S1' },
                 { value: 'Saanen', text: 'Saanen' },
                 { value: 'Santa Inês', text: 'Santa Inês' },
                 { value: 'Senepol', text: 'Senepol' },
@@ -446,6 +432,8 @@ export default {
                 { value: 'Tabapuã', text: 'Tabapuã' }],
             animal: {},
             animais: [],
+            animaisF: [],
+            animaisM: [],
             fields: [
                 { key: 'brinco', label: 'Brinco', sortable: true},
                 { key: 'nomeAnimal', label: 'Nome', sortable: true},
@@ -461,9 +449,13 @@ export default {
     },
     async created() {
         try {
-        const res = await axios.get(`${baseURL}/animais?ativo=true`);
+        const res = await axios.get(`${baseApiUrl}/animais?ativo=true`);
+        const resF = await axios.get(`${baseApiUrl}/animais?ativo=true&sexo=F`);
+        const resM = await axios.get(`${baseApiUrl}/animais?ativo=true&sexo=M`);
 
         this.animais = res.data;
+        this.animaisF = resF.data;
+        this.animaisM = resM.data;
         } catch (e) {
         console.error(e);
         }
@@ -505,7 +497,7 @@ export default {
                 return
             }
             try {
-                const res = await axios.post(`${baseURL}/animais`, { 
+                const res = await axios.post(`${baseApiUrl}/animais`, { 
                     nomeAnimal: this.nomeAnimal, 
                     brinco: this.brinco, 
                     dataNascimento: this.dataNascimento,
@@ -534,7 +526,7 @@ export default {
             }
             try {
                 const id = this.animal.id
-                const res = await axios.put(`${baseURL}/animais/${id}`, { 
+                const res = await axios.put(`${baseApiUrl}/animais/${id}`, { 
                     nomeAnimal: this.animal.nomeAnimal, 
                     brinco: this.animal.brinco, 
                     dataNascimento: this.animal.dataNascimento,
@@ -560,10 +552,10 @@ export default {
         },
         async remove() {
             try {
-                //await axios.patch(`${baseURL}/animais/${this.nomeAnimal}`, {ativo: true})
+                //await axios.patch(`${baseApiUrl}/animais/${this.nomeAnimal}`, {ativo: true})
 
                 const id = this.animal.id
-                await axios.delete(`${baseURL}/animais/${id}`)
+                await axios.delete(`${baseApiUrl}/animais/${id}`)
                     .then(() => {
                         location.reload();
                     });

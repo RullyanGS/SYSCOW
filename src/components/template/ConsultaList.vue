@@ -241,7 +241,7 @@
 
 <script>
 import axios from "axios";
-const baseURL = "http://localhost:3001";
+import {baseApiUrl} from '@/global'
 import moment from 'moment'
 
 export default {
@@ -282,8 +282,8 @@ export default {
     },
     async created() {
         try {
-        const resConsulta = await axios.get(`${baseURL}/consultas`);
-        const resAnimal = await axios.get(`${baseURL}/animais?ativo=true`);
+        const resConsulta = await axios.get(`${baseApiUrl}/consultas`);
+        const resAnimal = await axios.get(`${baseApiUrl}/animais?ativo=true`);
 
         this.consultas = resConsulta.data;
         this.animais = resAnimal.data;
@@ -323,7 +323,7 @@ export default {
                 return
             }
             try {
-                const res = await axios.post(`${baseURL}/consultas`, { 
+                const res = await axios.post(`${baseApiUrl}/consultas`, { 
                     nomeAnimal: this.nomeAnimal, 
                     nomeConsulta: this.nomeConsulta, 
                     descricaoConsulta: this.descricaoConsulta, 
@@ -348,7 +348,7 @@ export default {
             }
             try {
                 const id = this.consulta.id
-                const res = await axios.put(`${baseURL}/consultas/${id}`, { 
+                const res = await axios.put(`${baseApiUrl}/consultas/${id}`, { 
                     nomeAnimal: this.consulta.nomeAnimal, 
                     nomeConsulta: this.consulta.nomeConsulta, 
                     descricaoConsulta: this.consulta.descricaoConsulta, 
@@ -371,7 +371,7 @@ export default {
         async remove() {
             try {
                 const id = this.consulta.id
-                await axios.delete(`${baseURL}/consultas/${id}`)
+                await axios.delete(`${baseApiUrl}/consultas/${id}`)
                     .then(() => {
                         location.reload();
                     });

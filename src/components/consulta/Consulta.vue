@@ -1,6 +1,6 @@
 <template>
     <div class="consulta">
-        <PageTitle main="Consulta" />
+        <PageTitle main="Consulta Veterinária" />
         <consulta-list />
     </div>
 </template>

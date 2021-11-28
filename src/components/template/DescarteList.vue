@@ -201,7 +201,7 @@
 
 <script>
 import axios from "axios";
-const baseURL = "http://localhost:3001";
+import {baseApiUrl} from '@/global'
 import moment from 'moment'
 
 export default {
@@ -247,8 +247,8 @@ export default {
     },
     async created() {
         try {
-        const resDescarte = await axios.get(`${baseURL}/descartes`);
-        const resAnimal = await axios.get(`${baseURL}/animais?ativo=true`);
+        const resDescarte = await axios.get(`${baseApiUrl}/descartes`);
+        const resAnimal = await axios.get(`${baseApiUrl}/animais?ativo=true`);
 
         this.descartes = resDescarte.data;
         this.animais = resAnimal.data;
@@ -289,10 +289,10 @@ export default {
             try {
                 const id = this.nomeAnimal
 
-                const res = await axios.get(`${baseURL}/animais/${id}`);
+                const res = await axios.get(`${baseApiUrl}/animais/${id}`);
                 this.backupAnimal = res.data;
 
-                const resCadastro = await axios.post(`${baseURL}/descartes`, { 
+                const resCadastro = await axios.post(`${baseApiUrl}/descartes`, { 
                     nomeAnimal: this.backupAnimal.nomeAnimal, 
                     motivo: this.motivo, 
                     causa: this.causa, 
@@ -300,7 +300,7 @@ export default {
 
                     this.descartes = [...this.descartes, resCadastro.data];
 
-                await axios.patch(`${baseURL}/animais/${id}`, {ativo: false});
+                await axios.patch(`${baseApiUrl}/animais/${id}`, {ativo: false});
 
             } catch (e) {
                 console.error(e);
@@ -319,7 +319,7 @@ export default {
 
             try {
                 const id = this.descarte.id
-                const res = await axios.patch(`${baseURL}/descartes/${id}`, { 
+                const res = await axios.patch(`${baseApiUrl}/descartes/${id}`, { 
                     motivo: this.descarte.motivo, 
                     causa: this.descarte.causa, 
                     dataDescarte: this.descarte.dataDescarte});
@@ -337,13 +337,13 @@ export default {
         },
         async remove() {
             try {
-                const res = await axios.get(`${baseURL}/animais/?nomeAnimal=${this.descarte.nomeAnimal}`);
+                const res = await axios.get(`${baseApiUrl}/animais/?nomeAnimal=${this.descarte.nomeAnimal}`);
                 this.backupAnimal = res.data[0];
 
                 const id = this.descarte.id
-                await axios.delete(`${baseURL}/descartes/${id}`)
+                await axios.delete(`${baseApiUrl}/descartes/${id}`)
 
-                await axios.patch(`${baseURL}/animais/${this.backupAnimal.id}`, {ativo: true})
+                await axios.patch(`${baseApiUrl}/animais/${this.backupAnimal.id}`, {ativo: true})
             } catch (e) {
                 console.error(e);
             }

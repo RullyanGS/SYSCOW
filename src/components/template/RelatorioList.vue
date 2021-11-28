@@ -73,7 +73,7 @@
 <script>
 
 import axios from "axios";
-const baseURL = "http://localhost:3001";
+import {baseApiUrl} from '@/global'
 import VueHtml2pdf from 'vue-html2pdf'
 import moment from 'moment'
 
@@ -183,13 +183,13 @@ export default {
     },
     async created() {
         try {
-        const resAnimal = await axios.get(`${baseURL}/animais?ativo=true&id>=9`);
-        const resPesagem = await axios.get(`${baseURL}/pesagens`);
-        const resDescarte = await axios.get(`${baseURL}/descartes`);
-        const resVacina = await axios.get(`${baseURL}/vacinas`);
-        const resConsulta = await axios.get(`${baseURL}/consultas`);
-        const resEvento = await axios.get(`${baseURL}/eventos`);
-        const resOrdenha = await axios.get(`${baseURL}/ordenhas`);
+        const resAnimal = await axios.get(`${baseApiUrl}/animais?ativo=true&id>=9`);
+        const resPesagem = await axios.get(`${baseApiUrl}/pesagens`);
+        const resDescarte = await axios.get(`${baseApiUrl}/descartes`);
+        const resVacina = await axios.get(`${baseApiUrl}/vacinas`);
+        const resConsulta = await axios.get(`${baseApiUrl}/consultas`);
+        const resEvento = await axios.get(`${baseApiUrl}/eventos`);
+        const resOrdenha = await axios.get(`${baseApiUrl}/ordenhas`);
 
         this.animais = resAnimal.data;
         this.pesagens = resPesagem.data;

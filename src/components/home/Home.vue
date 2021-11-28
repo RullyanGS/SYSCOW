@@ -3,37 +3,45 @@
         <PageTitle main="Bem vindo ao SYSCOW" />
         <b-container>
             <b-row align-h="between">
-                <b-col cols="6">
-                    <h3>Total animais ativos:</h3>
-                    <tr>
-                        <td>  
-                            <img src="../../assets/cow-unfill.png" width="100"/>
-                        </td>
-                        <td> 
-                            <h1 class="totalAnimal">{{totalAnimal}}</h1>
-                        </td>
-                    </tr>
-                </b-col>
-                <b-col cols="6">
-                    <h3>Leite Diário:</h3>
-                    <b-table hover striped small fixed :items="ordenhas" :fields="fieldsOrdenha" :per-page="3"/>
-                </b-col>
+                <div class="card">
+                    <b-col>
+                        <h3>Total animais ativos:</h3>
+                        <tr>
+                            <td>  
+                                <img src="../../assets/cow-unfill.png" width="100"/>
+                            </td>
+                            <td> 
+                                <h1 class="totalAnimal">{{totalAnimal}}</h1>
+                            </td>
+                        </tr>
+                    </b-col>
+                </div>
+                <div class="card"> 
+                    <b-col>
+                        <h3>Leite Diário:</h3>
+                        <b-table hover striped small fixed :items="ordenhas" :fields="fieldsOrdenha" :per-page="3"/>
+                    </b-col>
+                </div>
             </b-row>
 
             <b-row align-h="between">
-                <b-col cols="6">
-                    <h3>Total animais descartados:</h3>
-                    <td>  
-                        <img src="../../assets/cow-unfill-x.png" width="100"/>
-                    </td>
-                    <td>
-                        <h1 class="totalAnimal">{{totalDescarte}}</h1> 
-                    </td>
-                </b-col>
-                <b-col cols="6">
-                    <h3>Consultas Veterinária:</h3>
-                    <b-table hover striped small fixed :items="consultas" :fields="fieldsConsulta" :per-page="3"/>
-                </b-col>
+                <div class="card"> 
+                    <b-col>
+                        <h3>Total animais descartados:</h3>
+                        <td>  
+                            <img src="../../assets/cow-unfill-x.png" width="100"/>
+                        </td>
+                        <td>
+                            <h1 class="totalAnimal">{{totalDescarte}}</h1> 
+                        </td>
+                    </b-col>
+                </div>
+                <div class="card">
+                    <b-col>
+                        <h3>Consultas Veterinária:</h3>
+                        <b-table hover striped small fixed :items="consultas" :fields="fieldsConsulta" :per-page="3"/>
+                    </b-col>
+                </div>
             </b-row>
         </b-container>
     </div>
@@ -117,6 +125,13 @@ export default {
 
 .totalAnimal {
     font-size: 60px;
+    margin-left: 100%;
+}
+
+.card {
+    padding: 20px;
+    margin: 10px;
+    width: 45%;
 }
 
 </style>

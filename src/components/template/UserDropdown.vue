@@ -1,34 +1,24 @@
 <template>
     <div class="user-dropdown">  
         <div class="user-button"> 
-            <span class="d-none d-sm-block">{{ user.name }}</span>
+            <span class="d-none d-sm-block">SYSCOW</span>
             <div class="user-dropdown-img">
                 <i class="fa fa-user"></i>
             </div>
             <i class="fa fa-angle-down"></i>
         </div>
         <div class="user-dropdown-content">
-            <router-link to="/">
-                <a href @click.prevent="logout"> <i class="fa fa-sign-out"></i> Sair </a>
+            <router-link to="/logout">
+                <i class="fa fa-sign-out"></i> Sair
             </router-link>
         </div>
     </div>
 </template>
 
 <script>
-import { userKey } from '@/global'
-import { mapState } from 'vuex'
 
 export default {
     name: "UserDropdown",
-    computed: mapState(['user']),
-    methods: {
-        logout() {
-            localStorage.removeItem(userKey)
-            this.$store.commit('setUser', null)
-            this.$router.push({ name: 'auth' })
-        }
-    }
 }
 </script>
 

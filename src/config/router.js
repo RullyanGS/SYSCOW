@@ -10,51 +10,81 @@ import Consulta from '@/components/consulta/Consulta'
 import Evento from '@/components/evento/Evento'
 import Ordenhadiaria from '@/components/ordenhadiaria/Ordenhadiaria'
 import Relatorios from '@/components/relatorios/Relatorios'
-import Auth from '@/components/auth/Auth'
+import Login from '@/components/login/Login'
+import auth from '@/auth'
 
 Vue.use(VueRouter)
 
 const routes = [{
-    name: 'auth',
     path: '/',
-    component: Auth
+    name: 'login',
+    component: Login
 }, {
-    name:  'home',
     path: '/home',
-    component: Home
+    name:  'home',
+    component: Home,
+    beforeEnter: requireAuth
 }, {
-    name: 'animais',
     path: '/animais',
-    component: Animais
+    name: 'animais',
+    component: Animais,
+    beforeEnter: requireAuth
 }, {
-    name: 'pesagem',
     path: '/pesagem',
-    component: Pesagem
+    name: 'pesagem',
+    component: Pesagem,
+    beforeEnter: requireAuth
 }, {
-    name: 'descarte',
     path: '/descarte',
-    component: Descarte
+    name: 'descarte',
+    component: Descarte,
+    beforeEnter: requireAuth
 }, {
-    name: 'vacinacao',
     path: '/vacinacao',
-    component: Vacinacao
+    name: 'vacinacao',
+    component: Vacinacao,
+    beforeEnter: requireAuth
 }, {
-    name: 'consulta',
     path: '/consulta',
-    component: Consulta
+    name: 'consulta',
+    component: Consulta,
+    beforeEnter: requireAuth
 }, {
-    name: 'evento',
     path: '/evento',
-    component: Evento
+    name: 'evento',
+    component: Evento,
+    beforeEnter: requireAuth
 }, {
-    name: 'ordenhadiaria',
     path: '/ordenhadiaria',
-    component: Ordenhadiaria
+    name: 'ordenhadiaria',
+    component: Ordenhadiaria,
+    beforeEnter: requireAuth
 }, {
-    name: 'relatorios',
     path: '/relatorios',
-    component: Relatorios
+    name: 'relatorios',
+    component: Relatorios,
+    beforeEnter: requireAuth
+}, {
+    path: '/login', component: Login
+}, {
+    path: '/logout',
+    beforeEnter (to, from, next) {
+    auth.logout()
+    next('/')
+    }
 }]
+
+function requireAuth (to, from, next) {
+    if (!auth.loggedIn()) {
+      next({
+        path: '/login',
+        query: { redirect: to.fullPath }
+      })
+    } else {
+      next()
+    }
+  }
+  
 
 export default new VueRouter({
     mode: 'history',

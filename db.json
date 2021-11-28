@@ -1,10 +1,4 @@
 {
-  "user": [
-    {
-      "name": "teste",
-      "email": "teste"
-    }
-  ],
   "animais": [
     {
       "nomeAnimal": "Vaco",
@@ -44,9 +38,9 @@
     },
     {
       "nomeAnimal": "teste",
-      "brinco": "12121",
+      "brinco": "1212",
       "dataNascimento": "2021-11-15",
-      "sexo": "F",
+      "sexo": "M",
       "origem": "Compra",
       "raca": "Angus",
       "nomeMae": null,
@@ -103,6 +97,12 @@
       "peso": "200",
       "dataPesagem": "2021-11-25",
       "id": 8
+    },
+    {
+      "nomeAnimal": "Mu",
+      "peso": "232,32",
+      "dataPesagem": "2021-11-28",
+      "id": 9
     }
   ],
   "descartes": [

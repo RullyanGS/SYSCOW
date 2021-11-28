@@ -49,14 +49,15 @@
                     <b-row>
                         <b-col>
                             <b-form-group
-                                label="Quantidade de Litros*"
+                                label="Quantidade de Litros* (L)"
                                 invalid-feedback="A Quantidade de Litros é obrigatório">
 
                                 <b-form-input
+                                    type="tel" 
+                                    v-mask="'###'"
                                     v-model="qtdeLitros"
                                     :state="qtdeLitrosState"
-                                    required 
-                                    type="number"/>
+                                    required/>
                             </b-form-group>
                         </b-col>
                         <b-col>
@@ -65,7 +66,8 @@
                                 invalid-feedback="O Número de Vacas Ordenhadas é obrigatório">
 
                                 <b-form-input
-                                    type="number"
+                                    type="tel" 
+                                    v-mask="'###'"
                                     v-model="nrFemeas"
                                     :state="nrFemeasState"
                                     required />
@@ -101,7 +103,8 @@
             @hidden="resetModal"
             @ok="editarOk">
 
-            Deseja realmente editar a Ordenha do dia <strong>{{ordenha.dataOrdenhaDiaria}}</strong> ?
+            Deseja realmente editar a ordenha desse dia ?
+
             <br><br>
 
             <form ref="form" @submit.stop.prevent="cadastrar">
@@ -114,10 +117,11 @@
                                 invalid-feedback="A Quantidade de Litros é obrigatório">
 
                                 <b-form-input
+                                    type="tel" 
+                                    v-mask="'###'"
                                     v-model="ordenha.qtdeLitros"
                                     :state="qtdeLitrosState"
-                                    required 
-                                    type="number"/>
+                                    required />
                             </b-form-group>
                         </b-col>
                         <b-col>
@@ -126,7 +130,8 @@
                                 invalid-feedback="O Número de Vacas Ordenhadas é obrigatório">
 
                                 <b-form-input
-                                    type="number"
+                                    type="tel" 
+                                    v-mask="'###'"
                                     v-model="ordenha.nrFemeas"
                                     :state="nrFemeasState"
                                     required />
@@ -138,7 +143,7 @@
                                 label="Data de Ordenha Diaria*"
                                 invalid-feedback="A data da Ordenha Diaria é obrigatório">
                                 <b-form-input
-                                    type = "date"
+                                    type="date"
                                     v-model="ordenha.dataOrdenhaDiaria"
                                     :state="dataOrdenhaDiariaState"
                                     required />
@@ -171,7 +176,7 @@
 
 <script>
 import axios from "axios";
-const baseURL = "http://localhost:3001";
+import {baseApiUrl} from '@/global'
 import moment from 'moment'
 
 export default {
@@ -204,7 +209,7 @@ export default {
     },
     async created() {
         try {
-        const res = await axios.get(`${baseURL}/ordenhas`);
+        const res = await axios.get(`${baseApiUrl}/ordenhas`);
 
         this.ordenhas = res.data;
         } catch (e) {
@@ -240,7 +245,7 @@ export default {
                 return
             }
             try {
-                const res = await axios.post(`${baseURL}/ordenhas`, { 
+                const res = await axios.post(`${baseApiUrl}/ordenhas`, { 
                     qtdeLitros: this.qtdeLitros, 
                     nrFemeas: this.nrFemeas, 
                     dataOrdenhaDiaria: this.dataOrdenhaDiaria});
@@ -262,7 +267,7 @@ export default {
             }
             try {
                 const id = this.ordenha.id
-                const res = await axios.put(`${baseURL}/ordenhas/${id}`, { 
+                const res = await axios.put(`${baseApiUrl}/ordenhas/${id}`, { 
                     qtdeLitros: this.ordenha.qtdeLitros, 
                     nrFemeas: this.ordenha.nrFemeas, 
                     dataOrdenhaDiaria: this.ordenha.dataOrdenhaDiaria});
@@ -282,7 +287,7 @@ export default {
         async remove() {
             try {
                 const id = this.ordenha.id
-                await axios.delete(`${baseURL}/ordenhas/${id}`)
+                await axios.delete(`${baseApiUrl}/ordenhas/${id}`)
                     .then(() => {
                         location.reload();
                     });

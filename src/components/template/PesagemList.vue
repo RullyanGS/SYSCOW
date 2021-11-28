@@ -65,11 +65,12 @@
                         </b-col>
                         <b-col>
                             <b-form-group
-                                label="Peso*"
+                                label="Peso* (Kg)"
                                 invalid-feedback="O Peso é obrigatório">
 
                                 <b-form-input
-                                    type="number"
+                                    type="tel" 
+                                    v-mask="'###'"
                                     v-model="peso"
                                     :state="pesoState"
                                     required />
@@ -132,14 +133,15 @@
                         </b-col>
                         <b-col>
                             <b-form-group
-                                label="Peso*"
+                                label="Peso* (kg)"
                                 invalid-feedback="O Peso é obrigatório">
 
                                 <b-form-input
+                                    type="tel" 
+                                    v-mask="'###'"
                                     v-model="pesagem.peso"
                                     :state="pesoState"
-                                    required 
-                                    type="number"/>
+                                    required />
                                     
                             </b-form-group>
                         </b-col>
@@ -180,7 +182,7 @@
 
 <script>
 import axios from "axios";
-const baseURL = "http://localhost:3001";
+import {baseApiUrl} from '@/global'
 import moment from 'moment'
 
 export default {
@@ -215,15 +217,11 @@ export default {
     },
     async created() {
         try {
-        const resPesagem = await axios.get(`${baseURL}/pesagens`);
-        const resAnimal = await axios.get(`${baseURL}/animais?ativo=true`);
+        const resPesagem = await axios.get(`${baseApiUrl}/pesagens`);
+        const resAnimal = await axios.get(`${baseApiUrl}/animais?ativo=true`);
 
         this.pesagens = resPesagem.data;
         this.animais = resAnimal.data;
-        
-        var data = new Date();
-        console.log(data.toLocaleDateString());
-        console.log(data.toISOString().substr(0, 10));
         } catch (e) {
         console.error(e);
         }
@@ -257,7 +255,7 @@ export default {
                 return
             }
             try {
-                const res = await axios.post(`${baseURL}/pesagens`, { 
+                const res = await axios.post(`${baseApiUrl}/pesagens`, { 
                     nomeAnimal: this.nomeAnimal, 
                     peso: this.peso, 
                     dataPesagem: this.dataPesagem});
@@ -279,7 +277,7 @@ export default {
             }
             try {
                 const id = this.pesagem.id
-                const res = await axios.put(`${baseURL}/pesagens/${id}`, { 
+                const res = await axios.put(`${baseApiUrl}/pesagens/${id}`, { 
                     nomeAnimal: this.pesagem.nomeAnimal, 
                     peso: this.pesagem.peso, 
                     dataPesagem: this.pesagem.dataPesagem});
@@ -299,7 +297,7 @@ export default {
         async remove() {
             try {
                 const id = this.pesagem.id
-                await axios.delete(`${baseURL}/pesagens/${id}`)
+                await axios.delete(`${baseApiUrl}/pesagens/${id}`)
                     .then(() => {
                         location.reload();
                     });

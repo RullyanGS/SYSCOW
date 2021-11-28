@@ -271,7 +271,7 @@
 
 <script>
 import axios from "axios";
-const baseURL = "http://localhost:3001";
+import {baseApiUrl} from '@/global'
 import moment from 'moment'
 
 export default {
@@ -323,8 +323,8 @@ export default {
     },
     async created() {
         try {
-        const resVacina = await axios.get(`${baseURL}/vacinas`);
-        const resAnimal = await axios.get(`${baseURL}/animais?ativo=true`);
+        const resVacina = await axios.get(`${baseApiUrl}/vacinas`);
+        const resAnimal = await axios.get(`${baseApiUrl}/animais?ativo=true`);
 
         this.vacinas = resVacina.data;
         this.animais = resAnimal.data;
@@ -367,7 +367,7 @@ export default {
                 return
             }
             try {
-                const res = await axios.post(`${baseURL}/vacinas`, { 
+                const res = await axios.post(`${baseApiUrl}/vacinas`, { 
                     nomeAnimal: this.nomeAnimal, 
                     nomePatologia: this.nomePatologia,
                     nomeMedicamento: this.nomeMedicamento,
@@ -392,7 +392,7 @@ export default {
             }
             try {
                 const id = this.vacina.id
-                const res = await axios.put(`${baseURL}/vacinas/${id}`, { 
+                const res = await axios.put(`${baseApiUrl}/vacinas/${id}`, { 
                     nomeAnimal: this.vacina.nomeAnimal, 
                     nomePatologia: this.vacina.nomePatologia, 
                     nomeMedicamento: this.vacina.nomeMedicamento, 
@@ -415,7 +415,7 @@ export default {
         async remove() {
             try {
                 const id = this.vacina.id
-                await axios.delete(`${baseURL}/vacinas/${id}`)
+                await axios.delete(`${baseApiUrl}/vacinas/${id}`)
                     .then(() => {
                         location.reload();
                     });
