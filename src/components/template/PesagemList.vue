@@ -56,7 +56,7 @@
                                     v-model="nomeAnimal"
                                     :state="nomeAnimalState"
                                     required >
-                                    <b-form-select-option v-for="animal of animais" :key="animal.id" :value="animal.nomeAnimal">
+                                    <b-form-select-option v-for="animal of animais" :key="animal.id" :value="animal.id">
                                         {{animal.brinco}} - {{animal.nomeAnimal}}
                                     </b-form-select-option>
 
@@ -116,19 +116,11 @@
                     <b-row>
                         <b-col>
                             <b-form-group
-                                label="Nome*"
-                                invalid-feedback="O nome é obrigatório">
-                                
-                                <b-form-select
+                                label="Nome*">
+
+                                <b-form-input 
                                     v-model="pesagem.nomeAnimal"
-                                    :state="nomeAnimalState" 
-                                    required >
-
-                                    <b-form-select-option v-for="animal of animais" :key="animal.id" :value="animal.nomeAnimal">
-                                        {{animal.brinco}} - {{animal.nomeAnimal}}
-                                    </b-form-select-option>
-
-                                </b-form-select>
+                                    disabled />
                             </b-form-group>
                         </b-col>
                         <b-col>
@@ -194,6 +186,7 @@ export default {
             perPage: 5,
 
             nomeAnimal: null,
+            brinco: null,
             nomeAnimalState: null,
             peso: null,
             pesoState: null,
@@ -206,6 +199,7 @@ export default {
             pesagens: [],
             fields: [
                 { key: 'nomeAnimal', label: 'Nome', sortable: true},
+                { key: 'brinco', label: 'Brinco', sortable: true},
                 { key: 'dataPesagem', label: 'Data Pesagem', sortable: true,
                 formatter: value => {
                     return moment(String(value)).format('DD/MM/YYYY')
@@ -255,12 +249,18 @@ export default {
                 return
             }
             try {
-                const res = await axios.post(`${baseApiUrl}/pesagens`, { 
-                    nomeAnimal: this.nomeAnimal, 
+                const id = this.nomeAnimal
+
+                const res = await axios.get(`${baseApiUrl}/animais/${id}`);
+                this.backupAnimal = res.data;
+
+                const resPesagem = await axios.post(`${baseApiUrl}/pesagens`, { 
+                    nomeAnimal: this.backupAnimal.nomeAnimal, 
+                    brinco: this.backupAnimal.brinco, 
                     peso: this.peso, 
                     dataPesagem: this.dataPesagem});
 
-                    this.pesagens = [...this.pesagens, res.data];
+                    this.pesagens = [...this.pesagens, resPesagem.data];
 
             } catch (e) {
                 console.error(e);
@@ -276,13 +276,14 @@ export default {
                 return
             }
             try {
-                const id = this.pesagem.id
-                const res = await axios.put(`${baseApiUrl}/pesagens/${id}`, { 
+                const idPesagem = this.pesagem.id
+                const resPesagem = await axios.put(`${baseApiUrl}/pesagens/${idPesagem}`, { 
                     nomeAnimal: this.pesagem.nomeAnimal, 
+                    brinco: this.pesagem.brinco, 
                     peso: this.pesagem.peso, 
                     dataPesagem: this.pesagem.dataPesagem});
 
-                    this.pesagens = [...this.pesagens, res.data];
+                    this.pesagens = [...this.pesagens, resPesagem.data];
 
             } catch (e) {
                 console.error(e);

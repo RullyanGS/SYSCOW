@@ -8,7 +8,7 @@
                             label="Data Início">
                             <b-form-input
                                 type="date"
-                                v-model="startDate" />
+                                v-model="filter.startDate" />
                         </b-form-group>
                     </b-col>
                     <b-col>
@@ -16,18 +16,19 @@
                             label="Data Fim">
                             <b-form-input
                                 type="date"
-                                v-model="endDate" />
+                                v-model="filter.endDate" />
                         </b-form-group>
                     </b-col>
                     <b-col >
-                         <b-button @click="downloadPDF" variant="primary">Gerar Relatório</b-button>
+                        <b-form-group
+                            label=".">
+                                <b-button @click="downloadPDF" variant="primary">Gerar Relatório</b-button>
+                        </b-form-group>
                     </b-col>
                 </b-row>
             </b-container>
         </ul>
         <ul>
-
-            <!-- <div class="mt-3">Selecionado: <strong>{{ tipoRelatorio }}</strong> - {{ dataInicio }} - {{ dataFim }}</div> -->
             
                 <vue-html2pdf 
                     :float-layout="false" 
@@ -40,25 +41,25 @@
 
                         <b-tabs>
                             <b-tab  title="Animais" active>
-                                <b-table :items="animais" :fields="fieldsAnimais"></b-table>
+                                <b-table :items="animais" :fields="fieldsAnimais" :filter="filter" :filter-function="filterItemAnimais"></b-table>
                             </b-tab>
                             <b-tab title="Pesagens">
-                                <b-table :items="pesagens" :fields="fieldsPesagens"></b-table>
+                                <b-table :items="pesagens" :fields="fieldsPesagens" :filter="filter" :filter-function="filterItemPesagens"></b-table>
                             </b-tab>
                             <b-tab title="Descartes">
-                                <b-table :items="descartes" :fields="fieldsDescartes"></b-table>
+                                <b-table :items="descartes" :fields="fieldsDescartes" :filter="filter" :filter-function="filterItemDescartes"></b-table>
                             </b-tab>
                             <b-tab title="Medicação">
-                                <b-table :items="vacinas" :fields="fieldsVacinas"></b-table>
+                                <b-table :items="vacinas" :fields="fieldsVacinas" :filter="filter" :filter-function="filterItemVacinas"></b-table>
                             </b-tab>
                             <b-tab title="Consultas">
-                                <b-table :items="consultas" :fields="fieldsConsultas"></b-table>
+                                <b-table :items="consultas" :fields="fieldsConsultas" :filter="filter" :filter-function="filterItemConsultas"></b-table>
                             </b-tab>
                             <b-tab title="Eventos">
-                                <b-table :items="eventos" :fields="fieldsEventos"></b-table>
+                                <b-table :items="eventos" :fields="fieldsEventos" :filter="filter" :filter-function="filterItemEventos"></b-table>
                             </b-tab>
                             <b-tab title="Ordenhas">
-                                <b-table :items="ordenhas" :fields="fieldsOrdenhas"></b-table>
+                                <b-table :items="ordenhas" :fields="fieldsOrdenhas" :filter="filter" :filter-function="filterItemOrdenhas"></b-table>
                             </b-tab>
                         </b-tabs>
 
@@ -81,9 +82,10 @@ export default {
     name: "RelatorioList",
     data() {
         return {
-            selectedType: '',
-            startDate: null,
-            endDate: null,
+            filter: {
+                startDate: null,
+                endDate: null
+            },
 
             animais: [],
             pesagens: [],
@@ -103,8 +105,8 @@ export default {
             ],
 
             fieldsAnimais: [
-                { key: 'brinco', label: 'Brinco', sortable: true},
                 { key: 'nomeAnimal', label: 'Nome', sortable: true},
+                { key: 'brinco', label: 'Brinco', sortable: true},
                 { key: 'raca', label: 'Raça', sortable: true},
                 { key: 'sexo', label: 'Sexo', sortable: true},
                 { key: 'dataNascimento', label: 'Data Nascimento', sortable: true,
@@ -179,11 +181,9 @@ export default {
             ]
         }
     },
-    computed: {
-    },
     async created() {
         try {
-        const resAnimal = await axios.get(`${baseApiUrl}/animais?ativo=true&id>=9`);
+        const resAnimal = await axios.get(`${baseApiUrl}/animais?ativo=true`);
         const resPesagem = await axios.get(`${baseApiUrl}/pesagens`);
         const resDescarte = await axios.get(`${baseApiUrl}/descartes`);
         const resVacina = await axios.get(`${baseApiUrl}/vacinas`);
@@ -205,7 +205,112 @@ export default {
     methods: {
         downloadPDF () {
             this.$refs.DownloadComp.generatePdf()
-        }
+        },
+        filterItemAnimais(row, filter) {
+            const startDate = filter.startDate
+            const endDate = filter.endDate
+
+            if (startDate && endDate) {
+                return startDate <= row.dataNascimento && row.dataNascimento <= endDate;
+            } 
+            if (startDate && !endDate) {
+                return startDate <= row.dataNascimento;
+            }
+            if (!startDate && endDate) {
+                return row.dataNascimento <= endDate;
+            }
+            return true;
+        },
+        filterItemPesagens(row, filter) {
+            const startDate = filter.startDate
+            const endDate = filter.endDate
+
+            if (startDate && endDate) {
+                return startDate <= row.dataPesagem && row.dataPesagem <= endDate;
+            } 
+            if (startDate && !endDate) {
+                return startDate <= row.dataPesagem;
+            }
+            if (!startDate && endDate) {
+                return row.dataPesagem <= endDate;
+            }
+            return true;
+        },
+        filterItemDescartes(row, filter) {
+            const startDate = filter.startDate
+            const endDate = filter.endDate
+
+            if (startDate && endDate) {
+                return startDate <= row.dataDescarte && row.dataDescarte <= endDate;
+            } 
+            if (startDate && !endDate) {
+                return startDate <= row.dataDescarte;
+            }
+            if (!startDate && endDate) {
+                return row.dataDescarte <= endDate;
+            }
+            return true;
+        },
+        filterItemVacinas(row, filter) {
+            const startDate = filter.startDate
+            const endDate = filter.endDate
+
+            if (startDate && endDate) {
+                return startDate <= row.dataVacinacao && row.dataVacinacao <= endDate;
+            } 
+            if (startDate && !endDate) {
+                return startDate <= row.dataVacinacao;
+            }
+            if (!startDate && endDate) {
+                return row.dataVacinacao <= endDate;
+            }
+            return true;
+        },
+        filterItemConsultas(row, filter) {
+            const startDate = filter.startDate
+            const endDate = filter.endDate
+
+            if (startDate && endDate) {
+                return startDate <= row.dataConsulta && row.dataConsulta <= endDate;
+            } 
+            if (startDate && !endDate) {
+                return startDate <= row.dataConsulta;
+            }
+            if (!startDate && endDate) {
+                return row.dataConsulta <= endDate;
+            }
+            return true;
+        },
+        filterItemEventos(row, filter) {
+            const startDate = filter.startDate
+            const endDate = filter.endDate
+
+            if (startDate && endDate) {
+                return startDate <= row.dataEvento && row.dataEvento <= endDate;
+            } 
+            if (startDate && !endDate) {
+                return startDate <= row.dataEvento;
+            }
+            if (!startDate && endDate) {
+                return row.dataEvento <= endDate;
+            }
+            return true;
+        },
+        filterItemOrdenhas(row, filter) {
+            const startDate = filter.startDate
+            const endDate = filter.endDate
+
+            if (startDate && endDate) {
+                return startDate <= row.dataOrdenhaDiaria && row.dataOrdenhaDiaria <= endDate;
+            } 
+            if (startDate && !endDate) {
+                return startDate <= row.dataOrdenhaDiaria;
+            }
+            if (!startDate && endDate) {
+                return row.dataOrdenhaDiaria <= endDate;
+            }
+            return true;
+        },
     },
     components: {
         VueHtml2pdf
@@ -214,5 +319,4 @@ export default {
 </script>
 
 <style>
-
 </style>

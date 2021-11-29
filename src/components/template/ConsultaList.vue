@@ -60,7 +60,7 @@
                                         <b-form-select-option :value="null" disabled>-- Por favor selecione uma opção --</b-form-select-option>
                                     </template>
 
-                                    <b-form-select-option v-for="animal of animais" :key="animal.id" :value="animal.nomeAnimal">
+                                    <b-form-select-option v-for="animal of animais" :key="animal.id" :value="animal.id">
                                         {{animal.brinco}} - {{animal.nomeAnimal}}
                                     </b-form-select-option>
 
@@ -137,37 +137,13 @@
                 
                 <b-container>
                     <b-row>
-                        <!--
                         <b-col>
                             <b-form-group
-                                label="Nome do Animal*"
-                                invalid-feedback="O nome do animal é obrigatório">
+                                label="Nome*">
 
-                                <b-form-input
+                                <b-form-input 
                                     v-model="consulta.nomeAnimal"
                                     disabled />
-                            </b-form-group>
-                        </b-col>
-                        -->
-                        <b-col>
-                            <b-form-group
-                                label="Nome do Animal*"
-                                invalid-feedback="O nome do animal é obrigatório">
-
-                                <b-form-select
-                                    v-model="consulta.nomeAnimal"
-                                    :state="nomeAnimalState"
-                                    required >
-
-                                    <template #first>
-                                        <b-form-select-option :value="null" disabled>-- Por favor selecione uma opção --</b-form-select-option>
-                                    </template>
-
-                                    <b-form-select-option v-for="animal of animais" :key="animal.id" :value="animal.nomeAnimal">
-                                        {{animal.brinco}} - {{animal.nomeAnimal}}
-                                    </b-form-select-option>
-
-                                </b-form-select>
                             </b-form-group>
                         </b-col>
                         <b-col>
@@ -252,6 +228,7 @@ export default {
             currentPage: 1,
             perPage: 5,
             nomeAnimal: null,
+            brinco: null,
             nomeConsulta: null,
             descricaoConsulta: null,
             dataConsulta: new Date().toISOString().substr(0, 10),
@@ -268,6 +245,7 @@ export default {
 
             fields: [
                 { key: 'nomeAnimal', label: 'Nome do Animal', sortable: true},
+                { key: 'brinco', label: 'Brinco', sortable: true},
                 { key: 'nomeConsulta', label: 'Nome Consulta', sortable: true},
                 { key: 'descricaoConsulta', label: 'Descricao da Consulta', sortable: true},
                 { key: 'dataConsulta', label: 'Data da Consulta', sortable: true,
@@ -323,8 +301,15 @@ export default {
                 return
             }
             try {
+                const id = this.nomeAnimal
+
+                const resB = await axios.get(`${baseApiUrl}/animais/${id}`);
+                this.backupAnimal = resB.data;
+
+
                 const res = await axios.post(`${baseApiUrl}/consultas`, { 
-                    nomeAnimal: this.nomeAnimal, 
+                    nomeAnimal: this.backupAnimal.nomeAnimal, 
+                    brinco: this.backupAnimal.brinco, 
                     nomeConsulta: this.nomeConsulta, 
                     descricaoConsulta: this.descricaoConsulta, 
                     dataConsulta: this.dataConsulta, 
@@ -350,6 +335,7 @@ export default {
                 const id = this.consulta.id
                 const res = await axios.put(`${baseApiUrl}/consultas/${id}`, { 
                     nomeAnimal: this.consulta.nomeAnimal, 
+                    brinco: this.consulta.brinco, 
                     nomeConsulta: this.consulta.nomeConsulta, 
                     descricaoConsulta: this.consulta.descricaoConsulta, 
                     dataConsulta: this.consulta.dataConsulta, 

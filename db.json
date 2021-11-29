@@ -21,7 +21,7 @@
       "raca": "Charolês",
       "nomeMae": null,
       "nomePai": null,
-      "ativo": true,
+      "ativo": false,
       "id": 5
     },
     {
@@ -51,67 +51,43 @@
   ],
   "pesagens": [
     {
-      "nomeAnimal": "Vaquinha",
-      "peso": "150",
-      "dataPesagem": "2021-11-13",
-      "id": 1
-    },
-    {
       "nomeAnimal": "Mu",
-      "peso": "200",
-      "dataPesagem": "2021-11-20",
-      "id": 2
-    },
-    {
-      "nomeAnimal": "asdas",
-      "peso": "",
-      "dataPesagem": "2021-11-20",
-      "id": 3
-    },
-    {
-      "nomeAnimal": "asdas",
-      "peso": "130",
-      "dataPesagem": "2021-11-21",
-      "id": 4
-    },
-    {
-      "nomeAnimal": "asdas",
-      "peso": "150",
-      "dataPesagem": "2021-11-21",
+      "brinco": "123456",
+      "peso": "112",
+      "dataPesagem": "2021-11-29",
       "id": 5
     },
     {
       "nomeAnimal": "asdas",
-      "peso": "110",
-      "dataPesagem": "2021-11-21",
+      "brinco": "2132",
+      "peso": "123",
+      "dataPesagem": "2021-11-29",
       "id": 6
     },
     {
-      "nomeAnimal": "Mu",
-      "peso": "175",
-      "dataPesagem": "2021-11-25",
-      "id": 7
-    },
-    {
       "nomeAnimal": "asdas",
-      "peso": "200",
-      "dataPesagem": "2021-11-25",
-      "id": 8
-    },
-    {
-      "nomeAnimal": "Mu",
-      "peso": "232,32",
-      "dataPesagem": "2021-11-28",
-      "id": 9
+      "brinco": "2132",
+      "peso": "1",
+      "dataPesagem": "2021-11-29",
+      "id": 7
     }
   ],
   "descartes": [
     {
-      "nomeAnimal": "Vaco",
+      "nomeAnimal": "Mu",
+      "brinco": "123456",
       "motivo": "morte",
-      "causa": "Causas naturais",
-      "dataDescarte": "2021-11-13",
-      "id": 1
+      "causa": "",
+      "dataDescarte": "2021-11-29",
+      "id": 2
+    },
+    {
+      "nomeAnimal": "Vaco",
+      "brinco": "14256",
+      "motivo": "morte",
+      "causa": "",
+      "dataDescarte": "2021-11-29",
+      "id": 3
     }
   ],
   "ordenhas": [
@@ -131,40 +107,81 @@
   "vacinas": [
     {
       "nomeAnimal": "Mu",
-      "nomePatologia": "gripe",
-      "nomeMedicamento": "gripe v",
+      "brinco": "2132",
+      "nomePatologia": "sadasda",
+      "nomeMedicamento": "asdasad",
       "observacao": "",
-      "dataVacinacao": "2021-11-15",
+      "dataVacinacao": "2021-11-29",
       "dataLiberacao": "",
-      "id": 2
+      "id": 4
+    },
+    {
+      "nomeAnimal": "teste",
+      "brinco": "2132",
+      "nomePatologia": "sadsa",
+      "nomeMedicamento": "adass",
+      "observacao": "",
+      "dataVacinacao": "2021-11-29",
+      "dataLiberacao": "",
+      "id": 5
     },
     {
       "nomeAnimal": "asdas",
-      "nomePatologia": "teste",
-      "nomeMedicamento": "teste",
+      "brinco": "2132",
+      "nomePatologia": "sads",
+      "nomeMedicamento": "sadsa",
       "observacao": "",
-      "dataVacinacao": "2021-11-21",
-      "dataLiberacao": "2021-11-21",
-      "id": 3
+      "dataVacinacao": "2021-11-29",
+      "dataLiberacao": "",
+      "id": 6
+    },
+    {
+      "nomeAnimal": "teste",
+      "brinco": "1212",
+      "nomePatologia": "s3werefw",
+      "nomeMedicamento": "wefdsf",
+      "observacao": "",
+      "dataVacinacao": "2021-11-29",
+      "dataLiberacao": "",
+      "id": 7
     }
   ],
   "consultas": [
     {
       "nomeAnimal": "asdas",
-      "nomeConsulta": "teste",
-      "descricaoConsulta": "teste",
-      "dataConsulta": "2021-11-20",
-      "id": 1
+      "brinco": "2132",
+      "nomeConsulta": "sadasd",
+      "descricaoConsulta": "",
+      "dataConsulta": "2021-11-29",
+      "id": 4
+    },
+    {
+      "nomeAnimal": "asdas",
+      "brinco": "2132",
+      "nomeConsulta": "esfdfdsf",
+      "descricaoConsulta": "",
+      "dataConsulta": "2021-11-29",
+      "id": 5
     }
   ],
   "eventos": [
     {
-      "nomeAnimal": "teste",
-      "nomeEvento": "cobertura",
-      "dataEvento": "2021-11-15",
-      "dataProximoEvento": "2021-11-15",
+      "nomeAnimal": "asdas",
+      "brinco": "2132",
+      "nomeEvento": "cio",
+      "dataEvento": "2021-11-29",
+      "dataProximoEvento": "2021-11-30",
       "descricaoEvento": "",
-      "id": 1
+      "id": 2
+    },
+    {
+      "nomeAnimal": "teste",
+      "brinco": "1212",
+      "nomeEvento": "cio",
+      "dataEvento": "2021-11-29",
+      "dataProximoEvento": "2021-11-29",
+      "descricaoEvento": "",
+      "id": 3
     }
   ]
 }

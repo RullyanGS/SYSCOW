@@ -130,14 +130,11 @@
                     <b-row>
                         <b-col>
                             <b-form-group
-                                label="Nome*"
-                                invalid-feedback="O nome é obrigatório">
+                                label="Nome*">
                                 
                                 <b-form-input
                                     v-model="descarte.nomeAnimal"
-                                    disabled
-                                    >
-                                </b-form-input>
+                                    disabled />
                             </b-form-group>
                         </b-col>
                         <b-col>
@@ -213,6 +210,7 @@ export default {
             perPage: 5,
             nomeAnimal: null,
             nomeAnimalState: null,
+            brinco: null,
             motivo: null,
             motivoState: null,
             causa: null,
@@ -235,6 +233,7 @@ export default {
             ],
             fields: [
                 { key: 'nomeAnimal', label: 'Nome', sortable: true},
+                { key: 'brinco', label: 'Brinco', sortable: true},
                 { key: 'dataDescarte', label: 'Data Descarte', sortable: true,
                 formatter: value => {
                     return moment(String(value)).format('DD/MM/YYYY')
@@ -294,6 +293,7 @@ export default {
 
                 const resCadastro = await axios.post(`${baseApiUrl}/descartes`, { 
                     nomeAnimal: this.backupAnimal.nomeAnimal, 
+                    brinco: this.backupAnimal.brinco, 
                     motivo: this.motivo, 
                     causa: this.causa, 
                     dataDescarte: this.dataDescarte});

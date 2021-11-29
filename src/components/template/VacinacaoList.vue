@@ -60,8 +60,8 @@
                                         <b-form-select-option :value="null" disabled>-- Por favor selecione uma opção --</b-form-select-option>
                                     </template>
 
-                                    <b-form-select-option v-for="animal of animais" :key="animal.id" :value="animal.nomeAnimal">
-                                        {{animal.nomeAnimal}}
+                                    <b-form-select-option v-for="animal of animais" :key="animal.id" :value="animal.id">
+                                        {{animal.brinco}} - {{animal.nomeAnimal}}
                                     </b-form-select-option>
 
                                 </b-form-select>
@@ -147,41 +147,20 @@
             @hidden="resetModal"
             @ok="editarOk">
 
+            Deseja realmente editar o medicamento do animal <strong>{{vacina.nomeAnimal}}</strong> ?
+            <br><br>
+
             <form ref="form" @submit.stop.prevent="handleSubmit">
                 
                 <b-container>
                     <b-row>
-                        <!--
                         <b-col>
                             <b-form-group
-                                label="Nome do Animal*"
-                                invalid-feedback="O nome do animal é obrigatório">
+                                label="Nome*">
 
-                                <b-form-input
+                                <b-form-input 
                                     v-model="vacina.nomeAnimal"
                                     disabled />
-                            </b-form-group>
-                        </b-col>
-                        -->
-                        <b-col>
-                            <b-form-group
-                                label="Nome do Animal*"
-                                invalid-feedback="O nome do animal é obrigatório">
-
-                                <b-form-select
-                                    v-model="vacina.nomeAnimal"
-                                    :state="nomeAnimalState"
-                                    required >
-
-                                    <template #first>
-                                        <b-form-select-option :value="null" disabled>-- Por favor selecione uma opção --</b-form-select-option>
-                                    </template>
-
-                                    <b-form-select-option v-for="animal of animais" :key="animal.id" :value="animal.nomeAnimal">
-                                        {{animal.brinco}} - {{animal.nomeAnimal}}
-                                    </b-form-select-option>
-
-                                </b-form-select>
                             </b-form-group>
                         </b-col>
                         <b-col>
@@ -282,6 +261,7 @@ export default {
             currentPage: 1,
             perPage: 5,
             nomeAnimal: null,
+            brinco: null,
             nomePatologia: null,
             nomeMedicamento: null,
             observacao: null,
@@ -300,6 +280,7 @@ export default {
 
             fields: [
                 { key: 'nomeAnimal', label: 'Nome do Animal', sortable: true},
+                { key: 'brinco', label: 'Brinco', sortable: true},
                 { key: 'nomePatologia', label: 'Nome Vacina', sortable: true},
                 { key: 'nomeMedicamento', label: 'Nome Medicamento', sortable: true},
                 { key: 'observacao', label: 'Observação', sortable: true},
@@ -367,8 +348,14 @@ export default {
                 return
             }
             try {
+                const id = this.nomeAnimal
+
+                const resB = await axios.get(`${baseApiUrl}/animais/${id}`);
+                this.backupAnimal = resB.data;
+
                 const res = await axios.post(`${baseApiUrl}/vacinas`, { 
-                    nomeAnimal: this.nomeAnimal, 
+                    nomeAnimal: this.backupAnimal.nomeAnimal, 
+                    brinco: this.backupAnimal.brinco, 
                     nomePatologia: this.nomePatologia,
                     nomeMedicamento: this.nomeMedicamento,
                     observacao: this.observacao, 
@@ -394,6 +381,7 @@ export default {
                 const id = this.vacina.id
                 const res = await axios.put(`${baseApiUrl}/vacinas/${id}`, { 
                     nomeAnimal: this.vacina.nomeAnimal, 
+                    brinco: this.vacina.brinco, 
                     nomePatologia: this.vacina.nomePatologia, 
                     nomeMedicamento: this.vacina.nomeMedicamento, 
                     observacao: this.vacina.observacao, 
