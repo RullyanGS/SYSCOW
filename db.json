@@ -47,6 +47,30 @@
       "nomePai": null,
       "ativo": true,
       "id": 8
+    },
+    {
+      "nomeAnimal": "Berlinda",
+      "brinco": "4321",
+      "dataNascimento": "2006-08-13",
+      "sexo": "F",
+      "origem": "Compra",
+      "raca": "Holandês Preto e Branco",
+      "nomeMae": "asdas",
+      "nomePai": "teste",
+      "ativo": false,
+      "id": 9
+    },
+    {
+      "nomeAnimal": "dff",
+      "brinco": "2231",
+      "dataNascimento": "2021-11-29",
+      "sexo": "F",
+      "origem": "Compra",
+      "raca": "Desconhecida",
+      "nomeMae": null,
+      "nomePai": null,
+      "ativo": true,
+      "id": 10
     }
   ],
   "pesagens": [
@@ -70,6 +94,13 @@
       "peso": "1",
       "dataPesagem": "2021-11-29",
       "id": 7
+    },
+    {
+      "nomeAnimal": "Berlinda",
+      "brinco": "4321",
+      "peso": "85",
+      "dataPesagem": "2021-11-29",
+      "id": 8
     }
   ],
   "descartes": [
@@ -88,6 +119,14 @@
       "causa": "",
       "dataDescarte": "2021-11-29",
       "id": 3
+    },
+    {
+      "nomeAnimal": "Berlinda",
+      "brinco": "4321",
+      "motivo": "desaparecido",
+      "causa": "É isso",
+      "dataDescarte": "2021-11-29",
+      "id": 4
     }
   ],
   "ordenhas": [

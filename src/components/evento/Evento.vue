@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import EventoList from "../template/EventoList";
+import EventoList from "../template/list/EventoList";
 import PageTitle from '../template/PageTitle'
 
 export default {

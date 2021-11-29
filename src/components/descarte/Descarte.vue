@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import DescarteList from "../template/DescarteList";
+import DescarteList from "../template/list/DescarteList";
 import PageTitle from '../template/PageTitle'
 
 export default {

@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import OrdenhaDiariaList from "../template/OrdenhaDiariaList";
+import OrdenhaDiariaList from "../template/list/OrdenhaDiariaList";
 import PageTitle from '../template/PageTitle'
 
 export default {

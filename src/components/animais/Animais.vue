@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import AnimalList from "../template/AnimalList";
+import AnimalList from "../template/list/AnimalList";
 import PageTitle from '../template/PageTitle'
 
 export default {

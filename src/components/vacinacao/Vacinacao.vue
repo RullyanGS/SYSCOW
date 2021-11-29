@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import VacinacaoList from "../template/VacinacaoList";
+import VacinacaoList from "../template/list/VacinacaoList";
 import PageTitle from '../template/PageTitle'
 
 export default {

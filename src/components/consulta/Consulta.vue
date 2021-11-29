@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import ConsultaList from "../template/ConsultaList";
+import ConsultaList from "../template/list/ConsultaList";
 import PageTitle from '../template/PageTitle'
 
 export default {

@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import PesagemList from "../template/PesagemList";
+import PesagemList from "../template/list/PesagemList";
 import PageTitle from '../template/PageTitle'
 
 export default {

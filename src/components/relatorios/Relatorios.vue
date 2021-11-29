@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import RelatorioList from "../template/RelatorioList";
+import RelatorioList from "../template/list/RelatorioList";
 import PageTitle from '../template/PageTitle'
 
 export default {

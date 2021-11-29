@@ -1,7 +1,7 @@
 const OktaAuth = require('@okta/okta-auth-js').OktaAuth
 const authClient = new OktaAuth({
-  issuer: 'https://dev-6202755.okta.com',
-  clientId: '0oa2w26wltG4dYUOi5d7',
+  issuer: 'https://dev-2939905.okta.com',
+  clientId: '0oa2wjnh3hLyeYLpy5d7',
   scopes: ['openid', 'email', 'profile'],
   redirectUri: window.location.origin + '/login/callback'
 })
