@@ -1,4 +1,4 @@
 export const userKey = '__knowledge_user'
-export const baseApiUrl = 'http://localhost:3001'
+export const baseApiUrl = 'https://json-server-heroku-syscow.herokuapp.com'
 
 export default { baseApiUrl , userKey}
