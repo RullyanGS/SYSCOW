@@ -26,7 +26,10 @@ export default {
 
     #content.hide-menu {
         background-image: url("../../assets/background.png");
-
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        
         grid-area: content;
         background-color: #efefef;
         padding: 20px;

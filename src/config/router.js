@@ -16,10 +16,6 @@ import auth from '@/auth'
 Vue.use(VueRouter)
 
 const routes = [{
-    path: '/',
-    name: 'login',
-    component: Login
-}, {
     path: '/home',
     name:  'home',
     component: Home,
@@ -65,19 +61,27 @@ const routes = [{
     component: Relatorios,
     beforeEnter: requireAuth
 }, {
-    path: '/login', component: Login
+    path: '/', 
+    name: "login",
+    component: Login,
 }, {
     path: '/logout',
     beforeEnter (to, from, next) {
     auth.logout()
     next('/')
     }
+}, {
+    path: '*',
+    name: 'NotFound',
+    beforeEnter (to, from, next) {
+        next('/home')
+    }
 }]
 
 function requireAuth (to, from, next) {
     if (!auth.loggedIn()) {
       next({
-        path: '/login',
+        path: '/',
         query: { redirect: to.fullPath }
       })
     } else {
