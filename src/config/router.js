@@ -74,7 +74,7 @@ const routes = [{
     path: '*',
     name: 'NotFound',
     beforeEnter (to, from, next) {
-        next('/home')
+        next('/')
     }
 }]
 
