@@ -7,7 +7,7 @@
       <form @submit.prevent="login">
         <input v-model="email" name="email" type="text" placeholder="E-mail">
         <input v-model="pass" name="password" type="password" placeholder="Senha">
-        <b-button type="submit" variant="primary">Acessar</b-button>
+        <b-button block type="submit" variant="primary">Acessar</b-button>
         <p v-if="error" class="error">Informação de login inválida</p>
         <p v-if="$route.query.redirect" class="error">
           Você precisa fazer o login primeiro.
@@ -60,7 +60,10 @@
       box-shadow: 0 1px 5px rgba(0, 0, 0, 0.15);
       display: flex;
       flex-direction: column;
-      align-items: center;  
+      align-items: center;
+      border-radius: 20px;
+      border:solid 2px;
+      border-color: blue;
   }
   .auth-title {
       padding: 10px;
@@ -99,7 +102,8 @@
           rgba(120, 120, 120, 0));
   }
   .logo {
-    font-size: 40px;
+    font-size: 50px;
     padding: 35px;
+    color: blue;
   }
 </style>
