@@ -98,8 +98,8 @@
                     <b-row>
                         <b-col>    
                             <b-form-group
-                                label="Data da Vacinação*" 
-                                invalid-feedback="A data de vacinação é obrigatoria">
+                                label="Data da medicação*" 
+                                invalid-feedback="A data da medicação é obrigatoria">
                                 <b-form-input
                                     type = "date"
                                     v-model="dataVacinacao"  
@@ -165,8 +165,8 @@
                         </b-col>
                         <b-col>
                             <b-form-group
-                                label="Nome da Vacina*"
-                                invalid-feedback="O nome da Vacina é obrigatório">
+                                label="Nome da Patologia*"
+                                invalid-feedback="O nome da Patologia é obrigatório">
 
                                 <b-form-input
                                     v-model="vacina.nomePatologia"
@@ -194,8 +194,8 @@
                     <b-row>
                         <b-col>    
                             <b-form-group
-                                label="Data da Vacinação*" 
-                                invalid-feedback="A data de vacinação é obrigatoria">
+                                label="Data da Medicação*" 
+                                invalid-feedback="A data de medicação é obrigatoria">
                                 <b-form-input
                                     type = "date"
                                     v-model="vacina.dataVacinacao"  

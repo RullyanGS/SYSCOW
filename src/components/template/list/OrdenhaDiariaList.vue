@@ -62,7 +62,7 @@
                         </b-col>
                         <b-col>
                             <b-form-group
-                                label="Número de Vacas Ordenhadas*"
+                                label="Nº de Vacas Ordenhadas*"
                                 invalid-feedback="O Número de Vacas Ordenhadas é obrigatório">
 
                                 <b-form-input
@@ -126,7 +126,7 @@
                         </b-col>
                         <b-col>
                             <b-form-group
-                                label="Número de Vacas Ordenhadas*"
+                                label="Nº de Vacas Ordenhadas*"
                                 invalid-feedback="O Número de Vacas Ordenhadas é obrigatório">
 
                                 <b-form-input
