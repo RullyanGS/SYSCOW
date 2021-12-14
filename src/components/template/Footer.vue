@@ -1,6 +1,6 @@
 <template>
     <footer class="footer">
-        <span>Copyritht <strong>SYSCOW</strong> © 2021</span>
+        <span>Copyright <strong>SYSCOW</strong> © 2021</span>
     </footer>
 </template>
 
