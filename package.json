@@ -1,5 +1,5 @@
 {
-  "name": "SYSCOW",
+  "name": "syscow",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -9,7 +9,7 @@
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
-  "dependencies": {
+  "dependencies": { 
     "@okta/okta-auth-js": "^5.5.0",
     "@okta/okta-vue": "^5.0.1",
     "array": "^0.4.3",

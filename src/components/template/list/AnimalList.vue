@@ -497,20 +497,30 @@ export default {
                 return
             }
             try {
-                const res = await axios.post(`${baseApiUrl}/animais`, { 
-                    nomeAnimal: this.nomeAnimal, 
-                    brinco: this.brinco, 
-                    dataNascimento: this.dataNascimento,
-                    sexo: this.sexo, 
-                    //peso: this.peso,
-                    origem: this.origem,
-                    raca: this.raca,
-                    nomeMae: this.nomeMae,
-                    nomePai: this.nomePai,
-                    ativo: this.ativo});
 
-                    this.animais = [...this.animais, res.data];
+                const checkBrinco = (serverUsers,brinco) => {
+                    const user = serverUsers.find(user => user.brinco === brinco); 
+                    if (user) return user;
+                };
 
+                const user = await axios.get(`${baseApiUrl}/animais`).then((res) => checkBrinco(res.data,this.brinco));
+                
+                if (user) alert("O cadastro não pode ser realizado pois, este brinco já esta cadastrado!");
+                else{
+                    const res = await axios.post(`${baseApiUrl}/animais`, { 
+                        nomeAnimal: this.nomeAnimal, 
+                        brinco: this.brinco, 
+                        dataNascimento: this.dataNascimento,
+                        sexo: this.sexo, 
+                        //peso: this.peso,
+                        origem: this.origem,
+                        raca: this.raca,
+                        nomeMae: this.nomeMae,
+                        nomePai: this.nomePai,
+                        ativo: this.ativo});
+
+                        this.animais = [...this.animais, res.data];
+                }
             } catch (e) {
                 console.error(e);
             }
