@@ -75,9 +75,10 @@
                                 label="Data de nascimento*"
                                 invalid-feedback="A data de nascimento é obrigatório">
                                 <b-form-input
-                                    type = "date"
+                                    type="date"
                                     v-model="dataNascimento"
                                     :state="dataNascimentoState"
+                                    :max="max"
                                     required />
                             </b-form-group>
                         </b-col>
@@ -221,6 +222,7 @@
                                     type = "date"
                                     v-model="animal.dataNascimento"
                                     :state="dataNascimentoState"
+                                    :max="max"
                                     required />
                             </b-form-group>
                         </b-col>
@@ -351,7 +353,14 @@ export default {
 
     name: "AnimalList",
     data() {
+        const now = new Date()
+        const today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
+
+        const maxDate = new Date(today)
+        var maxDateMoment = moment(maxDate, "DD/MM/YYYY");
+
         return {
+            max: maxDateMoment.format("YYYY-MM-DD"),
             teste: '',
             filter: '',
             currentPage: 1,
@@ -456,6 +465,7 @@ export default {
         this.animais = res.data;
         this.animaisF = resF.data;
         this.animaisM = resM.data;
+
         } catch (e) {
         console.error(e);
         }
@@ -497,15 +507,23 @@ export default {
                 return
             }
             try {
-
-                const checkBrinco = (serverUsers,brinco) => {
-                    const user = serverUsers.find(user => user.brinco === brinco); 
-                    if (user) return user;
+                const checkDataNascimentoF = (serverUsers,dataNascimento) => {
+                    const chDataNascimento = serverUsers.find(chDataNascimento => chDataNascimento.dataNascimento < dataNascimento); 
+                    if (chDataNascimento) return chDataNascimento;
                 };
 
-                const user = await axios.get(`${baseApiUrl}/animais`).then((res) => checkBrinco(res.data,this.brinco));
-                
-                if (user) alert("O cadastro não pode ser realizado pois, este brinco já esta cadastrado!");
+                const checkBrinco = (serverUsers,brinco) => {
+                    const chBrinco = serverUsers.find(chBrinco => chBrinco.brinco === brinco); 
+                    if (chBrinco) return chBrinco;
+                };
+
+                const chBrinco = await axios.get(`${baseApiUrl}/animais`).then((res) => checkBrinco(res.data,this.brinco));
+                const chDataNascimentoF = await axios.get(`${baseApiUrl}/animais?nomeAnimal=${this.nomeMae}`).then((res) => checkDataNascimentoF(res.data,this.dataNascimento));
+            
+                console.log(this.dataNascimento)
+                console.log(chDataNascimentoF.dataNascimento)
+
+                if (chBrinco) alert("O cadastro não pode ser realizado, pois este brinco já esta cadastrado!");
                 else{
                     const res = await axios.post(`${baseApiUrl}/animais`, { 
                         nomeAnimal: this.nomeAnimal, 

@@ -4,6 +4,9 @@
             <strong>{{title}}</strong>
         </h1>
         <UserDropdown v-if="!hideUserDropdown" />
+        <div class="icon" @click="toggleMenu">
+            <i class="fa fa-question"></i>
+        </div>
     </header>
 </template>
 
@@ -15,7 +18,10 @@ export default {
     components: { UserDropdown },
     props: {
         title: String,
-        hideUserDropdown: Boolean
+        hideUserDropdown: Boolean,
+        hideToggle: Boolean
+    },
+    computed: {
     },
     methods: {
         toggleMenu() {
@@ -42,5 +48,11 @@ export default {
         font-weight: 100;
         flex-grow: 1;
         margin-left: 70px;
+    }
+
+    .icon {
+        margin: 0px 10px;
+        font-size: 40px;
+        padding-right: 10px;
     }
 </style>

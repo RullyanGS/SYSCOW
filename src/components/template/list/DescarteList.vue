@@ -100,6 +100,7 @@
                                     type = "date"
                                     v-model="dataDescarte"
                                     :state="dataDescarteState"
+                                    :max="max"
                                     required />
                             </b-form-group>
                         </b-col>
@@ -170,6 +171,7 @@
                                     type = "date"
                                     v-model="descarte.dataDescarte"
                                     :state="dataDescarteState"
+                                    :max="max"
                                     required />
                             </b-form-group>
                         </b-col>
@@ -204,7 +206,14 @@ import moment from 'moment'
 export default {
     name: "DescarteList",
     data () {
+        const now = new Date()
+        const today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
+
+        const maxDate = new Date(today)
+        var maxDateMoment = moment(maxDate, "DD/MM/YYYY");
+
         return {
+            max: maxDateMoment.format("YYYY-MM-DD"),
             filter: '',
             currentPage: 1,
             perPage: 5,

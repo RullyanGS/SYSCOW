@@ -1,7 +1,8 @@
 <template>
   <div id="app" :class="{'hide-menu': hide }">
-    <Header title="SYSCOW" v-if="!hide "/>
+    <Header title="SYSCOW" v-if="!hide"/>
     <Menu v-if="!hide " />
+    <Help v-if="!hide " />
     <Content />
     <Footer />
   </div>
@@ -10,16 +11,17 @@
 <script>
 import Header from "@/components/template/Header"
 import Menu from "@/components/template/Menu"
+import Help from "@/components/template/Help"
 import Content from "@/components/template/Content"
 import Footer from "@/components/template/Footer"
 
 export default {
   name: "App",
-  components: { Header, Menu, Content, Footer},
+  components: { Header, Menu, Help, Content, Footer},
   computed: {
     hide () {
       return this.$route.path === '/login' || this.$route.path === '/'; 
-    }
+    },
   }
 }
 </script>
@@ -42,9 +44,9 @@ export default {
     grid-template-rows: 60px 1fr 40px;
     grid-template-columns: 300px 1fr;
     grid-template-areas: 
-      "header header"
-      "menu content"
-      "menu footer";
+      "header header help"
+      "menu content help"
+      "menu footer help";
   }
 
   #app.hide-menu {

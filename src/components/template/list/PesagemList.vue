@@ -86,6 +86,7 @@
                                     class="today"
                                     v-model="dataPesagem"
                                     :state="dataPesagemState"
+                                    :max="max"
                                     required />
                             </b-form-group>
                         </b-col>
@@ -144,6 +145,7 @@
                                 <b-form-input
                                     type = "date"
                                     v-model="pesagem.dataPesagem"
+                                    :max="max"
                                     required
                                     :state="dataPesagemState" />
                             </b-form-group>
@@ -180,7 +182,14 @@ import moment from 'moment'
 export default {
     name: "PesagemList",
     data () {
+        const now = new Date()
+        const today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
+
+        const maxDate = new Date(today)
+        var maxDateMoment = moment(maxDate, "DD/MM/YYYY");
+
         return {
+            max: maxDateMoment.format("YYYY-MM-DD"),
             filter: '',
             currentPage: 1,
             perPage: 5,

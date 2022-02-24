@@ -82,6 +82,7 @@
                                     type = "date"
                                     v-model="dataOrdenhaDiaria"
                                     :state="dataOrdenhaDiariaState"
+                                    :max="max"
                                     required />
                             </b-form-group>
                         </b-col>
@@ -146,6 +147,7 @@
                                     type="date"
                                     v-model="ordenha.dataOrdenhaDiaria"
                                     :state="dataOrdenhaDiariaState"
+                                    :max="max"
                                     required />
                             </b-form-group>
                         </b-col>
@@ -182,7 +184,14 @@ import moment from 'moment'
 export default {
     name: "OrdenhaDiariaList",
     data () {
+        const now = new Date()
+        const today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
+
+        const maxDate = new Date(today)
+        var maxDateMoment = moment(maxDate, "DD/MM/YYYY");
+
         return {
+            max: maxDateMoment.format("YYYY-MM-DD"),
             filter: '',
             currentPage: 1,
             perPage: 5,
