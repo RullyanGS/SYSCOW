@@ -1,13 +1,22 @@
 <template>
     <div id="content" :class="{'hide-menu': hide }">
         <router-view></router-view>
+        <div class="icon" @click="toggleMenu">
+            <i class="fa fa-question-circle"></i>
+        </div>
     </div>
+    
 </template>
 
 <script>
 
 export default {
     name: 'Content',
+    methods: {
+        toggleMenu() {
+            this.$store.commit('toggleMenu')
+        }
+    },
     computed: {
     hide () {
       return this.$route.path === '/login' || this.$route.path === '/'; 
@@ -33,5 +42,11 @@ export default {
         grid-area: content;
         background-color: #efefef;
         padding: 20px;
+    }
+
+    .icon {
+        font-size: 40px;
+        float: right;
+        padding-right: 20px;
     }
 </style>

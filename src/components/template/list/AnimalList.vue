@@ -109,7 +109,8 @@
                                     v-model="origem" 
                                     :options="opcaoOrigem"
                                     :state="origemState"
-                                    required>
+                                    required
+                                    @change="onChangeSelect($event)">
                                     <template #first>
                                         <b-form-select-option :value="null" disabled>-- Por favor selecione uma opção --</b-form-select-option>
                                     </template>
@@ -140,9 +141,10 @@
                                 label="Nome da mãe">
 
                                 <b-form-select
-                                    v-model="nomeMae" >
+                                    v-model="nomeMae" 
+                                    :disabled="inputDisabled">
                                     <template #first>
-                                        <b-form-select-option :value="null" >Não Cadastrado</b-form-select-option>
+                                        <b-form-select-option :value="null" >Não Informado</b-form-select-option>
                                     </template>
                                     <b-form-select-option v-for="animal of animaisF" :key="animal.id" :value="animal.nomeAnimal">
                                         {{animal.nomeAnimal}}
@@ -156,11 +158,12 @@
                                 label="Nome do pai">
 
                                 <b-form-select
-                                    v-model="nomePai" >
+                                    v-model="nomePai" 
+                                    :disabled="inputDisabled">
                                     <template #first>
-                                        <b-form-select-option :value="null" >Não Cadastrado</b-form-select-option>
+                                        <b-form-select-option :value="null" >Não Informado</b-form-select-option>
                                     </template>
-                                    <b-form-select-option v-for="animal of animaisM" :key="animal.id" :value="animal.nomeAnimal">
+                                    <b-form-select-option v-for="animal of animaisM" :key="animal.id" :value="animal.nomeAnimal" >
                                         {{animal.nomeAnimal}}
                                     </b-form-select-option>
                                 </b-form-select>
@@ -294,11 +297,12 @@
                                 label="Nome da mãe">
 
                                 <b-form-select
-                                    v-model="animal.nomeMae" >
+                                    v-model="animal.nomeMae"
+                                    :disabled="inputDisabled" >
                                     <template #first>
-                                        <b-form-select-option :value="null" >Não Cadastrado</b-form-select-option>
+                                        <b-form-select-option :value="null" >Não Informado</b-form-select-option>
                                     </template>
-                                    <b-form-select-option v-for="animal of animaisF" :key="animal.id" :value="animal.nomeAnimal">
+                                    <b-form-select-option v-for="animal of animaisF" :key="animal.id" :value="animal.nomeAnimal" >
                                         {{animal.nomeAnimal}}
                                     </b-form-select-option>
                                 </b-form-select>
@@ -310,11 +314,12 @@
                                 label="Nome do pai">
 
                                 <b-form-select
-                                    v-model="animal.nomePai" >
+                                    v-model="animal.nomePai"
+                                    :disabled="inputDisabled" >
                                     <template #first>
-                                        <b-form-select-option :value="null" >Não Cadastrado</b-form-select-option>
+                                        <b-form-select-option :value="null" >Não Informado</b-form-select-option>
                                     </template>
-                                    <b-form-select-option v-for="animal of animaisM" :key="animal.id" :value="animal.nomeAnimal">
+                                    <b-form-select-option v-for="animal of animaisM" :key="animal.id" :value="animal.nomeAnimal" >
                                         {{animal.nomeAnimal}}
                                     </b-form-select-option>
                                 </b-form-select>
@@ -360,6 +365,7 @@ export default {
         var maxDateMoment = moment(maxDate, "DD/MM/YYYY");
 
         return {
+            inputDisabled: true,
             max: maxDateMoment.format("YYYY-MM-DD"),
             teste: '',
             filter: '',
@@ -471,6 +477,13 @@ export default {
         }
     },
     methods: {
+        onChangeSelect() {   
+            if(this.origem === "Nascimento"){
+                this.inputDisabled = false
+            }else{
+                this.inputDisabled = true
+            }
+        },
         checkFormValidity() {
             const valid = this.$refs.form.checkValidity()
             this.nomeAnimalState = valid
@@ -512,6 +525,11 @@ export default {
                     if (chDataNascimento) return chDataNascimento;
                 };
 
+                const checkDataNascimentoM = (serverUsers,dataNascimento) => {
+                    const chDataNascimento = serverUsers.find(chDataNascimento => chDataNascimento.dataNascimento < dataNascimento); 
+                    if (chDataNascimento) return chDataNascimento;
+                };
+
                 const checkBrinco = (serverUsers,brinco) => {
                     const chBrinco = serverUsers.find(chBrinco => chBrinco.brinco === brinco); 
                     if (chBrinco) return chBrinco;
@@ -519,9 +537,28 @@ export default {
 
                 const chBrinco = await axios.get(`${baseApiUrl}/animais`).then((res) => checkBrinco(res.data,this.brinco));
                 const chDataNascimentoF = await axios.get(`${baseApiUrl}/animais?nomeAnimal=${this.nomeMae}`).then((res) => checkDataNascimentoF(res.data,this.dataNascimento));
+                const chDataNascimentoM = await axios.get(`${baseApiUrl}/animais?nomeAnimal=${this.nomePai}`).then((res) => checkDataNascimentoM(res.data,this.dataNascimento));
             
-                console.log(this.dataNascimento)
-                console.log(chDataNascimentoF.dataNascimento)
+                //console.log(this.dataNascimento)
+                //console.log(chDataNascimentoF)
+                //console.log(chDataNascimentoM)
+
+                if(this.origem === "Nascimento"){
+                    if(chDataNascimentoF != undefined){
+                    //console.log(chDataNascimentoF.dataNascimento)
+                    }else{
+                        alert("não é possivel cadastrar animal, pois sua idade não condiz com a mãe");
+                        return
+                    }
+
+                    if(chDataNascimentoM != null){
+                    //console.log(chDataNascimentoM.dataNascimento)
+                    }else{
+                        alert("não é possivel cadastrar animal, pois sua idade não condiz com o pai");
+                        return
+                    }
+                }
+
 
                 if (chBrinco) alert("O cadastro não pode ser realizado, pois este brinco já esta cadastrado!");
                 else{

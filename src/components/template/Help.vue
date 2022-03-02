@@ -1,15 +1,57 @@
 <template>
     <aside class="help" v-show="isMenuVisibleHelp">
         <div class="titulo">Help de Contexto</div>
-        <router-link to="/home">Ajuda 1</router-link>
-        <router-link to="/animais">Ajuda 2</router-link>
-        <router-link to="/pesagem">Ajuda 3</router-link>
-        <router-link to="/descarte">Ajuda 4</router-link>
-        <router-link to="/vacinacao">Ajuda 5</router-link>
-        <router-link to="/consulta">Ajuda 6</router-link>
-        <router-link to="/evento">Ajuda 7</router-link>
-        <router-link to="/ordenhadiaria">Ajuda 8</router-link>
-        <router-link to="/relatorios">Ajuda 9</router-link>
+
+        <div class="accordion">
+            <!-- Using modifiers -->
+            <b-button v-b-toggle.accordion-1 variant="info" class="m-1">Tela Inicial</b-button>
+            <b-button v-b-toggle.accordion-2 variant="info" class="m-1">Animais</b-button>
+            <b-button v-b-toggle.accordion-3 variant="info" class="m-1">Pesagem</b-button>
+            <b-button v-b-toggle.accordion-4 variant="info" class="m-1">Descarte</b-button>
+            <b-button v-b-toggle.accordion-5 variant="info" class="m-1">Medicação</b-button>
+            <b-button v-b-toggle.accordion-6 variant="info" class="m-1">Consulta Veterinária</b-button>
+            <b-button v-b-toggle.accordion-7 variant="info" class="m-1">Evento</b-button>
+            <b-button v-b-toggle.accordion-8 variant="info" class="m-1">Ordenha Diária</b-button>
+            <b-button v-b-toggle.accordion-9 variant="info" class="m-1">Relatórios</b-button>
+
+            <b-collapse id="accordion-1" accordion="my-accordion" role="tabpanel" class="cardInfo">
+                <b-card>Tela Inicial</b-card>
+            </b-collapse>
+
+            <b-collapse id="accordion-2" accordion="my-accordion" role="tabpanel" class="cardInfo">
+                <b-card>Animais</b-card>
+            </b-collapse>
+
+            <b-collapse id="accordion-3" accordion="my-accordion" role="tabpanel" class="cardInfo">
+                <b-card>Pesagem</b-card>
+            </b-collapse>
+            
+            <b-collapse id="accordion-4" accordion="my-accordion" role="tabpanel" class="cardInfo">
+                <b-card>Descarte</b-card>
+            </b-collapse>
+
+            <b-collapse id="accordion-5" accordion="my-accordion" role="tabpanel" class="cardInfo">
+                <b-card>Medicação</b-card>
+            </b-collapse>
+
+            <b-collapse id="accordion-6" accordion="my-accordion" role="tabpanel" class="cardInfo">
+                <b-card>Consulta Veterinária</b-card>
+            </b-collapse>
+
+            <b-collapse id="accordion-7" accordion="my-accordion" role="tabpanel" class="cardInfo">
+                <b-card>Evento</b-card>
+            </b-collapse>
+
+            <b-collapse id="accordion-8" accordion="my-accordion" role="tabpanel" class="cardInfo">
+                <b-card>Ordenha Diária</b-card>
+            </b-collapse>
+
+            <b-collapse id="accordion-9" accordion="my-accordion" role="tabpanel" class="cardInfo">
+                <b-card>Relatórios</b-card>
+            </b-collapse>
+
+        </div>
+
     </aside>
 </template>
 
@@ -50,5 +92,13 @@ export default {
         color: #fff;
         padding: 10px 0 20px 0;
         margin-bottom: 10px;
+    }
+
+    .accordion {
+        width: 400px;
+    }
+
+    .cardInfo{
+        width: 840px;
     }
 </style>

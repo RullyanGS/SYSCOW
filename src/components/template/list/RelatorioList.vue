@@ -22,7 +22,8 @@
                     <b-col >
                         <b-form-group
                             label=".">
-                                <b-button @click="downloadPDF" variant="primary">Gerar Relatório</b-button>
+                                <b-button @click="downloadPDF" variant="primary" v-on:click="isHidden = true"
+                                >Gerar Relatório</b-button>
                         </b-form-group>
                     </b-col>
                 </b-row>
@@ -34,12 +35,19 @@
                     :float-layout="false" 
                     :manual-pagination="true" 
                     :enable-download="true" 
-                    :pdf-content-width="'100%'" 
+                    :pdf-content-width="'100%'"
+                    :filename="'relatorio'"
+                    :pdf-quality="2" 
                     ref="DownloadComp">
 
                     <section slot="pdf-content"> 
-
-                        <b-tabs>
+                        <div class="folha" v-show="isHidden">
+                            SYSCOW - SISTEMA PARA GESTÃO DE GADO LEITEIRO<br>
+                            Chácara Santa Rita da Serra<br>   
+                            Emitido em {{dataAtual}}<br>
+                            <hr>
+                        </div>
+                        <b-tabs class="folha">
                             <b-tab  title="Animais" active>
                                 <b-table :items="animais" :fields="fieldsAnimais" :filter="filter" :filter-function="filterItemAnimais"></b-table>
                             </b-tab>
@@ -81,7 +89,13 @@ import moment from 'moment'
 export default {
     name: "RelatorioList",
     data() {
+        const hoje = new Date();
+
         return {
+            isHidden: true,
+
+            dataAtual : hoje.toLocaleString(),
+
             filter: {
                 startDate: null,
                 endDate: null
@@ -319,4 +333,7 @@ export default {
 </script>
 
 <style>
+    .folha{
+        padding: 20px 20px 0px 20px ;
+    }
 </style>
