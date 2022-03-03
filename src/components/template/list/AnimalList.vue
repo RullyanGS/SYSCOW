@@ -263,10 +263,11 @@
                                 label="Origem*"
                                 invalid-feedback="A origem é obrigatório">
                                 <b-form-select 
-                                    v-model="animal.origem" 
+                                    v-model="origem" 
                                     :options="opcaoOrigem"
                                     :state="origemState"
-                                    required>
+                                    required
+                                    @change="onChangeSelect($event)">
                                     <template #first>
                                         <b-form-select-option :value="null" disabled>-- Por favor selecione uma opção --</b-form-select-option>
                                     </template>
@@ -524,50 +525,42 @@ export default {
                     const chDataNascimento = serverUsers.find(chDataNascimento => chDataNascimento.dataNascimento < dataNascimento); 
                     if (chDataNascimento) return chDataNascimento;
                 };
-
                 const checkDataNascimentoM = (serverUsers,dataNascimento) => {
                     const chDataNascimento = serverUsers.find(chDataNascimento => chDataNascimento.dataNascimento < dataNascimento); 
                     if (chDataNascimento) return chDataNascimento;
                 };
-
                 const checkBrinco = (serverUsers,brinco) => {
                     const chBrinco = serverUsers.find(chBrinco => chBrinco.brinco === brinco); 
                     if (chBrinco) return chBrinco;
                 };
-
                 const chBrinco = await axios.get(`${baseApiUrl}/animais`).then((res) => checkBrinco(res.data,this.brinco));
                 const chDataNascimentoF = await axios.get(`${baseApiUrl}/animais?nomeAnimal=${this.nomeMae}`).then((res) => checkDataNascimentoF(res.data,this.dataNascimento));
                 const chDataNascimentoM = await axios.get(`${baseApiUrl}/animais?nomeAnimal=${this.nomePai}`).then((res) => checkDataNascimentoM(res.data,this.dataNascimento));
-            
-                /*console.log(this.nomeMae)
-                console.log(this.nomePai)
-                console.log(this.dataNascimento)
-                console.log(this.dataNascimento)
-                console.log(chDataNascimentoF)
-                console.log(chDataNascimentoM)*/
-
+                /*
+                console.log("nomeMae:           " + this.nomeMae)
+                console.log("nomePai:           " + this.nomePai)
+                console.log("dataNascimento:    " + this.dataNascimento)
+                console.log("chDataNascimentoF: " + chDataNascimentoF)
+                console.log("chDataNascimentoM: " + chDataNascimentoM)
+                */
                 if(this.origem === "Nascimento"){
-                    if(this.nomeMae != null){
-                        if(this.nomePai != null){
-                            if(chDataNascimentoF != undefined){
-                            //console.log("teste")
-                            }else{
-                                alert("não é possivel cadastrar animal, pois sua idade não condiz com a mãe");
-                                return
-                            }
-
-                            if(chDataNascimentoM != null){
-                            //console.log("teste")
-                            }else{
-                                alert("não é possivel cadastrar animal, pois sua idade não condiz com o pai");
-                                return
-                            }
+                    if(this.nomeMae != null && this.nomePai != null ){
+                        if(chDataNascimentoF != undefined){
+                            console.log("testeF")
+                        }else{
+                            console.log("VaiF")
+                            alert("não é possivel cadastrar animal, pois sua idade não condiz com a mãe");
+                            return
                         }
-                        
+                        if(chDataNascimentoM != undefined){
+                            console.log("testM")
+                        }else{
+                            console.log("VaiM")
+                            alert("não é possivel cadastrar animal, pois sua idade não condiz com o pai");
+                            return
+                        }
                     } 
                 }
-
-
                 if (chBrinco) alert("O cadastro não pode ser realizado, pois este brinco já esta cadastrado!");
                 else{
                     const res = await axios.post(`${baseApiUrl}/animais`, { 
@@ -598,6 +591,7 @@ export default {
                 return
             }
             try {
+                
                 const id = this.animal.id
                 const res = await axios.put(`${baseApiUrl}/animais/${id}`, { 
                     nomeAnimal: this.animal.nomeAnimal, 
