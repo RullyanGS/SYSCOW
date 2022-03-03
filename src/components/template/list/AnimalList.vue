@@ -539,24 +539,32 @@ export default {
                 const chDataNascimentoF = await axios.get(`${baseApiUrl}/animais?nomeAnimal=${this.nomeMae}`).then((res) => checkDataNascimentoF(res.data,this.dataNascimento));
                 const chDataNascimentoM = await axios.get(`${baseApiUrl}/animais?nomeAnimal=${this.nomePai}`).then((res) => checkDataNascimentoM(res.data,this.dataNascimento));
             
-                //console.log(this.dataNascimento)
-                //console.log(chDataNascimentoF)
-                //console.log(chDataNascimentoM)
+                /*console.log(this.nomeMae)
+                console.log(this.nomePai)
+                console.log(this.dataNascimento)
+                console.log(this.dataNascimento)
+                console.log(chDataNascimentoF)
+                console.log(chDataNascimentoM)*/
 
                 if(this.origem === "Nascimento"){
-                    if(chDataNascimentoF != undefined){
-                    //console.log(chDataNascimentoF.dataNascimento)
-                    }else{
-                        alert("não é possivel cadastrar animal, pois sua idade não condiz com a mãe");
-                        return
-                    }
+                    if(this.nomeMae != null){
+                        if(this.nomePai != null){
+                            if(chDataNascimentoF != undefined){
+                            //console.log("teste")
+                            }else{
+                                alert("não é possivel cadastrar animal, pois sua idade não condiz com a mãe");
+                                return
+                            }
 
-                    if(chDataNascimentoM != null){
-                    //console.log(chDataNascimentoM.dataNascimento)
-                    }else{
-                        alert("não é possivel cadastrar animal, pois sua idade não condiz com o pai");
-                        return
-                    }
+                            if(chDataNascimentoM != null){
+                            //console.log("teste")
+                            }else{
+                                alert("não é possivel cadastrar animal, pois sua idade não condiz com o pai");
+                                return
+                            }
+                        }
+                        
+                    } 
                 }
 
 
