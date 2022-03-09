@@ -1,6 +1,13 @@
 <template>
     <aside class="help" v-show="isMenuVisibleHelp">
-        <div class="titulo">Help de Contexto</div>
+        <div class="titulo">
+            <div class="icon" @click="toggleMenu">
+                <i class="fa fa-times-circle"/>
+            </div>
+            <div class="icon"> Help de Contexto </div>
+            
+        </div>
+        
 
         <div class="accordion">
             <!-- Using modifiers -->
@@ -60,6 +67,11 @@ import {mapState} from 'vuex'
 
 export default {
     name: 'Help',
+    methods: {
+        toggleMenu() {
+            this.$store.commit('toggleMenu')
+        }
+    },
     computed: mapState(['isMenuVisibleHelp'])
 }
 </script>

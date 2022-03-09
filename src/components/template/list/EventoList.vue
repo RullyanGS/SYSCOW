@@ -67,6 +67,11 @@
                                 </b-form-select>
                             </b-form-group>
                         </b-col>
+                    </b-row>
+                </b-container>
+
+                <b-container>
+                    <b-row>
                         <b-col>
                             <b-form-group
                                 label="Evento*"
@@ -83,11 +88,6 @@
                                 </b-form-select>
                             </b-form-group>
                         </b-col>
-                    </b-row>
-                </b-container>
-
-                <b-container>
-                    <b-row>
                         <b-col>    
                             <b-form-group
                                 label="Data da evento*" 
@@ -156,6 +156,11 @@
                                     disabled />
                             </b-form-group>
                         </b-col>
+                    </b-row>
+                </b-container>
+
+                <b-container>
+                    <b-row>
                         <b-col>
                             <b-form-group
                                 label="Evento*"
@@ -172,11 +177,6 @@
                                 </b-form-select>
                             </b-form-group>
                         </b-col>
-                    </b-row>
-                </b-container>
-
-                <b-container>
-                    <b-row>
                         <b-col>    
                             <b-form-group
                                 label="Data da evento*" 

@@ -58,6 +58,9 @@
                                     required />
                             </b-form-group>
                         </b-col>
+                    </b-row>
+                    <b-row>
+                        
                         <b-col>
                             <b-form-group
                                 label="Brinco*"
@@ -171,8 +174,10 @@
                             </b-form-group>
                         </b-col>
                     </b-row>
+                    <br>
+                    <b-alert show variant="danger">Campos Obrigatorios (*)</b-alert>
                 </b-container>
-
+                
             </form>
             </b-modal>
         </b-row>
@@ -205,6 +210,8 @@
                                     required />
                             </b-form-group>
                         </b-col>
+                    </b-row>
+                    <b-row>
                         <b-col>
                             <b-form-group
                                 label="Brinco*"
@@ -328,6 +335,8 @@
                             </b-form-group>
                         </b-col>
                     </b-row>
+                    <br>
+                    <b-alert show variant="danger">Campos Obrigatorios (*)</b-alert>
                 </b-container>
 
             </form>

@@ -63,6 +63,8 @@
                                 </b-form-select>
                             </b-form-group>
                         </b-col>
+                    </b-row>
+                    <b-row>
                         <b-col>
                             <b-form-group
                                 label="Peso* (Kg)"
@@ -91,8 +93,9 @@
                             </b-form-group>
                         </b-col>
                     </b-row>
+                    <br>
+                    <b-alert show variant="danger">Campos Obrigatorios (*)</b-alert>
                 </b-container>
-
             </form>
             </b-modal>
         </b-row>
@@ -124,6 +127,8 @@
                                     disabled />
                             </b-form-group>
                         </b-col>
+                    </b-row>
+                    <b-row>
                         <b-col>
                             <b-form-group
                                 label="Peso* (kg)"
@@ -151,6 +156,8 @@
                             </b-form-group>
                         </b-col>
                     </b-row>
+                    <br>
+                    <b-alert show variant="danger">Campos Obrigatorios (*)</b-alert>
                 </b-container>
 
             </form>

@@ -67,6 +67,8 @@
                                 </b-form-select>
                             </b-form-group>
                         </b-col>
+                    </b-row>
+                    <b-row>
                         <b-col>
                             <b-form-group
                                 label="Motivo*"
@@ -83,15 +85,6 @@
                                 </b-form-select>
                             </b-form-group>
                         </b-col>
-                        <b-col>
-                            <b-form-group
-                                label="Causa">
-
-                                <b-form-input
-                                    v-model="causa"/>
-
-                            </b-form-group>
-                        </b-col>
                         <b-col>    
                             <b-form-group
                                 label="Data de Descarte*"
@@ -102,6 +95,17 @@
                                     :state="dataDescarteState"
                                     :max="max"
                                     required />
+                            </b-form-group>
+                        </b-col>
+                    </b-row>
+                    <b-row>
+                        <b-col>
+                            <b-form-group
+                                label="Causa">
+
+                                <b-form-input
+                                    v-model="causa"/>
+
                             </b-form-group>
                         </b-col>
                     </b-row>
@@ -138,6 +142,8 @@
                                     disabled />
                             </b-form-group>
                         </b-col>
+                    </b-row>
+                    <b-row>
                         <b-col>
                             <b-form-group
                                 label="Motivo*"
@@ -154,15 +160,6 @@
                                 </b-form-select>
                             </b-form-group>
                         </b-col>
-                        <b-col>
-                            <b-form-group
-                                label="Causa">
-
-                                <b-form-input
-                                    v-model="descarte.causa"/>
-
-                            </b-form-group>
-                        </b-col>
                         <b-col>    
                             <b-form-group
                                 label="Data de Descarte*"
@@ -173,6 +170,17 @@
                                     :state="dataDescarteState"
                                     :max="max"
                                     required />
+                            </b-form-group>
+                        </b-col>
+                    </b-row>
+                    <b-row>
+                        <b-col>
+                            <b-form-group
+                                label="Causa">
+
+                                <b-form-input
+                                    v-model="descarte.causa"/>
+
                             </b-form-group>
                         </b-col>
                     </b-row>

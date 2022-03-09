@@ -67,6 +67,8 @@
                                 </b-form-select>
                             </b-form-group>
                         </b-col>
+                    </b-row>
+                    <b-row>
                         <b-col>
                             <b-form-group
                                 label="Nome da Consulta*"
@@ -146,6 +148,8 @@
                                     disabled />
                             </b-form-group>
                         </b-col>
+                    </b-row>
+                    <b-row>
                         <b-col>
                             <b-form-group
                                 label="Nome da Consulta*"
