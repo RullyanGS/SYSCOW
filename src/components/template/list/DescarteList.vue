@@ -112,6 +112,16 @@
                 </b-container>
 
             </form>
+
+            <template #modal-footer="{ ok, cancel }">
+                <b-button size="md" variant="success" @click="ok()">
+                    OK
+                </b-button>
+                <b-button size="md" variant="danger" @click="cancel()">
+                    Cancel
+                </b-button>
+            </template>
+
             </b-modal>
         </b-row>
 
@@ -188,6 +198,15 @@
 
             </form>
 
+            <template #modal-footer="{ ok, cancel }">
+                <b-button size="md" variant="success" @click="ok()">
+                    OK
+                </b-button>
+                <b-button size="md" variant="danger" @click="cancel()">
+                    Cancel
+                </b-button>
+            </template>
+
             </b-modal>
         </b-row>
 
@@ -200,6 +219,16 @@
                 @ok="remove">
                     <br>
                     Deseja realmente excluir o descarte do animal <strong>{{descarte.nomeAnimal}}</strong> ?
+
+            <template #modal-footer="{ ok, cancel }">
+                <b-button size="md" variant="success" @click="ok()">
+                    OK
+                </b-button>
+                <b-button size="md" variant="danger" @click="cancel()">
+                    Cancel
+                </b-button>
+            </template>
+
             </b-modal>
         </b-row>
 

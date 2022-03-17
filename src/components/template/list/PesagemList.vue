@@ -97,6 +97,16 @@
                     <b-alert show variant="danger">Campos Obrigatorios (*)</b-alert>
                 </b-container>
             </form>
+
+            <template #modal-footer="{ ok, cancel }">
+                <b-button size="md" variant="success" @click="ok()">
+                    OK
+                </b-button>
+                <b-button size="md" variant="danger" @click="cancel()">
+                    Cancel
+                </b-button>
+            </template>
+
             </b-modal>
         </b-row>
 
@@ -162,6 +172,15 @@
 
             </form>
 
+            <template #modal-footer="{ ok, cancel }">
+                <b-button size="md" variant="success" @click="ok()">
+                    OK
+                </b-button>
+                <b-button size="md" variant="danger" @click="cancel()">
+                    Cancel
+                </b-button>
+            </template>
+
             </b-modal>
         </b-row>
 
@@ -174,6 +193,16 @@
                 @ok="remove">
                     <br>
                     Deseja realmente excluir o peso do animal <strong>{{pesagem.nomeAnimal}}</strong> ?
+
+            <template #modal-footer="{ ok, cancel }">
+                <b-button size="md" variant="success" @click="ok()">
+                    OK
+                </b-button>
+                <b-button size="md" variant="danger" @click="cancel()">
+                    Cancel
+                </b-button>
+            </template>
+            
             </b-modal>
         </b-row>
 

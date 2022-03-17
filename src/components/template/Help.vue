@@ -7,58 +7,45 @@
             <div class="icon"> Help de Contexto </div>
             
         </div>
-        
 
-        <div class="accordion">
-            <!-- Using modifiers -->
-            <b-button v-b-toggle.accordion-1 variant="info" class="m-1">Tela Inicial</b-button>
-            <b-button v-b-toggle.accordion-2 variant="info" class="m-1">Animais</b-button>
-            <b-button v-b-toggle.accordion-3 variant="info" class="m-1">Pesagem</b-button>
-            <b-button v-b-toggle.accordion-4 variant="info" class="m-1">Descarte</b-button>
-            <b-button v-b-toggle.accordion-5 variant="info" class="m-1">Medicação</b-button>
-            <b-button v-b-toggle.accordion-6 variant="info" class="m-1">Consulta Veterinária</b-button>
-            <b-button v-b-toggle.accordion-7 variant="info" class="m-1">Evento</b-button>
-            <b-button v-b-toggle.accordion-8 variant="info" class="m-1">Ordenha Diária</b-button>
-            <b-button v-b-toggle.accordion-9 variant="info" class="m-1">Relatórios</b-button>
-
-            <b-collapse id="accordion-1" accordion="my-accordion" role="tabpanel" class="cardInfo">
-                <b-card>Tela Inicial</b-card>
-            </b-collapse>
-
-            <b-collapse id="accordion-2" accordion="my-accordion" role="tabpanel" class="cardInfo">
-                <b-card>Animais</b-card>
-            </b-collapse>
-
-            <b-collapse id="accordion-3" accordion="my-accordion" role="tabpanel" class="cardInfo">
-                <b-card>Pesagem</b-card>
-            </b-collapse>
-            
-            <b-collapse id="accordion-4" accordion="my-accordion" role="tabpanel" class="cardInfo">
-                <b-card>Descarte</b-card>
-            </b-collapse>
-
-            <b-collapse id="accordion-5" accordion="my-accordion" role="tabpanel" class="cardInfo">
-                <b-card>Medicação</b-card>
-            </b-collapse>
-
-            <b-collapse id="accordion-6" accordion="my-accordion" role="tabpanel" class="cardInfo">
-                <b-card>Consulta Veterinária</b-card>
-            </b-collapse>
-
-            <b-collapse id="accordion-7" accordion="my-accordion" role="tabpanel" class="cardInfo">
-                <b-card>Evento</b-card>
-            </b-collapse>
-
-            <b-collapse id="accordion-8" accordion="my-accordion" role="tabpanel" class="cardInfo">
-                <b-card>Ordenha Diária</b-card>
-            </b-collapse>
-
-            <b-collapse id="accordion-9" accordion="my-accordion" role="tabpanel" class="cardInfo">
-                <b-card>Relatórios</b-card>
-            </b-collapse>
-
+        <div class="helpContent">
+            <div style="color: #fff;" v-if="movie === '#/home'">
+                <h3>Tela Inicial</h3>
+                <p>Nessa seção odemos ver algumas insformações gerais</p>
+            </div>
+            <div style="color: #fff;" v-if="movie === '#/animais'">
+                <h3>Animais</h3>
+                <p>Nessa seção é realizado o cadastro dos animais</p>
+            </div>
+            <div style="color: #fff;" v-if="movie === '#/pesagem'">
+                <h3>Pesagem</h3>
+                <p>Nessa seção é realizado o cadastro das pesagens</p>
+            </div>
+            <div style="color: #fff;" v-if="movie === '#/descarte'">
+                <h3>Descarte</h3>
+                <p>Nessa seção é realizado o cadastro dos descartes</p>
+            </div>
+            <div style="color: #fff;" v-if="movie === '#/consulta'">
+                <h3>Consulta Veterinária</h3>
+                <p>Nessa seção é realizado o cadastro das consultas veterinárias</p>
+            </div>
+            <div style="color: #fff;" v-if="movie === '#/evento'">
+                <h3>Evento</h3>
+                <p>Nessa seção é realizado o cadastro dos eventos</p>
+            </div>
+            <div style="color: #fff;" v-if="movie === '#/evento'">
+                <h3>Evento</h3>
+                <p>Nessa seção é realizado o cadastro dos eventos</p>
+            </div>
+            <div style="color: #fff;" v-if="movie === '#/ordenhadiaria'">
+                <h3>Ordenha Diária</h3>
+                <p>Nessa seção é realizado o cadastro das ordenhas diárias</p>
+            </div>
+            <div style="color: #fff;" v-if="movie === '#/relatorios'">
+                <h3>Relatórios</h3>
+                <p>Nessa seção é realizado os relatórios</p>
+            </div>
         </div>
-
     </aside>
 </template>
 
@@ -67,12 +54,27 @@ import {mapState} from 'vuex'
 
 export default {
     name: 'Help',
+    data () {
+        return {
+           movie: window.location.hash,
+           a: false,
+        }
+    },
     methods: {
         toggleMenu() {
             this.$store.commit('toggleMenu')
         }
     },
-    computed: mapState(['isMenuVisibleHelp'])
+    watch: {
+        movie(movie) {
+            // Fetch data about the movie
+            fetch(`/${movie}`).then((data) => {
+            this.movieData = data;
+            });
+        }
+    },
+    computed: mapState(['isMenuVisibleHelp']),
+    props: ['titulo', 'texto']
 }
 </script>
 
@@ -112,5 +114,9 @@ export default {
 
     .cardInfo{
         width: 840px;
+    }
+
+    .helpContent{
+        margin: 10px;
     }
 </style>
