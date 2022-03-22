@@ -76,6 +76,21 @@
                 </vue-html2pdf>
 
         </ul>
+
+        <div>
+            <b-button class="btnHelpContexto" v-b-modal.modal-scrollable>Help de Contexto</b-button>
+
+            <b-modal id="modal-scrollable" scrollable title="Help de Contexto">
+                <div>
+                    <h3><strong>Relatórios</strong></h3>
+                </div>
+                <template #modal-footer="{ cancel }">
+                    <b-button size="md" variant="dark" @click="cancel()">
+                        Voltar
+                    </b-button>
+                </template>
+            </b-modal>
+        </div>
     </div>
 </template>
 

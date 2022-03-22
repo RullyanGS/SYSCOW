@@ -1,7 +1,7 @@
 <template>
     <div class="user-dropdown">  
         <div class="user-button"> 
-            <span class="d-none d-sm-block">SYSCOW</span>
+            <span class="d-none d-sm-block"></span>
             <div class="user-dropdown-img">
                 <i class="fa fa-user"></i>
             </div>

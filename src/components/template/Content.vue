@@ -1,9 +1,11 @@
 <template>
     <div id="content" :class="{'hide-menu': hide }">
         <router-view></router-view>
+        <!--
         <div class="icon" @click="toggleMenu">
             <i class="fa fa-question-circle"></i>
-        </div>
+        </div> 
+        -->
     </div>
     
 </template>
@@ -44,9 +46,9 @@ export default {
         padding: 20px;
     }
 
-    .icon {
+    /*.icon {
         font-size: 40px;
         float: right;
         padding-right: 20px;
-    }
+    }*/
 </style>

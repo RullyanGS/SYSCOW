@@ -10,12 +10,9 @@
 
         <div class="helpContent">
             <div style="color: #fff;" v-if="movie === '#/home'">
-                <h3>Tela Inicial</h3>
-                <p>Nessa seção odemos ver algumas insformações gerais</p>
             </div>
             <div style="color: #fff;" v-if="movie === '#/animais'">
-                <h3>Animais</h3>
-                <p>Nessa seção é realizado o cadastro dos animais</p>
+               
             </div>
             <div style="color: #fff;" v-if="movie === '#/pesagem'">
                 <h3>Pesagem</h3>

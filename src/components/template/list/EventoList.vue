@@ -131,10 +131,10 @@
 
             <template #modal-footer="{ ok, cancel }">
                 <b-button size="md" variant="success" @click="ok()">
-                    OK
+                    Confirmar
                 </b-button>
                 <b-button size="md" variant="danger" @click="cancel()">
-                    Cancel
+                    Cancelar
                 </b-button>
             </template>
 
@@ -230,10 +230,10 @@
 
             <template #modal-footer="{ ok, cancel }">
                 <b-button size="md" variant="success" @click="ok()">
-                    OK
+                    Confirmar
                 </b-button>
                 <b-button size="md" variant="danger" @click="cancel()">
-                    Cancel
+                    Cancelar
                 </b-button>
             </template>
 
@@ -252,16 +252,30 @@
 
             <template #modal-footer="{ ok, cancel }">
                 <b-button size="md" variant="success" @click="ok()">
-                    OK
+                    Confirmar
                 </b-button>
                 <b-button size="md" variant="danger" @click="cancel()">
-                    Cancel
+                    Cancelar
                 </b-button>
             </template>
             
             </b-modal>
         </b-row>
         
+        <div>
+            <b-button class="btnHelpContexto" v-b-modal.modal-scrollable>Help de Contexto</b-button>
+
+            <b-modal id="modal-scrollable" scrollable title="Help de Contexto">
+                <div>
+                    <h3><strong>Cadastro do Evento</strong></h3>
+                </div>
+                <template #modal-footer="{ cancel }">
+                    <b-button size="md" variant="dark" @click="cancel()">
+                        Voltar
+                    </b-button>
+                </template>
+            </b-modal>
+        </div>
 
     </div>
 </template>
