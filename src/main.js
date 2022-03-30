@@ -11,7 +11,11 @@ Vue.config.productionTip = false
 
 // Global
 import VueTheMask from 'vue-the-mask'
-Vue.use(VueTheMask)
+import VueApexCharts from 'vue-apexcharts'
+Vue.use(VueTheMask,
+        VueApexCharts)
+
+Vue.component('apexchart', VueApexCharts)
 
 new Vue({
   store,

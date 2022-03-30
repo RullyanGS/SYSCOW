@@ -351,7 +351,7 @@ export default {
             fields: [
                 { key: 'nomeAnimal', label: 'Nome do Animal', sortable: true},
                 { key: 'brinco', label: 'Brinco', sortable: true},
-                { key: 'nomePatologia', label: 'Nome Vacina', sortable: true},
+                { key: 'nomePatologia', label: 'Nome Patologia', sortable: true},
                 { key: 'nomeMedicamento', label: 'Nome Medicamento', sortable: true},
                 { key: 'observacao', label: 'Observação', sortable: true},
                 { key: 'dataVacinacao', label: 'Data da Vacinação', sortable: true,

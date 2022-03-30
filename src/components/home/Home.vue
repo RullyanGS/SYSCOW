@@ -18,8 +18,9 @@
                 </div>
                 <div class="card"> 
                     <b-col>
-                        <h3>Leite Diário:</h3>
-                        <b-table hover striped small fixed :items="ordenhas" :fields="fieldsOrdenha" :per-page="3"/>
+                        <!-- <h3>Leite Diário:</h3>
+                        <b-table hover striped small fixed :items="ordenhas" :fields="fieldsOrdenha" :per-page="3"/> -->
+                        <apexchart width="400" type="line" :options="options" :series="series"></apexchart>
                     </b-col>
                 </div>
             </b-row>
@@ -58,6 +59,31 @@ export default {
     components: { PageTitle },
     data() {
         return {
+            options: {
+                title: {
+                    text: 'Produção de Leite',
+                    align: 'left'
+                },
+                chart: {
+                    id: 'vuechart-example'
+                },
+                xaxis: {
+                    categories: [],
+                    title: {
+                        text: 'Data'
+                    }
+                },
+                yaxis: {
+                    title: {
+                        text: 'Quantidade Leite (L)'
+                    }
+                }
+            },
+            series: [{
+                name: 'Qtde Litros',
+                data: []
+            }],
+
             totalAnimal: '',
             totalDescarte: '',
 
@@ -97,7 +123,7 @@ export default {
         const resConsulta = await axios.get(`${baseApiUrl}/consultas`);
         const resEvento = await axios.get(`${baseApiUrl}/eventos`);
         const resOrdenha = await axios.get(`${baseApiUrl}/ordenhas`);
-
+        
         this.animais = resAnimal.data;
         this.pesagens = resPesagem.data;
         this.descartes = resDescarte.data;
@@ -105,6 +131,39 @@ export default {
         this.consultas = resConsulta.data;
         this.eventos = resEvento.data;
         this.ordenhas = resOrdenha.data;
+
+        var json = JSON.parse(JSON.stringify(resOrdenha.data));
+        
+        let tiposQtdeLitros = json.map((i) => {
+            return i.qtdeLitros;
+        })
+
+        var ultimasQtdeLitros = tiposQtdeLitros.slice(tiposQtdeLitros.length - 7);
+
+        this.series = [{
+            data: ultimasQtdeLitros
+        }]
+
+        //console.log(this.series)
+
+        let tiposDataOrdenhaDiaria = json.map((i) => {
+            return i.dataOrdenhaDiaria;
+        })
+        
+        var ultimasDataOrdenhaDiaria = tiposDataOrdenhaDiaria.slice(tiposDataOrdenhaDiaria.length - 7);
+
+        ultimasDataOrdenhaDiaria = ultimasDataOrdenhaDiaria.map((element) => {
+            var d = new Date(element);
+            return `${d.getDate()}/${d.getMonth()+1}/${d.getFullYear()}`;
+        })
+
+        this.options = {
+            xaxis: {
+                categories: ultimasDataOrdenhaDiaria
+            }
+        }
+
+       
 
         for(var i = 0; i < this.animais.length; i++) {
             this.totalAnimal++
