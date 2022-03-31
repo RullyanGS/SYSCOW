@@ -83,7 +83,8 @@
                                     v-model="dataOrdenhaDiaria"
                                     :state="dataOrdenhaDiariaState"
                                     :max="max"
-                                    required />
+                                    required
+                                    disabled/>
                             </b-form-group>
                         </b-col>
                     </b-row>

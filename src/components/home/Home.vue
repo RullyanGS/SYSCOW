@@ -6,14 +6,29 @@
                 <div class="card">
                     <b-col>
                         <h3>Total animais ativos:</h3>
-                        <tr>
-                            <td>  
-                                <img src="../../assets/cow-unfill.png" width="100"/>
-                            </td>
-                            <td> 
-                                <h1 class="totalAnimal">{{totalAnimal}}</h1>
-                            </td>
-                        </tr>
+                        <div  class="cardAnimal">
+                            <tr>
+                                <td>  
+                                    <img src="../../assets/cow-unfill.png" width="100"/>
+                                </td>
+                                <td> 
+                                    <h1 class="totalAnimal">{{totalAnimal}}</h1>
+                                </td>
+                            </tr>
+                        </div>
+                    </b-col>
+                    <b-col>
+                        <h3>Total animais descartados:</h3>
+                        <div  class="cardAnimal">
+                            <tr class="cardAnimal">
+                                <td>  
+                                    <img src="../../assets/cow-unfill-x.png" width="100"/>
+                                </td>
+                                <td>
+                                    <h1 class="totalAnimal">{{totalDescarte}}</h1> 
+                                </td>
+                            </tr>
+                        </div>
                     </b-col>
                 </div>
                 <div class="card"> 
@@ -27,20 +42,13 @@
 
             <b-row align-h="between">
                 <div class="card"> 
-                    <b-col>
-                        <h3>Total animais descartados:</h3>
-                        <td>  
-                            <img src="../../assets/cow-unfill-x.png" width="100"/>
-                        </td>
-                        <td>
-                            <h1 class="totalAnimal">{{totalDescarte}}</h1> 
-                        </td>
-                    </b-col>
+                    <h3>Consulta Veterinária</h3>
+                    <b-table hover striped small fixed :items="consultas" :fields="fieldsConsulta" :filter="filter" :filter-function="filterItemConsulta" :per-page="3"/>
                 </div>
                 <div class="card">
                     <b-col>
-                        <h3>Consultas Veterinária:</h3>
-                        <b-table hover striped small fixed :items="consultas" :fields="fieldsConsulta" :per-page="3"/>
+                        <h3>Animais em Quarentena</h3>
+                        <b-table hover striped small fixed :items="vacinas" :fields="fieldsQuarentena" :filter="filter" :filter-function="filterItemQuarentena" :per-page="3"/>
                     </b-col>
                 </div>
             </b-row>
@@ -58,7 +66,17 @@ export default {
     name: 'Home',
     components: { PageTitle },
     data() {
+        const now = new Date()
+        const today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
+
+        const maxDate = new Date(today)
+        var maxDateMoment = moment(maxDate, "DD/MM/YYYY");
+
         return {
+            filter: {
+                dataHoje: maxDateMoment.format("YYYY-MM-DD"),
+            },
+            
             options: {
                 title: {
                     text: 'Produção de Leite',
@@ -97,8 +115,7 @@ export default {
 
             fieldsConsulta: [
                 { key: 'nomeAnimal', label: 'Nome do Animal', sortable: true},
-                //{ key: 'nomeConsulta', label: 'Nome Consulta', sortable: true},
-                //{ key: 'descricaoConsulta', label: 'Descricao da Consulta', sortable: true},
+                { key: 'nomeConsulta', label: 'Nome Consulta', sortable: true},
                 { key: 'dataConsulta', label: 'Data da Consulta', sortable: true,
                 formatter: value => {
                     return moment(String(value)).format('DD/MM/YYYY')
@@ -106,12 +123,39 @@ export default {
             ],
             fieldsOrdenha: [
                 { key: 'qtdeLitros', label: 'Quantidade de Litros', sortable: true},
-                //{ key: 'nrFemeas', label: 'Número de Femeas Ordenhadas', sortable: true},
                 { key: 'dataOrdenhaDiaria', label: 'Data da Ordenha', sortable: true,
                 formatter: value => {
                     return moment(String(value)).format('DD/MM/YYYY')
                 }},
+            ],
+
+            fieldsQuarentena: [
+                { key: 'nomeAnimal', label: 'Nome do Animal', sortable: true},
+                { key: 'nomePatologia', label: 'Patologia', sortable: true},
+                { key: 'dataLiberacao', label: 'Data de Liberação', sortable: true,
+                formatter: value => {
+                    return moment(String(value)).format('DD/MM/YYYY')
+                }},
             ]
+        }
+    },
+    methods: {
+        filterItemQuarentena(row, filter) {
+
+            const dataHoje = filter.dataHoje;
+
+            //console.log(row.dataLiberacao + " < " + dataHoje)
+            //return row.dataLiberacao <= dataHoje
+            return dataHoje <= row.dataLiberacao
+        },
+
+        filterItemConsulta(row, filter) {
+
+            const dataHoje = filter.dataHoje;
+
+            //console.log(row.dataConsulta + " < " + dataHoje)
+            //return row.dataLiberacao <= dataHoje
+            return dataHoje <= row.dataConsulta
         }
     },
     async created() {
@@ -143,8 +187,6 @@ export default {
         this.series = [{
             data: ultimasQtdeLitros
         }]
-
-        //console.log(this.series)
 
         let tiposDataOrdenhaDiaria = json.map((i) => {
             return i.dataOrdenhaDiaria;
@@ -193,4 +235,7 @@ export default {
     width: 45%;
 }
 
+.cardAnimal {
+    margin-left: 30%;
+}
 </style>
