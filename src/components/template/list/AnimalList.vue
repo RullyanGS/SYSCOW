@@ -39,8 +39,6 @@
             ref="modal"
             title="Cadastro de um novo animal"
             size="lg"
-            @show="resetModal"
-            @hidden="resetModal"
             @ok="cadastroOk">
 
             <form ref="form" @submit.stop.prevent="handleSubmit">
